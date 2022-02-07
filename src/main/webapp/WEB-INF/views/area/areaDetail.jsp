@@ -100,7 +100,7 @@
 								</form>
 							</div>
 							<div align="right">
-								<a href="areaDetail.do?board_spot_num=${area.board_spot_num}">등록</a> <a href="areaDetail.do?board_spot_num=${area.board_spot_num}">삭제</a>
+								<a href="areaModifyForm.do?spot_num=${area.spot_num}">수정</a> <a href="areaDeleteForm.do?spot_num=${area.spot_num}">삭제</a>
 							</div>
 						</div>
 						<!-- 덧글 끝 -->

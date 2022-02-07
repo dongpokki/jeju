@@ -13,27 +13,30 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-	<c:if test="${count == 0}">
-		<div class="container mt-5">
-			<div class="page-banner">
-				<div class="row justify-content-center align-items-center h-100">
-					<div class="col-md-6">
-						<nav aria-label="Breadcrumb">
-							<ul class="breadcrumb justify-content-center py-0 bg-transparent">
-								<li class="breadcrumb-item active">Recommend Places</li>
-							</ul>
-						</nav>
-						<h1 class="text-center">Jeju</h1>
-					</div>
+
+	<div class="container mt-5">
+		<div class="page-banner">
+			<div class="row justify-content-center align-items-center h-100">
+				<div class="col-md-6">
+					<nav aria-label="Breadcrumb">
+						<ul class="breadcrumb justify-content-center py-0 bg-transparent">
+							<li class="breadcrumb-item active">Recommend Places</li>
+						</ul>
+					</nav>
+					<h1 class="text-center">Jeju</h1>
 				</div>
 			</div>
 		</div>
-	</c:if>
+	</div>
 
 	<main>
 		<div class="page-section">
 			<div class="container">
 				<div class="row">
+					<c:if test="${count == 0}">
+	냉무
+	</c:if>
+
 					<c:if test="${count > 0}">
 						<c:forEach var="area" items="${list}">
 							<div class="col-md-6 col-lg-4 py-3">
@@ -41,12 +44,12 @@
 								<div class="card-blog">
 									<div class="body">
 										<div class="post-title">
-											<a href="areaDetail.do?board_spot_num=${area.board_spot_num}">${area.title }</a>
+											<a href="areaDetail.do?spot_num=${area.spot_num}">${area.title }</a>
 										</div>
 										<div class="post-excerpt">${area.content }</div>
 									</div>
 									<div class="footer">
-										<a href="areaDetail.do?board_spot_num=${area.board_spot_num}">Read More</a>
+										<a href="areaDetail.do?spot_num=${area.spot_num}">Read More</a>
 									</div>
 								</div>
 
@@ -63,7 +66,7 @@
 
 				</div>
 				<div align="right">
-					<a href="areaDetail.do?board_spot_num=${area.board_spot_num}">등록</a> <a href="areaDetail.do?board_spot_num=${area.board_spot_num}">삭제</a>
+					<a href="areaWriteForm.do">등록</a> <a href="areaDeleteForm.do">삭제</a>
 				</div>
 			</div>
 
