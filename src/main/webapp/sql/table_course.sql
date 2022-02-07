@@ -1,4 +1,4 @@
-/*추천 코스 테이블*/
+/*추천 코스 테이블 안되면 죽는다*/
 create table jboard_course(
     course_num number not null,
     title varchar2(150) not null,
