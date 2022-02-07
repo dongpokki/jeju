@@ -3,7 +3,8 @@ package kr.area.vo;
 import java.sql.Date;
 
 public class AreaVO {
-	private int board_spot_num; // 추천 장소 게시판 글 번호
+	private int spot_num;
+
 	private String title; // 제목
 	private String content; // 내용
 	private int hit; // 조회수
@@ -13,12 +14,12 @@ public class AreaVO {
 	private String ip; // ip주소
 	private int user_num; // 회원번호(작성자)
 
-	public int getBoard_spot_num() {
-		return board_spot_num;
+	public int getSpot_num() {
+		return spot_num;
 	}
 
-	public void setBoard_spot_num(int board_spot_num) {
-		this.board_spot_num = board_spot_num;
+	public void setSpot_num(int spot_num) {
+		this.spot_num = spot_num;
 	}
 
 	public String getTitle() {

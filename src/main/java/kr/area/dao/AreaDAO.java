@@ -30,7 +30,7 @@ public class AreaDAO {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			sql = "INSERT INTO jboard_spot (board_spot_num, title, content, filename, ip, user_num)"
+			sql = "INSERT INTO jboard_spot (spot_num, title, content, filename, ip, user_num)"
 					+ "VALUES (jboard_spot_seq.nextval, ?,?,?,?,?)";
 
 			// PreparedStatement 객체 생성
@@ -67,7 +67,7 @@ public class AreaDAO {
 			}
 
 			sql = "UPDATE jboard_spot SET title=?, content=?, modify_date=SYSDATE" + sub_sql
-					+ ", ip=? WHERE board_spot_num=?";
+					+ ", ip=? WHERE spot_num=?";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -89,7 +89,7 @@ public class AreaDAO {
 	}
 
 	// 추천 장소 삭제
-	public void deleteSpotBoard(int board_spot_num) throws Exception {
+	public void deleteSpotBoard(int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -97,7 +97,7 @@ public class AreaDAO {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			sql = "DELETE FROM jboard_spot WHERE WHERE board_spot_num=?";
+			sql = "DELETE FROM jboard_spot WHERE spot_num=?";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -176,7 +176,7 @@ public class AreaDAO {
 
 			// SQL문 작성
 			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot " + sub_sql
-					+ "ORDER BY board_spot_num DESC) a ) WHERE rnum>=? AND rnum <=?";
+					+ "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=?";
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			if (keyword != null && !"".equals(keyword)) {
@@ -191,7 +191,7 @@ public class AreaDAO {
 			while (rs.next()) {
 				AreaVO area = new AreaVO();
 
-				area.setBoard_spot_num(rs.getInt("board_spot_num"));
+				area.setSpot_num(rs.getInt("spot_num"));
 				area.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				area.setFilename(rs.getString("filename"));
 				area.setContent(rs.getString("content"));
@@ -210,7 +210,7 @@ public class AreaDAO {
 	}
 
 	// 추천 장소 글 상세
-	public AreaVO getSpotBoard(int board_spot_num) throws Exception {
+	public AreaVO getSpotBoard(int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -221,16 +221,16 @@ public class AreaDAO {
 			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 			// SQL문 작성
-			sql = "SELECT * FROM jboard_spot WHERE board_spot_num = ?";
+			sql = "SELECT * FROM jboard_spot WHERE spot_num = ?";
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			// ?에 데이터 바인딩
-			pstmt.setInt(1, board_spot_num);
+			pstmt.setInt(1, spot_num);
 			// SQL문 테이블에 반영하고 결과행을 ResultSet에 담음
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				area = new AreaVO();
-				area.setBoard_spot_num(rs.getInt("board_spot_num"));
+				area.setSpot_num(rs.getInt("spot_num"));
 				area.setTitle(rs.getString("title"));
 				area.setContent(rs.getString("content"));
 				area.setHit(rs.getInt("hit"));

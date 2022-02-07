@@ -13,42 +13,46 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-	<div class="container mt-5">
-		<div class="page-banner">
-			<div class="row justify-content-center align-items-center h-100">
-				<div class="col-md-6">
-					<nav aria-label="Breadcrumb">
-						<ul class="breadcrumb justify-content-center py-0 bg-transparent">
-							<li class="breadcrumb-item active">Recommend Places</li>
-						</ul>
-					</nav>
-					<h1 class="text-center">Jeju</h1>
+	<c:if test="${count == 0}">
+		<div class="container mt-5">
+			<div class="page-banner">
+				<div class="row justify-content-center align-items-center h-100">
+					<div class="col-md-6">
+						<nav aria-label="Breadcrumb">
+							<ul class="breadcrumb justify-content-center py-0 bg-transparent">
+								<li class="breadcrumb-item active">Recommend Places</li>
+							</ul>
+						</nav>
+						<h1 class="text-center">Jeju</h1>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</c:if>
+
 	<main>
 		<div class="page-section">
 			<div class="container">
 				<div class="row">
-					<c:forEach var="area" items="${list}">
-						<div class="col-md-6 col-lg-4 py-3">
+					<c:if test="${count > 0}">
+						<c:forEach var="area" items="${list}">
+							<div class="col-md-6 col-lg-4 py-3">
 
-							<div class="card-blog">
-								<div class="body">
-									<div class="post-title">
-										<a href="areaDetail.do?board_spot_num=${area.board_spot_num}">${area.title }</a>
+								<div class="card-blog">
+									<div class="body">
+										<div class="post-title">
+											<a href="areaDetail.do?board_spot_num=${area.board_spot_num}">${area.title }</a>
+										</div>
+										<div class="post-excerpt">${area.content }</div>
 									</div>
-									<div class="post-excerpt">${area.content }</div>
+									<div class="footer">
+										<a href="areaDetail.do?board_spot_num=${area.board_spot_num}">Read More</a>
+									</div>
 								</div>
-								<div class="footer">
-									<a href="areaDetail.do?board_spot_num=${area.board_spot_num}">Read More</a>
-								</div>
+
 							</div>
-
-						</div>
-					</c:forEach>
-
+						</c:forEach>
+					</c:if>
 					<div class="col-12 mt-5">
 						<nav aria-label="Page Navigation">
 							<ul class="pagination justify-content-center">
