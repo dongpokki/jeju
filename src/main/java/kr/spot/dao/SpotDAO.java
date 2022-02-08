@@ -1,4 +1,4 @@
-package kr.area.dao;
+package kr.spot.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,23 +6,23 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.area.vo.AreaVO;
+import kr.spot.vo.SpotVO;
 import kr.util.DBUtil;
 import kr.util.StringUtil;
 
-public class AreaDAO {
+public class SpotDAO {
 	// 싱글턴 패턴
-	private static AreaDAO instance = new AreaDAO();
+	private static SpotDAO instance = new SpotDAO();
 
-	public static AreaDAO getInstance() {
+	public static SpotDAO getInstance() {
 		return instance;
 	}
 
-	private AreaDAO() {
+	private SpotDAO() {
 	}
 
 	// 추천 장소 등록
-	public void insertSpot(AreaVO area) throws Exception {
+	public void insertSpot(SpotVO Spot) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -36,11 +36,11 @@ public class AreaDAO {
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, area.getTitle());
-			pstmt.setString(2, area.getContent());
-			pstmt.setString(3, area.getFilename());
-			pstmt.setString(4, area.getIp());
-			pstmt.setInt(5, area.getUser_num());
+			pstmt.setString(1, Spot.getTitle());
+			pstmt.setString(2, Spot.getContent());
+			pstmt.setString(3, Spot.getFilename());
+			pstmt.setString(4, Spot.getIp());
+			pstmt.setInt(5, Spot.getUser_num());
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ public class AreaDAO {
 	}
 
 	// 추천 장소 수정
-	public void updateSpotBoard(AreaVO area) throws Exception {
+	public void updateSpotBoard(SpotVO Spot) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -62,7 +62,7 @@ public class AreaDAO {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			if (area.getFilename() != null) {
+			if (Spot.getFilename() != null) {
 				sub_sql = ",filename=?";
 			}
 
@@ -72,13 +72,13 @@ public class AreaDAO {
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(++cnt, area.getTitle());
-			pstmt.setString(++cnt, area.getContent());
-			if (area.getFilename() != null) {
-				pstmt.setString(++cnt, area.getFilename());
+			pstmt.setString(++cnt, Spot.getTitle());
+			pstmt.setString(++cnt, Spot.getContent());
+			if (Spot.getFilename() != null) {
+				pstmt.setString(++cnt, Spot.getFilename());
 			}
-			pstmt.setString(++cnt, area.getIp());
-			pstmt.setInt(++cnt, area.getUser_num());
+			pstmt.setString(++cnt, Spot.getIp());
+			pstmt.setInt(++cnt, Spot.getUser_num());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new Exception(e);
@@ -154,11 +154,11 @@ public class AreaDAO {
 	}
 
 	// 목록
-	public List<AreaVO> getList(int startRow, int endRow, String keyfield, String keyword) throws Exception {
+	public List<SpotVO> getList(int startRow, int endRow, String keyfield, String keyword) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<AreaVO> list = null;
+		List<SpotVO> list = null;
 		String sql = null;
 		String sub_sql = "";
 		int cnt = 0;
@@ -187,17 +187,17 @@ public class AreaDAO {
 
 			// SQL문을 테이블에 반영하고 결과행들을 ResultSet 담음
 			rs = pstmt.executeQuery();
-			list = new ArrayList<AreaVO>();
+			list = new ArrayList<SpotVO>();
 			while (rs.next()) {
-				AreaVO area = new AreaVO();
+				SpotVO spot = new SpotVO();
 
-				area.setSpot_num(rs.getInt("spot_num"));
-				area.setTitle(StringUtil.useNoHtml(rs.getString("title")));
-				area.setFilename(rs.getString("filename"));
-				area.setContent(rs.getString("content"));
+				spot.setSpot_num(rs.getInt("spot_num"));
+				spot.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				spot.setFilename(rs.getString("filename"));
+				spot.setContent(rs.getString("content"));
 
 				// 자바빈(VO)을 ArrayList에 저장
-				list.add(area);
+				list.add(spot);
 			}
 
 		} catch (Exception e) {
@@ -210,11 +210,11 @@ public class AreaDAO {
 	}
 
 	// 추천 장소 글 상세
-	public AreaVO getSpotBoard(int spot_num) throws Exception {
+	public SpotVO getSpotBoard(int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		AreaVO area = null;
+		SpotVO spot = null;
 		String sql = null;
 
 		try {
@@ -229,14 +229,14 @@ public class AreaDAO {
 			// SQL문 테이블에 반영하고 결과행을 ResultSet에 담음
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				area = new AreaVO();
-				area.setSpot_num(rs.getInt("spot_num"));
-				area.setTitle(rs.getString("title"));
-				area.setContent(rs.getString("content"));
-				area.setHit(rs.getInt("hit"));
-				area.setReg_date(rs.getDate("reg_date"));
-				area.setModify_date(rs.getDate("modify_date"));
-				area.setFilename(rs.getString("filename"));
+				spot = new SpotVO();
+				spot.setSpot_num(rs.getInt("spot_num"));
+				spot.setTitle(rs.getString("title"));
+				spot.setContent(rs.getString("content"));
+				spot.setHit(rs.getInt("hit"));
+				spot.setReg_date(rs.getDate("reg_date"));
+				spot.setModify_date(rs.getDate("modify_date"));
+				spot.setFilename(rs.getString("filename"));
 			}
 		} catch (Exception e) {
 			throw new Exception(e);
@@ -244,7 +244,7 @@ public class AreaDAO {
 			// 자원정리
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
-		return area;
+		return spot;
 	}
 
 }

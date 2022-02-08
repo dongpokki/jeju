@@ -1104,10 +1104,10 @@ a:hover {
 }
 
 .comment-form {
-	border-top: 1px solid #eee;
-	padding-top: 45px;
-	margin-top: 20px;
-	margin-bottom: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .single-comment .h5 {
@@ -1138,7 +1138,7 @@ a:hover {
 	position: relative;
 	margin-top: 20px;
 	width: 100%;
-	border-bottom: 1px solid #323232;
+	border-bottom: 1px solid rgb(0 0 0/ 20%);
 }
 
 .ArticleWritingTitle .column_title {
