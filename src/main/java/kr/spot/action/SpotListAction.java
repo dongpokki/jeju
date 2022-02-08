@@ -1,16 +1,16 @@
-package kr.area.action;
+package kr.spot.action;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.area.dao.AreaDAO;
-import kr.area.vo.AreaVO;
 import kr.controller.Action;
+import kr.spot.dao.SpotDAO;
+import kr.spot.vo.SpotVO;
 import kr.util.PagingUtil;
 
-public class AreaListAction implements Action {
+public class SpotListAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -25,13 +25,13 @@ public class AreaListAction implements Action {
 		if (keyword == null)
 			keyword = "";
 
-		AreaDAO dao = AreaDAO.getInstance();
+		SpotDAO dao = SpotDAO.getInstance();
 		int count = dao.getSpotBoardCount(keyfield, keyword);
 		// 페이지 처리
 		// keyfield,keyword,currentPage,count,rowCount,pageCount,url
-		PagingUtil page = new PagingUtil(keyfield, keyword, Integer.parseInt(pageNum), count, 20, 10, "areaList.do");
+		PagingUtil page = new PagingUtil(keyfield, keyword, Integer.parseInt(pageNum), count, 20, 10, "spotList.do");
 
-		List<AreaVO> list = null;
+		List<SpotVO> list = null;
 		if (count > 0) {
 			list = dao.getList(page.getStartCount(), page.getEndCount(), keyfield, keyword);
 		}
@@ -41,7 +41,7 @@ public class AreaListAction implements Action {
 		request.setAttribute("pagingHtml", page.getPagingHtml());
 
 		// JSP 경로 반환
-		return "/WEB-INF/views/area/areaList.jsp";
+		return "/WEB-INF/views/spot/spotList.jsp";
 	}
 
 }

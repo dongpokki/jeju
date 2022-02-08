@@ -1,8 +1,8 @@
-package kr.area.vo;
+package kr.spot.vo;
 
 import java.sql.Date;
 
-public class AreaVO {
+public class SpotVO {
 	private int spot_num;
 
 	private String title; // 제목

@@ -37,18 +37,18 @@
 	</c:if>
 
 					<c:if test="${count > 0}">
-						<c:forEach var="area" items="${list}">
+						<c:forEach var="spot" items="${list}">
 							<div class="col-md-6 col-lg-4 py-3">
 
 								<div class="card-blog">
 									<div class="body">
 										<div class="post-title">
-											<a href="areaDetail.do?spot_num=${area.spot_num}">${area.title }</a>
+											<a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.title }</a>
 										</div>
-										<div class="post-excerpt">${area.content }</div>
+										<div class="post-excerpt">${spot.content }</div>
 									</div>
 									<div class="footer">
-										<a href="areaDetail.do?spot_num=${area.spot_num}">Read More</a>
+										<a href="spotDetail.do?spot_num=${spot.spot_num}">Read More</a>
 									</div>
 								</div>
 
@@ -65,7 +65,7 @@
 
 				</div>
 				<div align="right">
-					<a href="areaWriteForm.do">등록</a> <a href="areaDeleteForm.do">삭제</a>
+					<a href="spotWriteForm.do" <c:if test="${empty session_user_num}">disabled="disabled"</c:if>>등록</a> <a href="spotDeleteForm.do">삭제</a>
 				</div>
 			</div>
 
