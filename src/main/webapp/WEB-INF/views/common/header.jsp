@@ -14,10 +14,10 @@
 				<ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/main/main.do" class="nav-link">Main</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/area/areaList.do" class="nav-link">Recommend Places</a></li>
-					<li class="nav-item"><a href="#" class="nav-link">Recommend Courses</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/course/courseList.do" class="nav-link">Recommend Courses</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/qna/qnaList.do" class="nav-link">Contact</a></li>
 				</ul>
- 
+
 				<div class="ml-auto">
 					<%-- 
 					[2022.02.07 정동윤 - 사진 첨부 시 너무 안보여서 우선 주석 처리 했습니다.]
@@ -28,25 +28,29 @@
 						<img src="${pageContext.request.contextPath}/images/face.png" width="25" height="25" class="my-photo">
 					</c:if>
 					 --%>
-					<c:if test="${!empty session_user_num}"> <!--  로그인 된 경우 -->
+					<c:if test="${!empty session_user_num}">
+						<!--  로그인 된 경우 -->
 						[<b><span>${session_user_id}</span></b>]
 						<a href="${pageContext.request.contextPath}/user/logout.do" class="btn btn-outline ">Logout</a>
 					</c:if>
-					
-					<c:if test="${empty session_user_num}"> <!--  로그인 안되어 있는 경우 -->
+
+					<c:if test="${empty session_user_num}">
+						<!--  로그인 안되어 있는 경우 -->
 						<a href="${pageContext.request.contextPath}/user/loginForm.do" class="btn btn-outline ">Login</a>
 						<a href="${pageContext.request.contextPath}/user/registerUserForm.do" class="btn btn-outline ">Join</a>
 					</c:if>
-					
-					<c:if test="${!empty session_user_num && session_user_auth == 2}"> <!--  일반 회원으로 로그인 한 경우 -->
+
+					<c:if test="${!empty session_user_num && session_user_auth == 2}">
+						<!--  일반 회원으로 로그인 한 경우 -->
 						<a href="${pageContext.request.contextPath}/user/myPage.do" class="btn btn-outline ">MY page</a>
 					</c:if>
-					
-					<c:if test="${!empty session_user_num && session_user_auth == 3}"> <!--  관리자로 로그인 한 경우 -->
+
+					<c:if test="${!empty session_user_num && session_user_auth == 3}">
+						<!--  관리자로 로그인 한 경우 -->
 						<a href="${pageContext.request.contextPath}/user/userList.do" class="btn btn-outline ">User management</a>
 					</c:if>
 				</div>
-				
+
 			</div>
 		</div>
 	</nav>
