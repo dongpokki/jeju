@@ -1137,7 +1137,7 @@ a:hover {
 .WritingHeader {
 	position: relative;
 	margin-top: 20px;
-	width: 900px;
+	width: 100%;
 	border-bottom: 1px solid #323232;
 }
 
@@ -1187,7 +1187,7 @@ element.style {
 
 .FlexableTextArea .textarea_input {
 	display: block;
-	width: 900px;
+	width: 100%;
 	min-height: 40px;
 	padding: 11px 12px 10px;
 	border: 1px solid #ebecef;

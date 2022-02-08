@@ -20,7 +20,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<div class="container">
-		<div class="WritingWrap" align="center">
+		<div class="WritingWrap">
 			<div class="WritingHeader">
 				<h2 class="title">카페 글쓰기</h2>
 			</div>
@@ -87,7 +87,7 @@
 					fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
 							'20', '22', '24', '28', '30', '36', '50', '72' ],
 					height : 500, // 에디터 높이
-					width : 900,
+					width : "100%",
 					focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 					lang : "ko-KR", // 한글 설정
 					placeholder : '내용을 입력해주세요.' //placeholder 설정
