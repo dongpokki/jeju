@@ -20,9 +20,9 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<div class="container">
-		<div class="WritingWrap" align="center">
+		<div class="WritingWrap">
 			<div class="WritingHeader">
-				<h2 class="title">카페 글쓰기</h2>
+				<h2 class="title">추천 장소 작성하기</h2>
 			</div>
 			<div class="WritingContent">
 				<div class="WritingEditor">
@@ -79,15 +79,14 @@
 							[ 'table', [ 'table' ] ],
 							[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
 							[ 'height', [ 'height' ] ],
-							[ 'insert', [ 'picture', 'link', 'video' ] ],
-							[ 'view', [ 'fullscreen', 'help' ] ] ],
+							[ 'insert', [ 'picture', 'link', 'video' ] ], ],
 					fontNames : [ 'Arial', 'Arial Black', 'Comic Sans MS',
 							'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체',
 							'바탕체' ],
 					fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
 							'20', '22', '24', '28', '30', '36', '50', '72' ],
 					height : 500, // 에디터 높이
-					width : 900,
+					width : "100%",
 					focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 					lang : "ko-KR", // 한글 설정
 					placeholder : '내용을 입력해주세요.' //placeholder 설정
