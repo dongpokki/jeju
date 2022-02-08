@@ -42,7 +42,7 @@ create sequence jcmt_course_seq;
 
 /*추천 코스 코멘트 좋아요*/
 create table jcmtgood_course(
-	coursecmtgood_num number not null,
+    coursecmtgood_num number not null,
     coursecmt_num number not null,
     user_num number not null,
     good number(1) not null,
