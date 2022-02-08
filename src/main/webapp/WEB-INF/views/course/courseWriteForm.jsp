@@ -63,26 +63,26 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<div class="container">
-		<div class="WritingWrap" align="center">
+		<div class="WritingWrap">
 			<div class="WritingHeader">
-				<h2 class="title">추천 코스 작성하기</h2>
+				<h2 class="title">추천 장소 작성하기</h2>
 			</div>
 			<div class="WritingContent">
 				<div class="WritingEditor">
 					<div class="ArticleWritingTitle">
 						<div class="column_title">
 							<div class="FormSelectBox menu_candidates_selectbox">
-								<div class="FormSelectButton"></div>
+								<div class="FormSelectButton">
+									<button type="button" aria-haspopup="true" aria-expanded="selectboxLayer" aria-pressed="selectboxLayer" class="button">게시판을 선택해 주세요.</button>
+								</div>
 							</div>
 						</div>
 						<div>
 							<div class="FlexableTextArea">
-								<textarea placeholder="제목을 입력해 주세요." class="textarea_input"
-									style="height: 40px;"></textarea>
+								<textarea placeholder="제목을 입력해 주세요." class="textarea_input" style="height: 40px;"></textarea>
 							</div>
-						</div>
 <div class="map_wrap">
-    <div id="map" style="width:80%;height:100%;position:relative;overflow:hidden;"></div>
+    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
     <div id="menu_wrap" class="bg_white">
         <div class="option">
@@ -318,7 +318,7 @@ function removeAllChildNods(el) {
     }
 }						
 </script>
-						<div>
+						<div style="padding :30px 0;">
 							<form id="write_form" action="courseWrite.do" method="post"
 								enctype="multipart/form-data">
 								<div class="form-group">
@@ -365,14 +365,14 @@ function removeAllChildNods(el) {
 							[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
 							[ 'height', [ 'height' ] ],
 							[ 'insert', [ 'picture', 'link', 'video' ] ],
-							[ 'view', [ 'fullscreen', 'help' ] ] ],
+							 ],
 					fontNames : [ 'Arial', 'Arial Black', 'Comic Sans MS',
 							'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체',
 							'바탕체' ],
 					fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
 							'20', '22', '24', '28', '30', '36', '50', '72' ],
 					height : 500, // 에디터 높이
-					width : 900,
+					width : "100%",
 					focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 					lang : "ko-KR", // 한글 설정
 					placeholder : '내용을 입력해주세요.' //placeholder 설정

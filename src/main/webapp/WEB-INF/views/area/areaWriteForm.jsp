@@ -22,7 +22,7 @@
 	<div class="container">
 		<div class="WritingWrap">
 			<div class="WritingHeader">
-				<h2 class="title">카페 글쓰기</h2>
+				<h2 class="title">추천 장소 작성하기</h2>
 			</div>
 			<div class="WritingContent">
 				<div class="WritingEditor">
@@ -79,8 +79,7 @@
 							[ 'table', [ 'table' ] ],
 							[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
 							[ 'height', [ 'height' ] ],
-							[ 'insert', [ 'picture', 'link', 'video' ] ],
-							[ 'view', [ 'fullscreen', 'help' ] ] ],
+							[ 'insert', [ 'picture', 'link', 'video' ] ], ],
 					fontNames : [ 'Arial', 'Arial Black', 'Comic Sans MS',
 							'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체',
 							'바탕체' ],
