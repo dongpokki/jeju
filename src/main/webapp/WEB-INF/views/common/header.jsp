@@ -15,7 +15,7 @@
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/main/main.do" class="nav-link">Main</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/area/areaList.do" class="nav-link">Recommend Places</a></li>
 					<li class="nav-item"><a href="#" class="nav-link">Recommend Courses</a></li>
-					<li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/qna/qnaList.do" class="nav-link">Contact</a></li>
 				</ul>
  
 				<div class="ml-auto">

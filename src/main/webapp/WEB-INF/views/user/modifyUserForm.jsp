@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보 수정</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -185,5 +186,10 @@
 </script>
 <!-- 우편번호(다음지도 API) 스크립트 끝 -->
 
+	<!-- 푸터 시작 -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+	<!-- 푸터 끝 -->
 </body>
 </html>

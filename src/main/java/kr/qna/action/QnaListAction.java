@@ -9,8 +9,9 @@ public class QnaListAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return "/WEB-INF/views/qna/list.jsp";
+
+		
+		return "/WEB-INF/views/qna/qnaList.jsp";
 	}
 
 }

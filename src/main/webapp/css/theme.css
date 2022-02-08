@@ -1132,3 +1132,72 @@ a:hover {
 	align-content: center;
 	font-weight: 400;
 }
+
+/* 글 작성 */
+.WritingHeader {
+	position: relative;
+	margin-top: 20px;
+	width: 900px;
+	border-bottom: 1px solid #323232;
+}
+
+.ArticleWritingTitle .column_title {
+	float: left;
+	width: 630px;
+}
+
+.WritingHeader .title {
+	margin-bottom: 16px;
+	font-size: 22px;
+	color: var(- -skinTextColor);
+}
+
+.WritingContent {
+	position: relative;
+	padding-top: 12px;
+	padding-bottom: 50px;
+}
+
+.WritingWrap {
+	color: #000;
+}
+
+.ArticleWritingTitle .FlexableTextArea .input_text, .ArticleWritingTitle .FormSelectBox .button
+	{
+	height: 40px;
+	font-size: 15px;
+}
+
+.FormSelectButton .button {
+	display: block;
+	position: relative;
+	width: 200px;
+	padding: 0 25px 0 11px;
+	border: 1px solid #ebecef;
+	background: #fff;
+	text-align: left;
+	box-sizing: border-box;
+	white-space: nowrap;
+	margin: 20px 0;
+}
+
+element.style {
+	height: 40px;
+}
+
+.FlexableTextArea .textarea_input {
+	display: block;
+	width: 900px;
+	min-height: 40px;
+	padding: 11px 12px 10px;
+	border: 1px solid #ebecef;
+	box-sizing: border-box;
+	overflow: hidden;
+	resize: none;
+	word-break: break-all;
+	font-size: 15px;
+	letter-spacing: -.23px;
+	line-height: 17px;
+	outline: none;
+	margin: 20px 0;
+}
