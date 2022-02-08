@@ -12,7 +12,12 @@
 <div>
 	<div class="page-main">
 		<jsp:include page="/WEB-INF/views/common/header.jsp" />
-		<h2>QnA</h2>
+		<div class="container mt-5">
+			<div class="page-banner" style="height:50px;background-color:#fff">
+				<h1>QnA</h1>
+				
+			</div>
+		</div>
 		
 	</div>
 </div>
