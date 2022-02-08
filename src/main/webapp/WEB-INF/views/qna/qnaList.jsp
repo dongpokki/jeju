@@ -15,7 +15,7 @@
 		<div class="container mt-5">
 			<div class="page-banner" style="height:50px;background-color:#fff">
 				<h1>QnA</h1>
-				
+				<input class="btn btn-outline" type="button" value="글쓰기" onclick="location.href='qnaWriteForm.do'">
 			</div>
 		</div>
 		
