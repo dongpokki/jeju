@@ -46,7 +46,7 @@ create table jcmtgood_course(
     coursecmt_num number not null,
     user_num number not null,
     good number(1) not null,
-    constraint jcmtgood_course_pk primary key(coursegood_num),
+    constraint jcmtgood_course_pk primary key(coursecmtgood_num),
     constraint jcmtgood_course_fk foreign key(coursecmt_num) references jcmt_course(coursecmt_num),
     constraint jcmtgood_course_fk2 foreign key(user_num) references juser(user_num)
 );
