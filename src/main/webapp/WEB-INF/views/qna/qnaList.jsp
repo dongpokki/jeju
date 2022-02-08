@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 목록</title>
+<title>QnA 목록</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 </head>
@@ -12,6 +12,7 @@
 <div>
 	<div class="page-main">
 		<jsp:include page="/WEB-INF/views/common/header.jsp" />
+		<h2>QnA</h2>
 		
 	</div>
 </div>
