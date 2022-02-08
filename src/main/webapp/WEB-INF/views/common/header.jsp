@@ -14,7 +14,7 @@
 				<ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/main/main.do" class="nav-link">Main</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/area/areaList.do" class="nav-link">Recommend Places</a></li>
-					<li class="nav-item"><a href="#" class="nav-link">Recommend Courses</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath}/course/courseList.do" class="nav-link">Recommend Courses</a></li>
 					<li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
 				</ul>
 
