@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-/* test */
 <title>추천 장소 페이지</title>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
