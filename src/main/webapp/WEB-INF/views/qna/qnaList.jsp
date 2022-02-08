@@ -10,7 +10,10 @@
 </head>
 <body>
 <div>
-
+	<div class="page-main">
+		<jsp:include page="/WEB-INF/views/common/header.jsp" />
+		
+	</div>
 </div>
 </body>
 </html>
