@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>추천 장소 상세 페이지</title>
+<title>추천 코스 등록</title>
 
 <!-- 레이아웃을 위한  -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -19,43 +19,22 @@
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-	<div class="container">
-		<div class="WritingWrap" align="center">
-			<div class="WritingHeader">
-				<h2 class="title">카페 글쓰기</h2>
-			</div>
-			<div class="WritingContent">
-				<div class="WritingEditor">
-					<div class="ArticleWritingTitle">
-						<div class="column_title">
-							<div class="FormSelectBox menu_candidates_selectbox">
-								<div class="FormSelectButton">
-									<button type="button" aria-haspopup="true" aria-expanded="selectboxLayer" aria-pressed="selectboxLayer" class="button">게시판을 선택해 주세요.</button>
-								</div>
-							</div>
-						</div>
-						<div>
-							<div class="FlexableTextArea">
-								<textarea placeholder="제목을 입력해 주세요." class="textarea_input" style="height: 40px;"></textarea>
-							</div>
-						</div>
-						<div>
-							<form id="write_form" action="areaWrite.do" method="post" enctype="multipart/form-data">
-								<div class="form-group">
-									<textarea id="summernote" name="content"></textarea>
-								</div>
-							</form>
-
-						</div>
-						<div class="form-group" align="center">
-							<input type="submit" value="등록" class="btn btn-primary"> <input type="submit" value="취소" class="btn btn-primary">
-						</div>
+	<div class="page-section">
+		<div class="container">
+			<div class="row">
+				<form id="write_form" action="areaWrite.do" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="title">제목 : </label> 
+						<input type="text" class="" placeholder="제목을 입력해주세요." name="title" required="required" />
 					</div>
-				</div>
+					<div class="form-group">
+						<textarea id="summernote" name="content"></textarea>
+					</div>
+				</form>
 			</div>
 		</div>
-	</div>
 
+	</div>
 
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
@@ -86,8 +65,9 @@
 							'바탕체' ],
 					fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
 							'20', '22', '24', '28', '30', '36', '50', '72' ],
-					height : 500, // 에디터 높이
-					width : 900,
+					height : 300, // 에디터 높이
+					minHeight : null, // 최소 높이
+					maxHeight : null, // 최대 높이
 					focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 					lang : "ko-KR", // 한글 설정
 					placeholder : '내용을 입력해주세요.' //placeholder 설정
