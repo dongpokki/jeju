@@ -7,7 +7,8 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>회원탈퇴</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 	</head>
 	<body>
 	<div class="page-main">
@@ -21,6 +22,11 @@
 			</div>
 		</div>
 	</div>
+	<!-- 푸터 시작 -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+	<!-- 푸터 끝 --> 
 	</body>
 	</html>
 </c:if>

@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 수정</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -50,7 +51,7 @@
 		});
 		
 		
-		//새비밀번호와 새 비밀번호 확인 일치 여부 체크
+		//새비밀번호와 새 비밀번호 확인 일치 여부 체크 
 		$('#cpasswd').keyup(function(){
 			if($('#passwd').val() == $('#cpasswd').val()){
 				$('#message_cpasswd').text('새비밀번호 일치');
@@ -92,5 +93,10 @@
 		</div>
 	</form>
 </div>
+	<!-- 푸터 시작 -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+	<!-- 푸터 끝 -->
 </body>
 </html>

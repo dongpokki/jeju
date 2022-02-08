@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${user_num==null }">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/css/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -30,29 +29,27 @@
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<h2>로그인</h2>
-	<form id="login_form"action="login.do" method="post">
+	<form id="login_form" action="login.do" method="post">
 		<ul>
 			<li>
 				<label for="id">아이디</label>
-				<input type="text" name="id" id="id" maxlength="12">
+				<input type="text" name="id" id="id" maxlength="10">
 			</li>
 			<li>
 				<label for="passwd">비밀번호</label>
 				<input type="password" name="passwd" id="passwd" maxlength="12">
 			</li>
-		</ul>
+		</ul>	
 		<div class="align-center">
 			<input type="submit" value="로그인">
-			<input type="button" value="Home" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do';">
 		</div>
 	</form>
 </div>
+	<!-- 푸터 시작 -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+	<!-- 푸터 끝 -->
 </body>
 </html>
-</c:if>
-<c:if test="${user_num!=null }">
-	<script type="text/javascript">
-	alert('이미 로그인되었습니다.');
-	location.href='${pageContext.request.contextPath }/main/main.do';
-	</script>
-</c:if>

@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원탈퇴</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -32,7 +33,7 @@
 			}
 		}); // end of submit
 		
-		//비밀번호 확인까지 한 후 다시 비밀번호를 수정하면 비밀번호 확인 및 메세지 초기화
+		//비밀번호 확인까지 한 후 다시 비밀번호를 수정하면 비밀번호 확인 및 메세지 초기화 
 		$('#passwd').keyup(function(){
 			$('#cpasswd').val('');
 			$('#message_id').text('');
@@ -76,5 +77,10 @@
 		</div>
 	</form>
 </div>
+	<!-- 푸터 시작 -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+	<!-- 푸터 끝 -->
 </body>
 </html>
