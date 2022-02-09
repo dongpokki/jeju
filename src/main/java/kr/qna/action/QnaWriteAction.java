@@ -30,6 +30,7 @@ public class QnaWriteAction implements Action{
 		qna.setFilename(multi.getParameter("filename"));
 		qna.setUser_num(user_num);
 		qna.setViewable_check(Integer.parseInt(multi.getParameter("viewable_check")));
+		qna.setName(multi.getParameter("name"));
 		
 		QnaDAO dao = QnaDAO.getInstance();
 		dao.insertBoard(qna);
