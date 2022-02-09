@@ -1932,7 +1932,7 @@ pre code {
 
 .form-control {
 	display: inline;
-	width: 100%;
+	width: 200px;
 	height: calc(1.5em + 0.75rem + 2px);
 	padding: 0.375rem 0.75rem;
 	font-size: 1rem;
@@ -2503,59 +2503,55 @@ a.btn.disabled, fieldset:disabled a.btn {
 	pointer-events: none;
 }
 
-/*중복*/
-/* .btn-primary {
+.btn-primary {
 	color: #fff;
 	background-color: #007bff;
 	border-color: #007bff;
-} */
+}
 
-/*중복*/
-/* .btn-primary:hover {
+.btn-primary:hover {
 	color: #fff;
 	background-color: #0069d9;
 	border-color: #0062cc;
-} */
+}
 
-/*중복*/
-/* .btn-primary:focus, .btn-primary.focus {
+.btn-primary:focus, .btn-primary.focus {
 	color: #fff;
 	background-color: #0069d9;
 	border-color: #0062cc;
 	box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
-} */
+}
 
-/*중복*/
-/* .btn-primary.disabled, .btn-primary:disabled {
+.btn-primary.disabled, .btn-primary:disabled {
 	color: #fff;
 	background-color: #007bff;
 	border-color: #007bff;
-} */
+}
 
-/*중복*/
-/* .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 	.show>.btn-primary.dropdown-toggle {
 	color: #fff;
 	background-color: #0062cc;
 	border-color: #005cbf;
-} */
+}
 
-/*중복*/
-/* .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
 	.show>.btn-primary.dropdown-toggle:focus {
 	box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
- */
- 
- 
-/*중복*/
-/* .btn-secondary {
+
+.btn-secondary {
 	color: #fff;
 	background-color: #6c757d;
 	border-color: #6c757d;
 }
- */
- 
+
+.btn-secondary:hover {
+	color: #fff;
+	background-color: #5a6268;
+	border-color: #545b62;
+}
+
 .btn-secondary:focus, .btn-secondary.focus {
 	color: #fff;
 	background-color: #5a6268;
@@ -3378,8 +3374,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 .dropdown-item.active, .dropdown-item:active {
 	color: #fff;
 	text-decoration: none;
-	background-color: #007bff;
-}
+	/* background-color: #007bff; */}
 
 .dropdown-item.disabled, .dropdown-item:disabled {
 	color: #6c757d;
@@ -4978,7 +4973,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 
 .breadcrumb-item.active {
-	color: #6c757d;
+	color: #FE9A2E;
 }
 
 .pagination {

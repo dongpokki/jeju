@@ -36,7 +36,7 @@
 				<nav aria-label="Breadcrumb">
 					<ul class="breadcrumb p-0 mb-0 bg-transparent">
 						<li class="breadcrumb-item"><a href="spotList.do">전체</a></li>
-						<li class="breadcrumb-item"><a href="#">동부/서부/남부/북부</a></li>
+						<li class="breadcrumb-item active"><a href="#">동부/서부/남부/북부</a></li>
 						<li class="breadcrumb-item active">카테고리 1</li>
 					</ul>
 				</nav>

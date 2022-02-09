@@ -35,7 +35,17 @@
 					<input type="text" class="form-control" placeholder="검색어를 입력해주세요">
 					<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">검색</button>
 				</form>
+				<nav aria-label="Breadcrumb">
+					<ul class="breadcrumb p-0 mb-0 bg-transparent">
+						<li class="breadcrumb-item"><a href="spotList.do?category=1" class="breadcrumb-item <c:if test="${category==0 }">active</c:if>">전체</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=2" class="breadcrumb-item <c:if test="${category==2 }">active</c:if>">동부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=3" class="breadcrumb-item <c:if test="${category==3 }">active</c:if>">서부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=4" class="breadcrumb-item <c:if test="${category==4 }">active</c:if>">남부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=5" class="breadcrumb-item <c:if test="${category==5 }">active</c:if>">북부</a></li>
+					</ul>
+				</nav>
 				<div class="row">
+
 					<!-- 등록된 내용이 없을 경우 -->
 					<c:if test="${count == 0}">
 						<p align="center">등록된 글이 없습니다.</p>

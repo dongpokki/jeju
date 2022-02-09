@@ -15,11 +15,11 @@
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/main/main.do" class="nav-link">Main</a></li>
 					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Recommend Places</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do">전체</a> 
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do">동부</a>
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do">서부</a>
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do">남부</a>
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do">북부</a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do?category=0">전체</a> 
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do?category=2">동부</a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do?category=3">서부</a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do?category=4">남부</a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do?category=5">북부</a>
 						</div></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/course/courseList.do" class="nav-link">Recommend Courses</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/qna/qnaList.do" class="nav-link">Contact</a></li>

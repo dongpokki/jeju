@@ -20,6 +20,7 @@ public class SpotListAction implements Action {
 
 		String keyfield = request.getParameter("keyfield");
 		String keyword = request.getParameter("keyword");
+
 		if (keyfield == null)
 			keyfield = "";
 		if (keyword == null)
@@ -27,17 +28,19 @@ public class SpotListAction implements Action {
 
 		SpotDAO dao = SpotDAO.getInstance();
 		int count = dao.getSpotBoardCount(keyfield, keyword);
+		int category = Integer.parseInt(request.getParameter("category"));
 		// 페이지 처리
 		// keyfield,keyword,currentPage,count,rowCount,pageCount,url
 		PagingUtil page = new PagingUtil(keyfield, keyword, Integer.parseInt(pageNum), count, 20, 10, "spotList.do");
 
 		List<SpotVO> list = null;
 		if (count > 0) {
-			list = dao.getList(page.getStartCount(), page.getEndCount(), keyfield, keyword);
+			list = dao.getList(page.getStartCount(), page.getEndCount(), keyfield, keyword, category);
 		}
 
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);
+		request.setAttribute("category", category);
 		request.setAttribute("pagingHtml", page.getPagingHtml());
 
 		// JSP 경로 반환

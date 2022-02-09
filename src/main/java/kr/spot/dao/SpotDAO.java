@@ -154,7 +154,8 @@ public class SpotDAO {
 	}
 
 	// 목록
-	public List<SpotVO> getList(int startRow, int endRow, String keyfield, String keyword) throws Exception {
+	public List<SpotVO> getList(int startRow, int endRow, String keyfield, String keyword, int category)
+			throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -173,17 +174,26 @@ public class SpotDAO {
 				else if (keyfield.equals("2"))
 					sub_sql = "WHERE b.content LIKE ?";
 			}
-
-			// SQL문 작성
-			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot " + sub_sql
-					+ "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=?";
-			// PreparedStatement 객체 생성
-			pstmt = conn.prepareStatement(sql);
-			if (keyword != null && !"".equals(keyword)) {
-				pstmt.setString(++cnt, "%" + keyword + "%");
+			if (category == 0) {
+				sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot " + sub_sql
+						+ "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
+				pstmt = conn.prepareStatement(sql);
+				if (keyword != null && !"".equals(keyword)) {
+					pstmt.setString(++cnt, "%" + keyword + "%");
+				}
+				pstmt.setInt(++cnt, startRow);
+				pstmt.setInt(++cnt, endRow);
+			} else if (category != 0) {
+				sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot WHERE category=? "
+						+ sub_sql + "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
+				pstmt = conn.prepareStatement(sql);
+				if (keyword != null && !"".equals(keyword)) {
+					pstmt.setString(++cnt, "%" + keyword + "%");
+				}
+				pstmt.setInt(++cnt, category);
+				pstmt.setInt(++cnt, startRow);
+				pstmt.setInt(++cnt, endRow);
 			}
-			pstmt.setInt(++cnt, startRow);
-			pstmt.setInt(++cnt, endRow);
 
 			// SQL문을 테이블에 반영하고 결과행들을 ResultSet 담음
 			rs = pstmt.executeQuery();
