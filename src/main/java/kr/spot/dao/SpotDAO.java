@@ -257,4 +257,51 @@ public class SpotDAO {
 		return spot;
 	}
 
+	
+	// [정동윤 작성] 메인에 노출할 BEST3 spot 구하기
+	// 목록
+	public List<SpotVO> getRankingSpot() throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<SpotVO> list = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+
+			// sql문 작성
+			// 추천수가 높은 순으로 랭킹컬럼 1부터 3까지 조회 [추천수(good)이 같은 경우에는, 조회수(hit) 높은순으로 추가 비교]
+			sql = "select * from (select spot_num,title,content,hit,good,row_number() over (order by good desc,hit desc) rank from jboard_spot join jgood_spot using(spot_num)) where rank < 4";
+			
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// sql문 수행하여 결과 집합을 rs에 담음
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<SpotVO>();
+			
+			while(rs.next()) {
+				SpotVO spot = new SpotVO();
+
+				spot.setSpot_num(rs.getInt("spot_num"));
+				spot.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				spot.setContent(rs.getString("content"));
+
+				// 자바빈(VO)을 ArrayList에 저장
+				list.add(spot);
+			}
+			
+			
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
+	}
+	
 }

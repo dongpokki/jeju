@@ -9832,6 +9832,30 @@ a.text-dark:hover, a.text-dark:focus {
 	background-image: url("../images/jeju_main.jpg");
 }
 
+.best-title{
+	display: inline-block;
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.best-content{
+	display: inline-block;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.2;
+    height: 6em;
+    text-align: left;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+
 /* 마이페이지 사용 */
 .my-photo {
 	object-fit: cover;
