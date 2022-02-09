@@ -29,14 +29,16 @@ public class QnaDAO {
 			conn =DBUtil.getConnection();
 			
 			sql="INSERT INTO jboard_qna(qna_num,title,content,hit,viewable_check,reg_date,filename,ip,user_num) "
-					+ "VALUES (jboard_qna_seq.nextval,?,?,?,?,?,?)";
+					+ "VALUES (jboard_qna_seq.nextval,?,?,?,?,SYSDATE,?,?,?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, qna.getTitle());
 			pstmt.setString(2, qna.getContent());
-			pstmt.setString(3, qna.getFilename());
-			pstmt.setString(4, qna.getIp());
-			pstmt.setInt(5, qna.getUser_num());
+			pstmt.setInt(3, qna.getHit());
+			pstmt.setInt(4, qna.getViewable_check());
+			pstmt.setString(5, qna.getFilename());
+			pstmt.setString(6, qna.getIp());
+			pstmt.setInt(7, qna.getUser_num());
 			
 			pstmt.executeUpdate();
 			
@@ -128,6 +130,7 @@ public class QnaDAO {
 				qna.setUser_num(rs.getInt("user_num"));
 				qna.setId(rs.getString("id"));
 				qna.setName(rs.getString("name"));
+				qna.setViewable_check(rs.getInt("viewable_check"));;
 				//BoardVO를 ArrayList에 저장
 				list.add(qna);
 			}

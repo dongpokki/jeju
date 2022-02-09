@@ -15,20 +15,8 @@ public class QnaVO {
 	private int user_num;
 	private String id;
 	private String name;
+	private int auth;
 	
-	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public int getQna_num() {
 		return qna_num;
 	}
@@ -88,5 +76,23 @@ public class QnaVO {
 	}
 	public void setUser_num(int user_num) {
 		this.user_num = user_num;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAuth() {
+		return auth;
+	}
+	public void setAuth(int auth) {
+		this.auth = auth;
 	}
 }
