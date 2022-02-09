@@ -45,11 +45,8 @@
 		</ul>
 	</form>
 	<div class="list-space align-right">
-		<c:if test="${empty user_num}">
-		<input type="button" value="글쓰기" onclick="location.href='${pageContext.request.contextPath}/course/courseWriteForm.do'"></c:if>
-		<!-- 로그인 작업 후 다시
-		<c:if test="${empty user_num}">
-		<input type="button" value="글쓰기" onclick="location.href='${pageContext.request.contextPath}/user/loginform.do'"></c:if> -->
+		<input type="button" value="글쓰기" onclick="location.href='${pageContext.request.contextPath}/course/courseWriteForm.do'"
+		<c:if test="${empty user_num}"> onclick="location.href='${pageContext.request.contextPath}/user/loginForm.do'"</c:if>>
 		<input type="button" value="홈으로" 
 		 onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 	</div>
