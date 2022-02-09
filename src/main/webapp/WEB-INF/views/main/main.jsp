@@ -24,11 +24,11 @@
 		<!-- 베스트 스팟 시작 -->	
 		<h1 class="text-primary">BEST SPOT</h1>
 		<div class="row">
-			<c:if test="${empty list}">
-				<p class="empty_content">등록된 글이 없습니다.</p>
+			<c:if test="${empty spot_list}">
+				<div class="alert alert-warning" style="width:100%;">등록된 추천 장소가 없습니다.</div>
 			</c:if>
-			<c:if test="${!empty list}">
-				<c:forEach var="spot" items="${list}">
+			<c:if test="${!empty spot_list}">
+				<c:forEach var="spot" items="${spot_list}">
 					<div class="col-sm-6 col-lg-4">
 						<h3 class="best-title">${spot.title}</h3>
 						<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
@@ -44,16 +44,16 @@
 		<!-- 베스트 코스 시작 -->	
 		<h1 class="text-primary">BEST COURSE</h1>
 		<div class="row">
-			<c:if test="${empty list}">
-				<p class="empty_content">등록된 글이 없습니다.</p>
+			<c:if test="${empty course_list}">
+				<div class="alert alert-warning" style="width:100%;">등록된 추천 코스가 없습니다.</div>
 			</c:if>
-			<c:if test="${!empty list}">
-				<c:forEach var="spot" items="${list}">
+			<c:if test="${!empty course_list}">
+				<c:forEach var="course" items="${course_list}">
 					<div class="col-sm-6 col-lg-4">
-						<h3 class="best-title">${spot.title}</h3>
+						<h3 class="best-title">${course.title}</h3>
 						<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
-						<p class="best-content">${spot.content}</p>
-		  				<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=${spot.spot_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
+						<p class="best-content">${course.content}</p>
+		  				<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=${course.course_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
 					</div>
 				</c:forEach>
 			</c:if>
