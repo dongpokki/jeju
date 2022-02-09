@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +28,7 @@
 						<th>작성자</th>
 						<th>작성일</th>
 						<th>조회</th>
+						<th>답변여부</th>
 					</tr>
 					<c:if test="${count==0 }">
 					<tr>
@@ -42,9 +44,19 @@
 						<td>${qna.qna_num }</td>
 						<td><c:if test="${qna.viewable_check==1 }"><img src="${pageContext.request.contextPath }/images/lock.png"></c:if>
 						<td><a href="qnaDetail.do">${qna.title }</a></td>
-						<td>${qna.id }</td>
+						<td>${qna.name }
+							(<c:choose>
+								<c:when test="${fn:length(qna.id) gt 3}">
+									<c:out value="${fn:substring(qna.id, 0, 2)}"/><c:forEach begin="2" end="${fn:length(qna.id) }">*</c:forEach>
+								</c:when>
+							<c:otherwise>
+								<c:out value="${qna.id}"/>
+							</c:otherwise>
+							</c:choose>)
+						</td>
 						<td>${qna.reg_date }</td>
 						<td>${qna.hit }</td>
+						<td></td>
 					</tr>
 					</c:forEach>
 					</c:if>
