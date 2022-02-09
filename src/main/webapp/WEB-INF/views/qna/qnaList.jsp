@@ -43,7 +43,7 @@
 						</td></c:if>
 						<td>${qna.qna_num }</td>
 						<td><c:if test="${qna.viewable_check==1 }"><img src="${pageContext.request.contextPath }/images/lock.png"></c:if>
-						<td><a href="qnaDetail.do">${qna.title }</a></td>
+						<td><a href="qnaDetail.do?qna_num=${qna.qna_num}">${qna.title }</a></td>
 						<td>${qna.name }
 							(<c:choose>
 								<c:when test="${fn:length(qna.id) gt 3}">
@@ -65,7 +65,7 @@
 					
 				</div>
 				<div class="d-grid gap-2 col-6">
-					<c:if test="${session_user_auth==3}"><input class="btn btn-primary btn-login fw-bold" type="button" value="삭제" onclick="location.href='delete.do'"></c:if>
+					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary btn-login fw-bold" type="button" value="삭제" onclick="location.href='delete.do'"></c:if>
 					<input <c:if test="${empty session_user_num}">disabled="disabled"</c:if> class="btn btn-primary btn-login fw-bold" type="button" value="작성" onclick="location.href='qnaWriteForm.do'"> 
 					<input class="btn btn-secondary btn-login fw-bold" type="button" value="목록" onclick="location.href='qnaList.do';">
 				</div>

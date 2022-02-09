@@ -151,8 +151,8 @@ public class QnaDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			sql="SELECT * FROM jboard_qna b JOIN zuser u ON b.user_num=u.user_num "
-					+ "JOIN zmember_detail d ON b.user_numer=d.user_num "
+			sql="SELECT * FROM jboard_qna b JOIN juser u USING(user_num) "
+					+ "JOIN juser_detail d USING(user_num) "
 					+ "WHERE b.qna_num=?";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -171,6 +171,8 @@ public class QnaDAO {
 				qna.setFilename(rs.getString("filename"));
 				qna.setIp(rs.getString("ip"));
 				qna.setUser_num(rs.getInt("user_num"));
+				qna.setName(rs.getString("name"));
+				qna.setId(rs.getString("id"));
 			}
 			
 		}catch(Exception e) {
