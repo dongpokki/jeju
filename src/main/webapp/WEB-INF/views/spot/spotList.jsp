@@ -37,11 +37,11 @@
 				</form>
 				<nav aria-label="Breadcrumb">
 					<ul class="breadcrumb p-0 mb-0 bg-transparent">
-						<li class="breadcrumb-item"><a href="spotList.do?category=1" class="breadcrumb-item <c:if test="${category==0 }">active</c:if>">전체</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=2" class="breadcrumb-item <c:if test="${category==2 }">active</c:if>">동부</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=3" class="breadcrumb-item <c:if test="${category==3 }">active</c:if>">서부</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=4" class="breadcrumb-item <c:if test="${category==4 }">active</c:if>">남부</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=5" class="breadcrumb-item <c:if test="${category==5 }">active</c:if>">북부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${category==0 }">style="color:#FE9A2E;"</c:if>>전체</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=1" <c:if test="${category==2 }">style="color:#FE9A2E;"</c:if>>동부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=2" <c:if test="${category==3 }">style="color:#FE9A2E;"</c:if>>서부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${category==4 }">style="color:#FE9A2E;"</c:if>>남부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=4" <c:if test="${category==5 }">style="color:#FE9A2E;"</c:if>>북부</a></li>
 					</ul>
 				</nav>
 				<div class="row">
