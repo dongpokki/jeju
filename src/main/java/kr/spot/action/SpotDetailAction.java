@@ -19,7 +19,7 @@ public class SpotDetailAction implements Action {
 		SpotVO spot = dao.getSpotBoard(spot_num);
 
 		spot.setTitle(StringUtil.useBrNoHtml(spot.getTitle()));
-		spot.setContent(StringUtil.useBrNoHtml(spot.getContent()));
+		spot.setContent(spot.getContent());
 		request.setAttribute("spot", spot);
 
 		// JSP 경로 반환

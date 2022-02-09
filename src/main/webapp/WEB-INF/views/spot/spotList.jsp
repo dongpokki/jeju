@@ -12,7 +12,7 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-
+	<!-- 사진 섹션 시작 -->
 	<div class="container mt-5">
 		<div class="page-banner">
 			<div class="row justify-content-center align-items-center h-100">
@@ -27,15 +27,16 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- 사진 섹션 끝 -->
 	<main>
 		<div class="page-section">
 			<div class="container">
 				<div class="row">
+					<!-- 등록된 내용이 없을 경우 -->
 					<c:if test="${count == 0}">
-	냉무
-	</c:if>
-
+						<p align="center">등록된 글이 없습니다.</p>
+					</c:if>
+					<!-- 게시글 목록 시작 -->
 					<c:if test="${count > 0}">
 						<c:forEach var="spot" items="${list}">
 							<div class="col-md-6 col-lg-4 py-3">
@@ -55,6 +56,8 @@
 							</div>
 						</c:forEach>
 					</c:if>
+					<!-- 게시글 목록 끝 -->
+					<!-- 페이지 시작 -->
 					<div class="col-12 mt-5">
 						<nav aria-label="Page Navigation">
 							<ul class="pagination justify-content-center">
@@ -62,11 +65,15 @@
 							</ul>
 						</nav>
 					</div>
+					<!-- 페이지 끝 -->
 
 				</div>
-				<div align="right">
-					<a href="spotWriteForm.do" <c:if test="${empty session_user_num}">disabled="disabled"</c:if>>등록</a> <a href="spotDeleteForm.do">삭제</a>
-				</div>
+				<!-- 관리자만 등록/삭제 버튼 보이게 -->
+				<c:if test="${session_user_auth == 3}">
+					<div align="right">
+						<input class="btn btn-primary" type="button" value="등록" onclick="location.href='spotWriteForm.do'"> <input class="btn btn-secondary" type="button" value="삭제" onclick="location.href='spotDeleteForm.do';">
+					</div>
+				</c:if>
 			</div>
 
 		</div>
@@ -78,7 +85,6 @@
 
 </body>
 </html>
-
 
 
 

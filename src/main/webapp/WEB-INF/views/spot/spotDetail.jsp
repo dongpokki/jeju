@@ -9,11 +9,10 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
-// 감삼다 
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-	<!-- 사진 들어올 부분 -->
+	<!-- 사진 섹션 시작 -->
 	<div class="container mt-5">
 		<div class="page-banner">
 			<div class="row justify-content-center align-items-center h-100">
@@ -28,6 +27,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- 사진 섹션 끝 -->
 	<!-- 컨테이너 시작 -->
 	<main>
 		<!-- 카테고리 표시 -->
@@ -35,7 +35,7 @@
 			<div class="container">
 				<nav aria-label="Breadcrumb">
 					<ul class="breadcrumb p-0 mb-0 bg-transparent">
-						<li class="breadcrumb-item"><a href="areaList.do">전체</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do">전체</a></li>
 						<li class="breadcrumb-item"><a href="#">동부/서부/남부/북부</a></li>
 						<li class="breadcrumb-item active">카테고리 1</li>
 					</ul>
@@ -47,19 +47,17 @@
 						<div class="blog-single-wrap">
 							<div class="header">
 								<div class="post-thumb">
-									<img src="${pageContext.request.contextPath }/upload/${area.filename}">
+									<img src="${pageContext.request.contextPath }/upload/${spot.filename}">
 								</div>
 							</div>
-							<h1 class="post-title">${area.title }</h1>
+							<h1 class="post-title">${spot.title }</h1>
 							<div class="post-meta">
-								<div class="post-date">${area.reg_date }</div>
+								<div class="post-date">${spot.reg_date }</div>
 								<div class="post-comment-count ml-2">
 									<a href="#">덧글 수(누르면 덧글 창으로 이동)</a>
 								</div>
 							</div>
-							<div class="post-content">
-								<p>${area.content }</p>
-							</div>
+							<div class="post-content">${spot.content }</div>
 						</div>
 						<div>
 							<p align="right">(좋아요 버튼)</p>
@@ -90,7 +88,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="form-group">
-												<textarea class="form-control w-100" name="comment" id="comment" cols="10" rows="2" placeholder="내용을 입력해주세요."></textarea>
+												<textspot class="form-control w-100" name="comment" id="comment" cols="10" rows="2" placeholder="내용을 입력해주세요."></textspot>
 											</div>
 										</div>
 									</div>
@@ -100,7 +98,7 @@
 								</form>
 							</div>
 							<div align="right">
-								<a href="areaModifyForm.do?spot_num=${area.spot_num}">수정</a> <a href="areaDeleteForm.do?spot_num=${area.spot_num}">삭제</a>
+								<a href="spotModifyForm.do?spot_num=${spot.spot_num}">수정</a> <a href="spotDeleteForm.do?spot_num=${spot.spot_num}">삭제</a>
 							</div>
 						</div>
 						<!-- 덧글 끝 -->
