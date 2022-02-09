@@ -28,8 +28,8 @@ public class QnaDAO {
 			//커넥션풀로부터 커넥션을 할당
 			conn =DBUtil.getConnection();
 			
-			sql="INSERT INTO jboard_qna(qna_num,title,content,filename,ip,user_num) "
-					+ "VALUES (jboard_qna_seq.nextval,?,?,?,?,?)";
+			sql="INSERT INTO jboard_qna(qna_num,title,content,hit,viewable_check,reg_date,filename,ip,user_num) "
+					+ "VALUES (jboard_qna_seq.nextval,?,?,?,?,?,?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, qna.getTitle());
@@ -119,17 +119,17 @@ public class QnaDAO {
 			rs = pstmt.executeQuery();
 			list = new ArrayList<QnaVO>();
 			while(rs.next()) {
-				QnaVO board = new QnaVO();
-				board.setQna_num(rs.getInt("qna_num"));
+				QnaVO qna = new QnaVO();
+				qna.setQna_num(rs.getInt("qna_num"));
 				//HTML 태그를 허용하지않음
-				board.setTitle(StringUtil.useNoHtml(rs.getString("title")));//태그 불허
-				board.setHit(rs.getInt("hit"));
-				board.setReg_date(rs.getDate("reg_date"));
-				board.setUser_num(rs.getInt("user_num"));
-				board.setId(rs.getString("id"));
-				board.setName(rs.getString("name"));
+				qna.setTitle(StringUtil.useNoHtml(rs.getString("title")));//태그 불허
+				qna.setHit(rs.getInt("hit"));
+				qna.setReg_date(rs.getDate("reg_date"));
+				qna.setUser_num(rs.getInt("user_num"));
+				qna.setId(rs.getString("id"));
+				qna.setName(rs.getString("name"));
 				//BoardVO를 ArrayList에 저장
-				list.add(board);
+				list.add(qna);
 			}
 		}catch(Exception e) {
 			throw new Exception(e);
