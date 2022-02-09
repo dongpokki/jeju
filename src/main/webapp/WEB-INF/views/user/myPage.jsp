@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css"> 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -95,64 +95,110 @@
 </script>
 </head>
 <body>
-<div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<h2>회원정보</h2>
-	<div class="mypage-div">
-		<h3>프로필 사진</h3>
-		<ul>
-			<li>
+	
+	<!-- 중앙 컨텐츠 시작 -->	
+	<div class="container">
+		<h1 class="text-primary" style="margin-top:20px;">마이 페이지</h1>
+		<div class="row">
+			<div class="col-sm-4 col-lg-4 p-3 mb-2 bg-light text-dark">
 				<c:if test="${empty user.photo}">
-					<img src="${pageContext.request.contextPath}/images/face.png" width="200" height="200" class="my-photo">
+					<img src="${pageContext.request.contextPath}/images/face.png" width="250" height="250" class="my-photo">
 				</c:if>
 				<c:if test="${!empty user.photo}">
-					<img src="${pageContext.request.contextPath}/upload/${user.photo}" width="200" height="200" class="my-photo">
+					<img src="${pageContext.request.contextPath}/upload/${user.photo}" width="250" height="250" class="my-photo">
 				</c:if>
-			</li>
-			<li>
 				<div class="align-center">
-					<input type="button" value="수정" id="photo_btn">
+					<input type="button" value="수정" id="photo_btn" class="btn btn-warning">
 				</div>
 				<div id="photo_choice" style="display:none">
 					<input type="file" id="photo" accept="image/gif,image/png,image/jpeg">
-					<input type="button" value="전송" id="photo_submit">
-					<input type="button" value="취소" id="photo_reset">
+					<div class="align-center">
+						<input type="button" value="전송" id="photo_submit" class="btn btn-warning">
+						<input type="button" value="취소" id="photo_reset" class="btn btn-warning">
+					</div>
 				</div>
-			</li>
-		</ul>
-		<h3>회원탈퇴</h3>
-		<ul>
-			<li>
-				<input type="button" value="회원탈퇴" onclick="location.href='deleteUserForm.do';">
-			</li>
-		</ul>
+			</div>
+			<div class="col-sm-8 col-lg-8 p-3 mb-2 bg-light text-dark">
+				<h4>
+					<b>${user.id}</b>님 안녕하세요!
+				</h4>
+				<div class="mypage-info-warrap">
+					<div>
+						<span class="mypage-info">이름</span>${user.name}
+					</div>
+					<div>
+						<span class="mypage-info">전화번호</span>${user.phone}
+					</div>
+					<div>
+						<span class="mypage-info">이메일</span>${user.email}
+					</div>
+					<div>
+						<span class="mypage-info">주소</span>(${user.zipcode})${user.address1} ${user.address2}
+					</div>
+				</div>
+				<div style="text-align: center;">
+					<input type="button" value="연락처 수정" onclick="location.href='modifyUserForm.do';" class="btn btn-secondary">
+					<input type="button" value="비밀번호 수정" onclick="location.href='modifyPasswordForm.do';" class="btn btn-secondary">
+					<input type="button" value="회원탈퇴" onclick="location.href='deleteUserForm.do';" class="btn btn-secondary">
+				</div>
+			</div>
+		</div>
+
+
+
+		<hr class="featurette-divider">
+
+		<h1 class="text-primary">내가 추천한 코스</h1>
+		<div class="row">
+			<div class="col-sm-6 col-lg-4">
+				<h3>bootstap</h3>
+				<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
+				<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. </p>
+  				<p><a href="#" class="btn btn-warning">상세보기 &raquo;</a></p>
+			</div>
+			<div class="col-sm-6 col-lg-4">
+				<h3>bootstap</h3>
+				<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
+				<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. </p>
+  				<p><a href="#" class="btn btn-warning">상세보기 &raquo;</a></p>
+			</div>
+			<div class="col-sm-6 col-lg-4">
+				<h3>bootstap</h3>
+				<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
+				<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. </p>
+  				<p><a href="#" class="btn btn-warning">상세보기 &raquo;</a></p>
+			</div>
+		</div>
+		
+		<hr class="featurette-divider">
+		
+		<h1 class="text-primary">내가 추천한 장소</h1>
+		<div class="row">
+			<div class="col-sm-6 col-lg-4">
+				<h3>bootstap</h3>
+				<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
+				<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. </p>
+  				<p><a href="#" class="btn btn-warning">상세보기 &raquo;</a></p>
+			</div>
+			<div class="col-sm-6 col-lg-4">
+				<h3>bootstap</h3>
+				<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
+				<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. </p>
+  				<p><a href="#" class="btn btn-warning">상세보기 &raquo;</a></p>
+			</div>
+			<div class="col-sm-6 col-lg-4">
+				<h3>bootstap</h3>
+				<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
+				<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. </p>
+  				<p><a href="#" class="btn btn-warning">상세보기 &raquo;</a></p>
+			</div>
+		</div>
 	</div>
-	
-	<div class="mypage-div">
-		<h3>연락처</h3>
-		<ul>
-			<li>이름 : ${user.name}</li>
-			<li>전화번호 : ${user.phone}</li>
-			<li>이메일 : ${user.email}</li>
-			<li>우편번호 : ${user.zipcode}</li>
-			<li>주소 : ${user.address1} ${user.address2} </li>
-			<li>가입일 : ${user.reg_date}</li>
-			<c:if test="${!empty user.modify_date}">
-			<li>최근 정보 수정일 : ${user.modify_date}</li>
-			</c:if>
-			<li>
-				<input type="button" value="연락처 수정" onclick="location.href='modifyUserForm.do';">
-			</li>
-		</ul>
-		<h3>비밀번호 수정</h3>
-		<ul>
-			<li>
-				<input type="button" value="비밀번호 수정" onclick="location.href='modifyPasswordForm.do';">	
-			</li>
-		</ul>
-	</div>
-	
-</div>
+	<!-- 중앙 컨텐츠 끝 -->
+
+	<p><p>
+
 	<!-- 푸터 시작 -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>

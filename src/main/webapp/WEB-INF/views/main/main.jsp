@@ -11,19 +11,14 @@
 	<!-- 헤더 시작 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<!-- 헤더 끝 -->
-		
-	<!-- 메인배너 시작-->
-	<div class="jumbotron">
-		<div class="container">
-  			<h1>Hello, world!</h1>
-  			<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. </p>
-  			<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-		</div>
-	</div>
-	<!-- 메인배너 끝 -->	
-		
+				
 	<!-- 중앙 컨텐츠 시 작 -->	
 	<div class="container">
+
+		<!-- 메인배너 시작-->
+		<div class="main-banner">
+		</div>
+		<!-- 메인배너 끝 -->	
 		
 		<h1 class="text-primary">BEST COURSE</h1>
 		<div class="row">
