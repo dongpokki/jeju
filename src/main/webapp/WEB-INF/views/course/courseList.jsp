@@ -54,31 +54,39 @@
 		 onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 	</div>
 	<c:if test="${count == 0}">
-	<!-- 지도 시작 -->
+    
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f0f45ae09fd5fe9bd4014a783fa7b89"></script>
 <div id="map" style="width: 40%; height: 500px;"></div>
 <script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 	mapOption = {
 		center : new kakao.maps.LatLng(33.4992269,126.4890004), // 지도의 중심좌표
-		level : 6
+		level : 9
 	// 지도의 확대 레벨
 	};
 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 	//첫번째 띄울 좌표
 	var first_positions = [
-	{
-		content : '<div>제주공항</div>',
-		latlng : new kakao.maps.LatLng(33.510418,126.4891647)
-	},
-	{
-		content : '<div>팜파스호텔</div>',
-		latlng : new kakao.maps.LatLng(33.5097739,126.4883493)
-	},
-	{
-		content : '<div>온센</div>',
-		latlng : new kakao.maps.LatLng(33.5089867,126.4865683)
-	}
+		{
+			content : '<div>제주공항</div>',
+			latlng : new kakao.maps.LatLng(33.510418, 126.4891647)
+		},
+		{
+			content : '<div>하귀옛날국수집</div>',
+			latlng : new kakao.maps.LatLng(33.4755061,126.3679761)
+		},
+		{
+			content : '<div>제주공룡랜드</div>',
+			latlng : new kakao.maps.LatLng(33.3958579,126.3360471)
+		},
+		{
+			content : '<div>큰노꼬메오름</div>',
+			latlng : new kakao.maps.LatLng(33.3929915,126.3466901)
+		},
+		{
+			content : '<div>아르떼뮤지엄제주</div>',
+			latlng : new kakao.maps.LatLng(33.3929915,126.3466901)
+		}
 
 	];
 	//두번째 띄울 좌표
@@ -135,9 +143,11 @@
 	}
 	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
 	var first_polyline = [
-	new kakao.maps.LatLng(33.510418,126.4891647),
-	new kakao.maps.LatLng(33.5097739,126.4883493),
-	new kakao.maps.LatLng(33.5089867,126.4865683),
+		new kakao.maps.LatLng(33.510418, 126.4891647),
+		new kakao.maps.LatLng(33.4755061, 126.3679761),
+		new kakao.maps.LatLng(33.3958579,126.3360471),
+		new kakao.maps.LatLng(33.3929915,126.3466901),
+		new kakao.maps.LatLng(33.3929915,126.3466901)
 	];
 	// 지도에 표시할 선을 생성합니다
 	var first_linePath = new kakao.maps.Polyline({
