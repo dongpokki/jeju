@@ -108,7 +108,7 @@ public class QnaDAO {
 			
 			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM "
 				+ "(SELECT * FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num)"
-				+sub_sql + " ORDER BY b.qna_num DESC)a) "
+				+sub_sql + " ORDER BY u.auth DESC,b.qna_num DESC)a) "
 				+ "WHERE rnum>=? AND rnum<=?";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -140,5 +140,44 @@ public class QnaDAO {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		return list;
+	}
+	//글 상세 정보
+	public QnaVO getQna(int qna_num) throws Exception{
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs =null;
+		String sql =null;
+		QnaVO qna = null;
+		try {
+			conn = DBUtil.getConnection();
+			
+			sql="SELECT * FROM jboard_qna b JOIN zuser u ON b.user_num=u.user_num "
+					+ "JOIN zmember_detail d ON b.user_numer=d.user_num "
+					+ "WHERE b.qna_num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qna_num);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				qna = new QnaVO();
+				qna.setQna_num(rs.getInt("qna_num"));
+				qna.setTitle(rs.getString("title"));
+				qna.setContent(rs.getString("content"));
+				qna.setHit(rs.getInt("hit"));
+				qna.setViewable_check(rs.getInt("viewable_check"));
+				qna.setReg_date(rs.getDate("reg_date"));
+				qna.setModify_date(rs.getDate("modify_date"));
+				qna.setFilename(rs.getString("filename"));
+				qna.setIp(rs.getString("ip"));
+				qna.setUser_num(rs.getInt("user_num"));
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return qna;
 	}
 }
