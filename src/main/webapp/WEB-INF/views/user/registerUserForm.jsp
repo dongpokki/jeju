@@ -30,7 +30,7 @@ $(function(){
 			success:function(param){
 				if(param.result == 'idNotFound'){
 					idChecked = 1;
-					$('#message_id').css('color','#000000').text('등록 가능 ID');
+					$('#message_id').css('color','blue').text('등록 가능 ID');
 				}else if(param.result == 'idDuplicated'){
 					idChecked = 0;
 					$('#message_id').css('color','red').text('중복된 ID');
@@ -122,50 +122,57 @@ $(function(){
 <div class="page-main">
 	<!-- header 공용 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<h2>회원가입</h2>
-	<form id="register_form" action="registerUser.do" method="post">
-		<ul>
-			<li>
-				<label for="id">id</label>
-				<input type="text" id="id" name="id" maxlength="10">
-				<input type="button" value="ID 중복체크" id="id_check">
-				<span id="message_id"></span>
-			</li>
-			<li>
-				<label for="name">이름</label>
-				<input type="text" id="name" name="name" maxlength="10">
-			</li>
-			<li>
-				<label for="passwd">비밀번호</label>
-				<input type="password" id="passwd" name="passwd" maxlength="12">
-			</li>
-			<li>
-				<label for="phone">전화번호</label>
-				<input type="text" id="phone" name="phone" maxlength="15">
-			</li>
-			<li>
-				<label for="email">이메일</label>
-				<input type="email" id="email" name="email" maxlength="50">
-			</li>
-			<li>
-				<label for="zipcode">우편번호</label>
-				<input type="text" id="zipcode" name="zipcode" maxlength="5">
-				<input type="button" value="우편번호 찾기" onclick="sample2_execDaumPostcode()">
-			</li>
-			<li>
-				<label for="address1">주소</label>
-				<input type="text" id="address1" name="address1" maxlength="30">
-			</li>
-			<li>
-				<label for="address2">나머지 주소</label>
-				<input type="text" id="address2" name="address2" maxlength="30">
-			</li>
-		</ul>
-		<div class="align-center">
-			<input type="submit" value="등록">
-			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do';">
+	<!-- header 끝 -->
+	
+	<!-- 본문 영역 -->
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+				<div class="card border-0 shadow rounded-3 my-5">
+					<div class="card-body p-4 p-sm-5">
+						<h5 class="card-title text-center mb-5 fw-light fs-5">Join</h5>
+						<form id="register_form" action="registerUser.do" method="post">
+							<div class="input-group mb-3">
+  								<input type="text" id="id" name="id" maxlength="12" class="form-control" placeholder="아이디 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+  								<input type="button" value="ID 중복체크" id="id_check" class="btn btn-outline-secondary">
+							</div>
+							<div class="input-group mb-3">
+  								<span id="message_id"></span>
+							</div>
+							<div class="form-floating mb-3">
+								<input type="password" name="passwd" id="passwd" class="form-control" maxlength="12" placeholder="비밀번호 입력">
+							</div>
+							<div class="form-floating mb-3">
+								<input type="text" id="name" name="name" maxlength="10" placeholder="이름 입력" class="form-control">
+							</div>
+							<div class="form-floating mb-3">
+								<input type="text" id="phone" name="phone" maxlength="15" placeholder="전화번호 입력" class="form-control">
+							</div>
+							<div class="form-floating mb-3">
+								<input type="email" id="email" name="email" maxlength="50" placeholder="이메일 입력" class="form-control">
+							</div>
+							<div class="input-group mb-3">
+  								<input type="text" id="zipcode" name="zipcode" maxlength="5" class="form-control" placeholder="우편번호 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+  								<input type="button" value="우편번호 찾기" onclick="sample2_execDaumPostcode()" class="btn btn-outline-secondary">
+							</div>
+							<div class="form-floating mb-3">
+								<input type="text" id="address1" name="address1" maxlength="30" placeholder="주소 입력" class="form-control">
+							</div>
+							<div class="form-floating mb-3">
+								<input type="text" id="address2" name="address2" maxlength="30" placeholder="상세 주소 입력" class="form-control">
+							</div>
+							<div class="d-grid gap-2 col-6 mx-auto" style="text-align: center;">
+								<input class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" value="회원가입"> 
+								<input class="btn btn-secondary btn-login text-uppercase fw-bold" type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do';">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
-	</form>
+	</div>
+	<!-- 본문 영역 -->
+	
 	
 <!-- 우편번호(다음지도 API) 스크립트 시작 -->
 <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->

@@ -42,11 +42,9 @@
 						<h5 class="card-title text-center mb-5 fw-light fs-5">Login</h5>
 						<form id="login_form" action="login.do" method="post">
 							<div class="form-floating mb-3">
-								<label for="id">아이디</label>
 								<input type="text" name="id" id="id" maxlength="12" class="form-control" placeholder="아이디 입력">
 							</div>
 							<div class="form-floating mb-3">
-								<label for="passwd">비밀번호</label>
 								<input type="password" name="passwd" id="passwd" class="form-control" maxlength="12" placeholder="비밀번호 입력">
 							</div>
 							<div class="d-grid gap-2 col-6 mx-auto" style="text-align: center;">
