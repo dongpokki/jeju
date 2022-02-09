@@ -9857,4 +9857,12 @@ a.text-dark:hover, a.text-dark:focus {
     display: inline-block;
     margin-bottom: 10px;	
 }
-/* 마이페이지 사용 */
+
+/* 회원정보 수정 페이지 사용 */
+
+.modifyUserForm-info{
+	font-size: 14pt;
+    font-weight: bold;
+    width: 100px;
+    display: inline-block;	
+}

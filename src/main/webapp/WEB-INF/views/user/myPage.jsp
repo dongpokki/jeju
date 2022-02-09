@@ -138,7 +138,7 @@
 					</div>
 				</div>
 				<div style="text-align: center;">
-					<input type="button" value="연락처 수정" onclick="location.href='modifyUserForm.do';" class="btn btn-secondary">
+					<input type="button" value="회원정보 수정" onclick="location.href='modifyUserForm.do';" class="btn btn-secondary">
 					<input type="button" value="비밀번호 수정" onclick="location.href='modifyPasswordForm.do';" class="btn btn-secondary">
 					<input type="button" value="회원탈퇴" onclick="location.href='deleteUserForm.do';" class="btn btn-secondary">
 				</div>
