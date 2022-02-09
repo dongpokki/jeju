@@ -140,7 +140,7 @@ $(function(){
   								<span id="message_id"></span>
 							</div>
 							<div class="form-floating mb-3">
-								<input type="password" name="passwd" id="passwd" class="form-control" maxlength="12" placeholder="비밀번호 입력">
+								<input type="password" name="passwd" id="passwd" class="form-control " maxlength="12" placeholder="비밀번호 입력">
 							</div>
 							<div class="form-floating mb-3">
 								<input type="text" id="name" name="name" maxlength="10" placeholder="이름 입력" class="form-control">
