@@ -19,7 +19,31 @@
 				<h1>QnA</h1>
 			</div>
 			<div>
-				<table id="Qna">
+			<form action="qnaList.do" method="get" style="float: right;">
+				<div class="FormSelectButton">
+					<div>
+					<ul id="search">
+						<li>
+							<select name="keyfield" class="form-control" style="width:100px">
+							<option value="">전체</option>
+							<option value="1">제목</option>
+							<option value="2">작성자</option>
+							<option value="3">내용</option>
+							</select>
+						</li>
+						<li>
+							<input type="search" size="16" name="keyword" id="keyword" class="form-control" value="${param.keyword }" placeholder="검색어를 입력해주세요">
+						</li>
+						<li>
+							<button type="submit" class="btn btn-primary btn-block"><img src='${pageContext.request.contextPath }/images/search.png'width="25px"></button>
+						</li>
+					</ul>
+					</div>
+				</div>
+			</form>
+			</div>
+			<div>
+				<table id="Qna" style="width:100%">
 					<tr>
 						<c:if test="${session_user_auth==3}"><th>체크</th></c:if>
 						<th>글번호</th>
@@ -42,7 +66,7 @@
 							<input type="checkbox" name="delet_check" >
 						</td></c:if>
 						<td>${qna.qna_num }</td>
-						<td><c:if test="${qna.viewable_check==1 }"><img src="${pageContext.request.contextPath }/images/lock.png"></c:if>
+						<td><c:if test="${qna.viewable_check==1 }"><img src="${pageContext.request.contextPath }/images/lock.png" width="30px"></c:if>
 						<td><a href="qnaDetail.do?qna_num=${qna.qna_num}">${qna.title }</a></td>
 						<td>${qna.name }
 							(<c:choose>
@@ -60,10 +84,7 @@
 					</tr>
 					</c:forEach>
 					</c:if>
-				</table>
-				<div>
-					
-				</div>
+				</table>	
 				<div class="d-grid gap-2 col-6">
 					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary btn-login fw-bold" type="button" value="삭제" onclick="location.href='delete.do'"></c:if>
 					<input <c:if test="${empty session_user_num}">disabled="disabled"</c:if> class="btn btn-primary btn-login fw-bold" type="button" value="작성" onclick="location.href='qnaWriteForm.do'"> 

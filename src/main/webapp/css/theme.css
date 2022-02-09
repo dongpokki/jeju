@@ -1248,3 +1248,9 @@ label[for="content"]{
 	outline:none;
 	margin:15px 0;
 }
+ul{
+	list-style:none;
+}
+#search li{
+     display: inline-block;
+}

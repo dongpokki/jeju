@@ -57,11 +57,13 @@ public class QnaDAO {
 		String sql=null;
 		String sub_sql="";
 		int count=0;
+		int cnt=0;
 		try {
 			//커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 			
 			if(keyword!=null && !"".equals(keyword)) {
+				if(keyfield.equals("0")) sub_sql="WHERE b.title LIKE ? OR d.name LIKE ? OR b.content LIKE ?";				
 				if(keyfield.equals("1")) sub_sql="WHERE b.title LIKE ?";
 				else if(keyfield.equals("2")) sub_sql="WHERE u.id LIKE ?";
 				else if(keyfield.equals("3")) sub_sql="WHERE b.content LIKE ?";
@@ -71,7 +73,13 @@ public class QnaDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			if(keyword!=null & !"".equals(keyword)) {
-				pstmt.setString(1, "%"+keyword+"%");
+				if(keyfield.equals("0")) {
+					pstmt.setString(++cnt, "%"+keyword+"%");
+					pstmt.setString(++cnt, "%"+keyword+"%");
+					pstmt.setString(++cnt, "%"+keyword+"%");
+				}else {
+					pstmt.setString(++cnt, "%"+keyword+"%");
+				}
 			}
 			
 			rs = pstmt.executeQuery();
@@ -101,8 +109,9 @@ public class QnaDAO {
 			conn = DBUtil.getConnection();
 			
 			if(keyword!=null && !"".equals(keyword)) {
-				if(keyfield.equals("1")) sub_sql="WHERE b.title LIKE ?";
-				else if(keyfield.equals("2")) sub_sql="WHERE u.id LIKE ?";
+				if(keyfield.equals("0")) sub_sql="WHERE b.title LIKE ? OR d.name LIKE ? OR b.content LIKE ?";
+				else if(keyfield.equals("1")) sub_sql="WHERE b.title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql="WHERE d.name LIKE ?";
 				else if(keyfield.equals("3")) sub_sql="WHERE b.content LIKE ?";
 			}
 			
@@ -113,7 +122,13 @@ public class QnaDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			if(keyword!=null && !"".equals(keyword)) {
-				pstmt.setString(++cnt, "%"+keyword+"%");
+				if(keyfield.equals("0")) {
+					pstmt.setString(++cnt, "%"+keyword+"%");
+					pstmt.setString(++cnt, "%"+keyword+"%");
+					pstmt.setString(++cnt, "%"+keyword+"%");
+				}else {
+					pstmt.setString(++cnt, "%"+keyword+"%");
+				}
 			}
 			pstmt.setInt(++cnt, startRow);
 			pstmt.setInt(++cnt, endRow);

@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:if test="${qna.viewable_check==1 && session_user_num != qna.user_num}">
+	<script type="text/javascript">
+		alert('비공개 글입니다.');
+		location.href='qnaList.do';
+	</script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +28,7 @@
 			<div>
 				<ul>
 					<li>글번호: ${qna.qna_num }</li>
+					<li><c:if test="${qna.viewable_check==1}">[ 비공개 ]</c:if></li>
 					<li>제목 : ${qna.title }</li>
 					<li>작성자 : ${qna.name } (<c:choose>
 							<c:when test="${fn:length(qna.id) gt 3}">
@@ -56,18 +63,18 @@
 							onclick="location.href='qnaUpdateForm.do?qna_num=${qna.qna_num}'">
 						<input type="button" class="btn btn-tertiary btn-login fw-bold"
 							value="삭제" id="delete_btn">
-						<script type="text/javascript">
-							let delete_btn = document
-									.getElementById('delete_btn');
-							//이벤트 연결
-							delete_btn.onclick = function() {
-								let choice = confirm('삭제하시겠습니까?');
-								if (choice) {
-									location
-											.replace('qnaDelete.do?qna_num=${qna.qna_num}');
-								}
-							};
-						</script>
+<script type="text/javascript">
+	let delete_btn = document
+			.getElementById('delete_btn');
+	//이벤트 연결
+	delete_btn.onclick = function() {
+		let choice = confirm('삭제하시겠습니까?');
+		if (choice) {
+			location
+					.replace('qnaDelete.do?qna_num=${qna.qna_num}');
+		}
+	};
+</script>
 					</c:if>
 				</div>
 			</div>
