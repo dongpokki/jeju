@@ -13,7 +13,22 @@ public class QnaVO {
 	private String filename;
 	private String ip;
 	private int user_num;
+	private String id;
+	private String name;
 	
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getQna_num() {
 		return qna_num;
 	}

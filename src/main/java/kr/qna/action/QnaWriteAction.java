@@ -17,7 +17,7 @@ public class QnaWriteAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
-		Integer user_num = (Integer)session.getAttribute("user_num");
+		Integer user_num = (Integer)session.getAttribute("session_user_num");
 		if(user_num==null) {
 			return "redirect:/member/loginForm.do";
 		}

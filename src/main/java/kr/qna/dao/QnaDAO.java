@@ -2,9 +2,14 @@ package kr.qna.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import kr.qna.vo.QnaVO;
+import kr.user.vo.UserVO;
 import kr.util.DBUtil;
+import kr.util.StringUtil;
 
 public class QnaDAO {
 	//싱글턴 패턴
@@ -23,8 +28,8 @@ public class QnaDAO {
 			//커넥션풀로부터 커넥션을 할당
 			conn =DBUtil.getConnection();
 			
-			sql="INSERT INTO zboard(board_num,title,content,filename,ip,mem_num) "
-					+ "VALUES (zboard_seq.nextval,?,?,?,?,?)";
+			sql="INSERT INTO jboard_qna(qna_num,title,content,filename,ip,user_num) "
+					+ "VALUES (jboard_qna_seq.nextval,?,?,?,?,?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, qna.getTitle());
@@ -42,4 +47,95 @@ public class QnaDAO {
 		}
 	}
 	
+	//총레코드 수 (검색 레코드 수)
+	public int getBoardCount(String keyfield,String keyword) throws Exception{
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs =null;
+		String sql=null;
+		String sub_sql="";
+		int count=0;
+		try {
+			//커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+			
+			if(keyword!=null && !"".equals(keyword)) {
+				if(keyfield.equals("1")) sub_sql="WHERE b.title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql="WHERE u.id LIKE ?";
+				else if(keyfield.equals("3")) sub_sql="WHERE b.content LIKE ?";
+			}
+			//sQL문 작성
+			sql="SELECT COUNT(*) FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num)"+sub_sql;
+			
+			pstmt = conn.prepareStatement(sql);
+			if(keyword!=null & !"".equals(keyword)) {
+				pstmt.setString(1, "%"+keyword+"%");
+			}
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count=rs.getInt(1);
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
+
+	//목록 
+	public List<QnaVO> getListBoard(int startRow,int endRow,String keyfield,String keyword) throws Exception{
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs=null;
+		List<QnaVO> list =null;
+		String sql =null;
+		String sub_sql="";
+		int cnt=0;
+		try {
+			//커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			if(keyword!=null && !"".equals(keyword)) {
+				if(keyfield.equals("1")) sub_sql="WHERE b.title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql="WHERE u.id LIKE ?";
+				else if(keyfield.equals("3")) sub_sql="WHERE b.content LIKE ?";
+			}
+			
+			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM "
+				+ "(SELECT * FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num)"
+				+sub_sql + " ORDER BY b.qna_num DESC)a) "
+				+ "WHERE rnum>=? AND rnum<=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			if(keyword!=null && !"".equals(keyword)) {
+				pstmt.setString(++cnt, "%"+keyword+"%");
+			}
+			pstmt.setInt(++cnt, startRow);
+			pstmt.setInt(++cnt, endRow);
+			
+			rs = pstmt.executeQuery();
+			list = new ArrayList<QnaVO>();
+			while(rs.next()) {
+				QnaVO board = new QnaVO();
+				board.setQna_num(rs.getInt("qna_num"));
+				//HTML 태그를 허용하지않음
+				board.setTitle(StringUtil.useNoHtml(rs.getString("title")));//태그 불허
+				board.setHit(rs.getInt("hit"));
+				board.setReg_date(rs.getDate("reg_date"));
+				board.setUser_num(rs.getInt("user_num"));
+				board.setId(rs.getString("id"));
+				board.setName(rs.getString("name"));
+				//BoardVO를 ArrayList에 저장
+				list.add(board);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
+	}
 }

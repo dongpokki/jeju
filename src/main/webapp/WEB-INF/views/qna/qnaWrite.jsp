@@ -2,5 +2,5 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	alert('글쓰기 완료');
-	location.href='list.do';
+	location.href='qnaList.do';
 </script>

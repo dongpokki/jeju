@@ -2,7 +2,7 @@ create table jboard_qna(
     qna_num number not null,
     title varchar2(150) not null,
     content clob not null,
-    hit number(5) not null,
+    hit number(5) default 0 not null,
     viewable_check number(1) not null,
     reg_date date default sysdate not null,
     modify_date date,
