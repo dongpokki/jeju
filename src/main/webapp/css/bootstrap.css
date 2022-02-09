@@ -9862,6 +9862,10 @@ a.text-dark:hover, a.text-dark:focus {
 	margin-bottom: 10px;
 }
 
+.nonlabel_input{
+	width:100%;
+}
+
 /* 회원정보 수정 페이지 사용 */
 .modifyUserForm-info {
 	font-size: 14pt;

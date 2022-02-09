@@ -75,16 +75,16 @@
 						<h5 class="card-title text-center mb-5 fw-light fs-5">비밀번호 수정</h5>
 						<form id="password_form" action="modifyPassword.do" method="post">
 							<div class="form-floating mb-3">
-								<input type="text" name="id" id="id" class="form-control" maxlength="12" placeholder="아이디 입력">
+								<input type="text" name="id" id="id" class="form-control nonlabel_input" maxlength="12" placeholder="아이디 입력">
 							</div>
 							<div class="form-floating mb-3">
-								<input type="password" name="origin_passwd" id="origin_passwd" class="form-control" maxlength="12" placeholder="현재 비밀번호 입력">
+								<input type="password" name="origin_passwd" id="origin_passwd" class="form-control nonlabel_input" maxlength="12" placeholder="현재 비밀번호 입력">
 							</div>
 							<div class="form-floating mb-3">
-								<input type="password" name="passwd" id="passwd" class="form-control" maxlength="12" placeholder="새 비밀번호 입력">
+								<input type="password" name="passwd" id="passwd" class="form-control nonlabel_input" maxlength="12" placeholder="새 비밀번호 입력">
 							</div>
 							<div class="form-floating mb-3">
-								<input type="password" name="cpasswd" id="cpasswd" class="form-control" maxlength="12" placeholder="새 비밀번호 확인">
+								<input type="password" name="cpasswd" id="cpasswd" class="form-control nonlabel_input" maxlength="12" placeholder="새 비밀번호 확인">
 								<span id="message_cpasswd"></span>
 							</div>
 							<div class="d-grid gap-2 col-6 mx-auto" style="text-align: center;">

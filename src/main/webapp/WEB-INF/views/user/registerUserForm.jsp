@@ -140,26 +140,26 @@ $(function(){
   								<span id="message_id"></span>
 							</div>
 							<div class="form-floating mb-3">
-								<input type="password" name="passwd" id="passwd" class="form-control " maxlength="12" placeholder="비밀번호 입력">
+								<input type="password" name="passwd" id="passwd" class="form-control nonlabel_input" maxlength="12" placeholder="비밀번호 입력">
 							</div>
 							<div class="form-floating mb-3">
-								<input type="text" id="name" name="name" maxlength="10" placeholder="이름 입력" class="form-control">
+								<input type="text" id="name" name="name" maxlength="10" placeholder="이름 입력" class="form-control nonlabel_input">
 							</div>
 							<div class="form-floating mb-3">
-								<input type="text" id="phone" name="phone" maxlength="15" placeholder="전화번호 입력" class="form-control">
+								<input type="text" id="phone" name="phone" maxlength="15" placeholder="전화번호 입력" class="form-control nonlabel_input">
 							</div>
 							<div class="form-floating mb-3">
-								<input type="email" id="email" name="email" maxlength="50" placeholder="이메일 입력" class="form-control">
+								<input type="email" id="email" name="email" maxlength="50" placeholder="이메일 입력" class="form-control nonlabel_input">
 							</div>
 							<div class="input-group mb-3">
   								<input type="text" id="zipcode" name="zipcode" maxlength="5" class="form-control" placeholder="우편번호 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
   								<input type="button" value="우편번호 찾기" onclick="sample2_execDaumPostcode()" class="btn btn-outline-secondary">
 							</div>
 							<div class="form-floating mb-3">
-								<input type="text" id="address1" name="address1" maxlength="30" placeholder="주소 입력" class="form-control">
+								<input type="text" id="address1" name="address1" maxlength="30" placeholder="주소 입력" class="form-control nonlabel_input">
 							</div>
 							<div class="form-floating mb-3">
-								<input type="text" id="address2" name="address2" maxlength="30" placeholder="상세 주소 입력" class="form-control">
+								<input type="text" id="address2" name="address2" maxlength="30" placeholder="상세 주소 입력" class="form-control nonlabel_input">
 							</div>
 							<div class="d-grid gap-2 col-6 mx-auto" style="text-align: center;">
 								<input class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" value="회원가입"> 
