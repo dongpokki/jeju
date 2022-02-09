@@ -18,7 +18,7 @@ public class QnaDetailAction implements Action{
 		QnaDAO dao = QnaDAO.getInstance();
 		
 		//조회수증가
-		//dao.updateReadCout(board_num);
+		dao.updateReadCount(qna_num);
 		
 		QnaVO qna = dao.getQna(qna_num);
 		

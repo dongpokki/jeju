@@ -42,6 +42,9 @@
 								src="${pageContext.request.contextPath }/upload/${qna.filename}">
 						</div>
 					</c:if>
+					<p>
+						${qna.content }
+					</p>
 				<div>
 					<c:if test="${!empty qna.modify_date }">
 					최근 수정일 : ${qna.modify_date }

@@ -182,4 +182,26 @@ public class QnaDAO {
 		}
 		return qna;
 	}
+	//조회수증가
+	 public void updateReadCount(int qna_num) throws Exception{
+		 Connection conn=null;
+		 PreparedStatement pstmt =null;
+		 String sql=null;
+		 try {
+			 conn=DBUtil.getConnection();
+			 
+			 sql="UPDATE jboard_qna SET hit=hit+1 WHERE qna_num=?";
+			 
+			 pstmt =conn.prepareStatement(sql);
+			 pstmt.setInt(1, qna_num);
+			 
+			 pstmt.executeUpdate();
+			 
+		 }catch(Exception e) {
+			 throw new Exception(e);
+		 }finally {
+			 DBUtil.executeClose(null, pstmt, conn);
+		 }
+	 }
+	
 }
