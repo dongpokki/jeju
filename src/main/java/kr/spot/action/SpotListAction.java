@@ -27,8 +27,9 @@ public class SpotListAction implements Action {
 			keyword = "";
 
 		SpotDAO dao = SpotDAO.getInstance();
-		int count = dao.getSpotBoardCount(keyword);
 		int category = Integer.parseInt(request.getParameter("category"));
+		int count = dao.getSpotBoardCount(keyword, category);
+
 		// 페이지 처리
 		// keyfield,keyword,currentPage,count,rowCount,pageCount,url
 		PagingUtil page = new PagingUtil(keyfield, keyword, Integer.parseInt(pageNum), count, 20, 10, "spotList.do");

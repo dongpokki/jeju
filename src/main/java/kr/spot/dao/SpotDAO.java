@@ -112,7 +112,7 @@ public class SpotDAO {
 	}
 
 	// 총 레코드 수(검색 레코드 수)
-	public int getSpotBoardCount(String keyword) throws Exception {
+	public int getSpotBoardCount(String keyword, int category) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -124,14 +124,14 @@ public class SpotDAO {
 			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 			if (keyword != null && !"".equals(keyword)) {
-				sub_sql = "WHERE ( title LIKE ? OR content LIKE ? )";
+				sub_sql = "AND content LIKE ? ";
 			}
 			// 전체 또는 검색 레코드 수
-			sql = "SELECT COUNT(*) FROM jboard_spot " + sub_sql;
+			sql = "SELECT COUNT(*) FROM jboard_spot WHERE category = ? " + sub_sql;
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, category);
 			if (keyword != null && !"".equals(keyword)) {
-				pstmt.setString(1, "%" + keyword + "%");
 				pstmt.setString(2, "%" + keyword + "%");
 			}
 			rs = pstmt.executeQuery();
