@@ -112,7 +112,7 @@ public class SpotDAO {
 	}
 
 	// 총 레코드 수(검색 레코드 수)
-	public int getSpotBoardCount(String keyfield, String keyword) throws Exception {
+	public int getSpotBoardCount(String keyword) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -123,27 +123,22 @@ public class SpotDAO {
 		try {
 			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
-
 			if (keyword != null && !"".equals(keyword)) {
-				// 검색글 처리
-				if (keyfield.equals("1"))
-					sub_sql = "WHERE b.title LIKE ?";
-				else if (keyfield.equals("3"))
-					sub_sql = "WHERE b.content LIKE ?";
+				sub_sql = "WHERE ( title LIKE ? OR content LIKE ? )";
 			}
-
 			// 전체 또는 검색 레코드 수
 			sql = "SELECT COUNT(*) FROM jboard_spot " + sub_sql;
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			if (keyword != null && !"".equals(keyword)) {
 				pstmt.setString(1, "%" + keyword + "%");
+				pstmt.setString(2, "%" + keyword + "%");
 			}
-
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				count = rs.getInt(1);
 			}
+
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
@@ -154,8 +149,7 @@ public class SpotDAO {
 	}
 
 	// 목록
-	public List<SpotVO> getList(int startRow, int endRow, String keyfield, String keyword, int category)
-			throws Exception {
+	public List<SpotVO> getList(int startRow, int endRow, String keyword, int category) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -168,29 +162,31 @@ public class SpotDAO {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			if (keyword != null && !"".equals(keyword)) {
-				if (keyfield.equals("1"))
-					sub_sql = "WHERE b.title LIKE ?";
-				else if (keyfield.equals("2"))
-					sub_sql = "WHERE b.content LIKE ?";
-			}
 			if (category == 0) {
+				if (keyword != null && !"".equals(keyword)) {
+					sub_sql = "WHERE content LIKE ?";
+				}
+
 				sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot " + sub_sql
 						+ "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
 				pstmt = conn.prepareStatement(sql);
 				if (keyword != null && !"".equals(keyword)) {
+
 					pstmt.setString(++cnt, "%" + keyword + "%");
 				}
 				pstmt.setInt(++cnt, startRow);
 				pstmt.setInt(++cnt, endRow);
 			} else if (category != 0) {
+				if (keyword != null && !"".equals(keyword)) {
+					sub_sql = "AND content LIKE ?";
+				}
 				sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot WHERE category=? "
 						+ sub_sql + "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
 				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(++cnt, category);
 				if (keyword != null && !"".equals(keyword)) {
 					pstmt.setString(++cnt, "%" + keyword + "%");
 				}
-				pstmt.setInt(++cnt, category);
 				pstmt.setInt(++cnt, startRow);
 				pstmt.setInt(++cnt, endRow);
 			}
@@ -257,7 +253,6 @@ public class SpotDAO {
 		return spot;
 	}
 
-	
 	// [정동윤 작성] 메인에 노출할 BEST3 spot 구하기
 	// 목록
 	public List<SpotVO> getRankingSpot() throws Exception {
@@ -274,16 +269,16 @@ public class SpotDAO {
 			// sql문 작성
 			// 추천수가 높은 순으로 랭킹컬럼 1부터 3까지 조회 [추천수(good)이 같은 경우에는, 조회수(hit) 높은순으로 추가 비교]
 			sql = "select * from (select spot_num,title,content,hit,good,row_number() over (order by good desc,hit desc) rank from jboard_spot join jgood_spot using(spot_num)) where rank < 4";
-			
-			//PreparedStatement 객체 생성
+
+			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			
+
 			// sql문 수행하여 결과 집합을 rs에 담음
 			rs = pstmt.executeQuery();
-			
+
 			list = new ArrayList<SpotVO>();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				SpotVO spot = new SpotVO();
 
 				spot.setSpot_num(rs.getInt("spot_num"));
@@ -293,8 +288,7 @@ public class SpotDAO {
 				// 자바빈(VO)을 ArrayList에 저장
 				list.add(spot);
 			}
-			
-			
+
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
@@ -303,5 +297,5 @@ public class SpotDAO {
 		}
 		return list;
 	}
-	
+
 }

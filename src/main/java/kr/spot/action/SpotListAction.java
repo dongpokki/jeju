@@ -27,7 +27,7 @@ public class SpotListAction implements Action {
 			keyword = "";
 
 		SpotDAO dao = SpotDAO.getInstance();
-		int count = dao.getSpotBoardCount(keyfield, keyword);
+		int count = dao.getSpotBoardCount(keyword);
 		int category = Integer.parseInt(request.getParameter("category"));
 		// 페이지 처리
 		// keyfield,keyword,currentPage,count,rowCount,pageCount,url
@@ -35,13 +35,13 @@ public class SpotListAction implements Action {
 
 		List<SpotVO> list = null;
 		if (count > 0) {
-			list = dao.getList(page.getStartCount(), page.getEndCount(), keyfield, keyword, category);
+			list = dao.getList(page.getStartCount(), page.getEndCount(), keyword, category);
 		}
 
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);
-		request.setAttribute("category", category);
 		request.setAttribute("pagingHtml", page.getPagingHtml());
+		request.setAttribute("category", category);
 
 		// JSP 경로 반환
 		return "/WEB-INF/views/spot/spotList.jsp";
