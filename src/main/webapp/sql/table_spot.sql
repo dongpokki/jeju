@@ -8,6 +8,7 @@ create table jboard_spot(
   modify_date date,
   filename varchar2(150),
   ip varchar2(40) not null,
+  category number(1) default 1 not null,
   user_num number not null,
   constraint jboard_spot_pk primary key (spot_num),
   constraint jboard_spot_fk foreign key (user_num) references juser (user_num)
