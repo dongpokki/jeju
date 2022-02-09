@@ -24,8 +24,6 @@
 <body>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<h2>Recommended course</h2>
-	<h1>추천 코스 목록</h1>
 	<form id="search_form" action="list.do" method="get">
 		<ul class="search">
 			<li>
@@ -44,14 +42,17 @@
 			</li>
 		</ul>
 	</form>
-	<div class="list-space align-right">
+	</div>
+	<div class="list-space align-center">
 		<input type="button" value="글쓰기" onclick="location.href='${pageContext.request.contextPath}/course/courseWriteForm.do'"
 		<c:if test="${empty user_num}"> onclick="location.href='${pageContext.request.contextPath}/user/loginForm.do'"</c:if>>
 		<input type="button" value="홈으로" 
 		 onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 	</div>
+	<div class="page-title" align="center">
+    <h2>Jeju 추천!<br>2월에 가면 더 좋은 제주도 여행 코스</h2>
 	<c:if test="${count == 0}">
-    
+   
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f0f45ae09fd5fe9bd4014a783fa7b89"></script>
 <div id="map" style="width: 40%; height: 500px;"></div>
 <script>
@@ -322,6 +323,7 @@
 	</div>
 	</c:if>
 </div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
 
