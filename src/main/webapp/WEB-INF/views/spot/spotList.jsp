@@ -31,6 +31,10 @@
 	<main>
 		<div class="page-section">
 			<div class="container">
+				<form action="#" class="search-widget" align="right">
+					<input type="text" class="form-control" placeholder="검색어를 입력해주세요">
+					<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">검색</button>
+				</form>
 				<div class="row">
 					<!-- 등록된 내용이 없을 경우 -->
 					<c:if test="${count == 0}">

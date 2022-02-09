@@ -1931,8 +1931,8 @@ pre code {
 }
 
 .form-control {
-	display: block;
-	width: 100%;
+	display: inline;
+	width: 200px;
 	height: calc(1.5em + 0.75rem + 2px);
 	padding: 0.375rem 0.75rem;
 	font-size: 1rem;
@@ -3107,8 +3107,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-block {
-	display: block;
-	width: 100%;
+	display: inline;
+	/* width: 100%; */
 }
 
 .btn-block+.btn-block {
@@ -3173,9 +3173,11 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 .dropdown-toggle:empty::after {
 	margin-left: 0;
 }
+
 .dropdown:hover .dropdown-menu {
-    display: block;
+	display: block;
 }
+
 .dropdown-menu {
 	position: absolute;
 	top: 100%;
@@ -3205,7 +3207,6 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 	right: 0;
 	left: auto;
 }
-
 
 @media ( min-width : 576px) {
 	.dropdown-menu-sm-left {
@@ -9821,15 +9822,15 @@ a.text-dark:hover, a.text-dark:focus {
 /* 정동윤 추가 css */
 
 /* 메인페이지 사용 */
-.main-banner{
+.main-banner {
 	position: relative;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    height: 320px;
-    background-color: #F6F5FC;
-    color: #FBC16D;	
-    border-radius: 30px;
-    background-image: url("../images/jeju_main.jpg");
+	margin-top: 16px;
+	margin-bottom: 16px;
+	height: 320px;
+	background-color: #F6F5FC;
+	color: #FBC16D;
+	border-radius: 30px;
+	background-image: url("../images/jeju_main.jpg");
 }
 
 /* 마이페이지 사용 */
@@ -9845,28 +9846,27 @@ a.text-dark:hover, a.text-dark:focus {
 	text-align: center;
 }
 
-#photo{
-	margin-bottom: 20px;	
+#photo {
+	margin-bottom: 20px;
 }
 
-.mypage-info-warrap{
+.mypage-info-warrap {
 	padding-top: 30px;
 	height: 230px;
 }
 
-.mypage-info{
+.mypage-info {
 	font-size: 14pt;
-    font-weight: bold;
-    width: 100px;
-    display: inline-block;
-    margin-bottom: 10px;	
+	font-weight: bold;
+	width: 100px;
+	display: inline-block;
+	margin-bottom: 10px;
 }
 
 /* 회원정보 수정 페이지 사용 */
-
-.modifyUserForm-info{
+.modifyUserForm-info {
 	font-size: 14pt;
-    font-weight: bold;
-    width: 100px;
-    display: inline-block;	
+	font-weight: bold;
+	width: 100px;
+	display: inline-block;
 }
