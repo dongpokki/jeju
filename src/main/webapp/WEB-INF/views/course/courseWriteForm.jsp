@@ -98,7 +98,7 @@
         <div id="pagination"></div>
     </div>
 </div>
-
+<!-- 지도 시작 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f0f45ae09fd5fe9bd4014a783fa7b89&libraries=services"></script>
 <script>
 // 마커를 담을 배열입니다
@@ -115,9 +115,6 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
-
-// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 // 키워드로 장소를 검색합니다
 searchPlaces();
@@ -302,22 +299,15 @@ function displayPagination(pagination) {
     paginationEl.appendChild(fragment);
 }
 
-// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-// 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title) {
-    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
-    infowindow.setContent(content);
-    infowindow.open(map, marker);
-}
 
  // 검색결과 목록의 자식 Element를 제거하는 함수입니다
 function removeAllChildNods(el) {   
     while (el.hasChildNodes()) {
         el.removeChild (el.lastChild);
     }
-}						
+}				
 </script>
+<!-- 지도 끝 -->
 						<div style="padding :30px 0;">
 							<form id="write_form" action="courseWrite.do" method="post"
 								enctype="multipart/form-data">
