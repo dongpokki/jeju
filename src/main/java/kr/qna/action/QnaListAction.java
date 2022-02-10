@@ -30,7 +30,7 @@ public class QnaListAction implements Action{
 		PagingUtil page =new PagingUtil(keyfield, keyword, Integer.parseInt(pageNum),count,10,10,"list.do");
 		List<QnaVO> list =null;
 		if(count>0) {
-			list = dao.getListBoard(page.getStartCount(), page.getEndCount(), keyfield, keyword);
+			list = dao.getListQna(page.getStartCount(), page.getEndCount(), keyfield, keyword);
 		}
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);

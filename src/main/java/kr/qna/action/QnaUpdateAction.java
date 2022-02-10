@@ -11,7 +11,7 @@ import kr.qna.dao.QnaDAO;
 import kr.qna.vo.QnaVO;
 import kr.util.FileUtil;
 
-public class QnaWriteAction implements Action{
+public class QnaUpdateAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -21,22 +21,32 @@ public class QnaWriteAction implements Action{
 		if(user_num==null) {
 			return "redirect:/user/loginForm.do";
 		}
-		
+		//로그인 된 경우
 		MultipartRequest multi = FileUtil.createFile(request);
+		int qna_num = Integer.parseInt(multi.getParameter("qna_num"));
+		String filename = multi.getFilesystemName("filename");
+		
+		QnaDAO dao = QnaDAO.getInstance();
+		QnaVO db_qna = dao.getQna(qna_num);
+		if(user_num!=db_qna.getUser_num()) {
+			FileUtil.removeFile(request, filename);
+			return "/WEB-INF/veiws/common/notice.jsp";
+		}
 		QnaVO qna = new QnaVO();
+		qna.setQna_num(qna_num);
 		qna.setTitle(multi.getParameter("title"));
 		qna.setContent(multi.getParameter("content"));
 		qna.setIp(request.getRemoteAddr());
-		qna.setFilename(multi.getFilesystemName("filename"));
-		qna.setUser_num(user_num);
 		qna.setViewable_check(Integer.parseInt(multi.getParameter("viewable_check")));
-		qna.setName(multi.getParameter("name"));
+		qna.setFilename(filename);
 		
-		QnaDAO dao = QnaDAO.getInstance();
-		dao.insertBoard(qna);
-		System.out.println(multi.getParameter("filename"));
+		dao.updateQna(qna);
 		
-		return "/WEB-INF/views/qna/qnaWrite.jsp";
+		if(filename!=null) {
+			FileUtil.removeFile(request, db_qna.getFilename());
+		}
+		
+		return "redirect:/qna/qnaDetail.do?qna_num="+qna_num;
 	}
 
 }

@@ -28,8 +28,8 @@ public class QnaDAO {
 			//커넥션풀로부터 커넥션을 할당
 			conn =DBUtil.getConnection();
 			
-			sql="INSERT INTO jboard_qna(qna_num,title,content,hit,viewable_check,reg_date,filename,ip,user_num) "
-					+ "VALUES (jboard_qna_seq.nextval,?,?,?,?,SYSDATE,?,?,?)";
+			sql="INSERT INTO jboard_qna(qna_num,title,content,hit,viewable_check,filename,ip,user_num) "
+					+ "VALUES (jboard_qna_seq.nextval,?,?,?,?,?,?,?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, qna.getTitle());
@@ -65,7 +65,7 @@ public class QnaDAO {
 			if(keyword!=null && !"".equals(keyword)) {
 				if(keyfield.equals("0")) sub_sql="WHERE b.title LIKE ? OR d.name LIKE ? OR b.content LIKE ?";				
 				if(keyfield.equals("1")) sub_sql="WHERE b.title LIKE ?";
-				else if(keyfield.equals("2")) sub_sql="WHERE u.id LIKE ?";
+				else if(keyfield.equals("2")) sub_sql="WHERE d.name LIKE ?";
 				else if(keyfield.equals("3")) sub_sql="WHERE b.content LIKE ?";
 			}
 			//sQL문 작성
@@ -96,7 +96,7 @@ public class QnaDAO {
 	}
 
 	//목록 
-	public List<QnaVO> getListBoard(int startRow,int endRow,String keyfield,String keyword) throws Exception{
+	public List<QnaVO> getListQna(int startRow,int endRow,String keyfield,String keyword) throws Exception{
 		Connection conn =null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;
@@ -218,5 +218,62 @@ public class QnaDAO {
 			 DBUtil.executeClose(null, pstmt, conn);
 		 }
 	 }
+	 //글 수정
+	public void updateQna(QnaVO qna) throws Exception{
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		String sql =null;
+		String sub_sql="";
+		int cnt =0;
+		try {
+			conn=DBUtil.getConnection();
+			
+			if(qna.getFilename()!=null) {
+				sub_sql=",filename=?";
+			}
+			
+			sql="UPDATE jboard_qna SET title=?,content=?,modify_date=SYSDATE,viewable_check=?"
+					+sub_sql +",ip=? WHERE qna_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(++cnt, qna.getTitle());
+			pstmt.setString(++cnt, qna.getContent());
+			pstmt.setInt(++cnt, qna.getViewable_check());
+			if(qna.getFilename()!=null) {
+				pstmt.setString(++cnt, qna.getFilename());
+			}
+			pstmt.setString(++cnt, qna.getIp());
+			pstmt.setInt(++cnt, qna.getQna_num());
+			
+			pstmt.executeUpdate();
+			
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 	
+	//파일 삭제
+	public void deleteFile(int qna_num) throws Exception{
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		String sql =null;
+		try{
+			conn =DBUtil.getConnection();
+			
+			sql="UPDATE jboard_qna SET filename='' WHERE qna_num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qna_num);
+			
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	 
 }

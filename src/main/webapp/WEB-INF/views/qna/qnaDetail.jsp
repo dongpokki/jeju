@@ -2,17 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:if test="${qna.viewable_check==1 && session_user_num != qna.user_num}">
+<c:choose>
+	<c:when test="${session_user_auth!=3 && qna.viewable_check==1 && session_user_num!=qna.user_num }">
 	<script type="text/javascript">
 		alert('비공개 글입니다.');
 		location.href='qnaList.do';
 	</script>
-</c:if>
+	</c:when>
+	<c:otherwise>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글상셍</title>
+<title>Qna 상세</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet"
@@ -30,10 +32,11 @@
 					<li>글번호: ${qna.qna_num }</li>
 					<li><c:if test="${qna.viewable_check==1}">[ 비공개 ]</c:if></li>
 					<li>제목 : ${qna.title }</li>
-					<li>작성자 : ${qna.name } (<c:choose>
+					<li>작성자 :${qna.name } (<c:choose>
 							<c:when test="${fn:length(qna.id) gt 3}">
 								<c:out value="${fn:substring(qna.id, 0, 2)}" />
-								<c:forEach begin="2" end="${fn:length(qna.id) }">*</c:forEach>
+								<c:forEach begin="3" end="${fn:length(qna.id)}">*</c:forEach>
+								
 							</c:when>
 							<c:otherwise>
 								<c:out value="${qna.id}" />
@@ -42,11 +45,9 @@
 					</li>
 					<li>조회수 : ${qna.hit }</li>
 				</ul>
-				<p>
 					<c:if test="${!empty qna.filename }">
-						<div>
-							<img alt="파일"
-								src="${pageContext.request.contextPath }/upload/${qna.filename}">
+						<div class="align-center">
+							<img alt="파일" src="${pageContext.request.contextPath }/upload/${qna.filename}">
 						</div>
 					</c:if>
 					<p>
@@ -55,12 +56,16 @@
 				<div>
 					<c:if test="${!empty qna.modify_date }">
 					최근 수정일 : ${qna.modify_date }
-				</c:if>
-					작성일 : ${qna.reg_date }
-					<c:if test="${session_user_num==qna.user_num }">
+					</c:if>
+					<c:if test="${empty qna.modify_date }">
+						작성일 : ${qna.reg_date }
+					</c:if>
+						<c:if test="${session_user_num==qna.user_num}">
 						<input type="button" class="btn btn-primary btn-login fw-bold"
 							value="수정"
 							onclick="location.href='qnaUpdateForm.do?qna_num=${qna.qna_num}'">
+						</c:if>
+						<c:if test="${session_user_num==qna.user_num}">
 						<input type="button" class="btn btn-tertiary btn-login fw-bold"
 							value="삭제" id="delete_btn">
 <script type="text/javascript">
@@ -75,10 +80,16 @@
 		}
 	};
 </script>
-					</c:if>
+						</c:if>
 				</div>
 			</div>
 		</div>
 </div>
+<p>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+	</c:otherwise>
+</c:choose>

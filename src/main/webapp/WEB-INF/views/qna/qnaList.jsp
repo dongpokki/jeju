@@ -18,7 +18,7 @@
 			<div class="page-banner" style="height:50px;background-color:#fff">
 				<h1>QnA</h1>
 			</div>
-			<div>
+			<div class="align-center">
 			<form action="qnaList.do" method="get" style="float: right;">
 				<div class="FormSelectButton">
 					<div>
@@ -47,7 +47,6 @@
 					<tr>
 						<c:if test="${session_user_auth==3}"><th>체크</th></c:if>
 						<th>글번호</th>
-						<th>공개여부</th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
@@ -66,12 +65,16 @@
 							<input type="checkbox" name="delet_check" >
 						</td></c:if>
 						<td>${qna.qna_num }</td>
-						<td><c:if test="${qna.viewable_check==1 }"><img src="${pageContext.request.contextPath }/images/lock.png" width="30px"></c:if>
-						<td><a href="qnaDetail.do?qna_num=${qna.qna_num}">${qna.title }</a></td>
+						<td>
+							<a href="qnaDetail.do?qna_num=${qna.qna_num}">${qna.title }</a>
+							<c:if test="${qna.viewable_check==1 }">
+								<img src="${pageContext.request.contextPath }/images/lock1.png" width="20px">
+							</c:if>
+						</td>
 						<td>${qna.name }
 							(<c:choose>
 								<c:when test="${fn:length(qna.id) gt 3}">
-									<c:out value="${fn:substring(qna.id, 0, 2)}"/><c:forEach begin="2" end="${fn:length(qna.id) }">*</c:forEach>
+									<c:out value="${fn:substring(qna.id, 0, 2)}"/><c:forEach begin="3" end="${fn:length(qna.id) }">*</c:forEach>
 								</c:when>
 							<c:otherwise>
 								<c:out value="${qna.id}"/>
@@ -86,7 +89,7 @@
 					</c:if>
 				</table>	
 				<div class="d-grid gap-2 col-6">
-					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary btn-login fw-bold" type="button" value="삭제" onclick="location.href='delete.do'"></c:if>
+					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary btn-login fw-bold" type="button" value="삭제" onclick="location.href='qnaDelete.do'"></c:if>
 					<input <c:if test="${empty session_user_num}">disabled="disabled"</c:if> class="btn btn-primary btn-login fw-bold" type="button" value="작성" onclick="location.href='qnaWriteForm.do'"> 
 					<input class="btn btn-secondary btn-login fw-bold" type="button" value="목록" onclick="location.href='qnaList.do';">
 				</div>
