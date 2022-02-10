@@ -15,7 +15,8 @@
 	<div class="container mt-5">
 		<div class="page-banner">
 			<div class="row justify-content-center align-items-center h-100">
-				<div class="col-md-6">
+				<img src="${pageContext.request.contextPath}/images/${category }.jpg" style="border-radius: 30px; width:100%; max-height: 320px;">
+				<div class="col-md-6" style="position: absolute;">
 					<nav aria-label="Breadcrumb">
 						<ul class="breadcrumb justify-content-center py-0 bg-transparent">
 							<li class="breadcrumb-item active">Recommend Places</li>
@@ -32,11 +33,11 @@
 			<div class="container">
 				<form class="search-widget" align="right">
 					<c:if test="${!empty param.category}">
-				    <input type="hidden" name="category" value="${param.category}">
-				    </c:if>
-				    <c:if test="${empty param.category}">
-				    <input type="hidden" name="category" value="0">
-				    </c:if>
+						<input type="hidden" name="category" value="${param.category}">
+					</c:if>
+					<c:if test="${empty param.category}">
+						<input type="hidden" name="category" value="0">
+					</c:if>
 					<input type="text" class="form-control" placeholder="검색어를 입력해주세요" value="${param.keyword}" name="keyword" id="keyword">
 					<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">검색</button>
 				</form>
