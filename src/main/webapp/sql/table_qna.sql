@@ -6,7 +6,7 @@ create table jboard_qna(
     viewable_check number(1) not null,
     reg_date date default sysdate not null,
     modify_date date,
-    filename varchar2(150),
+   	filename varchar2(150),
     ip varchar2(40) not null,
     user_num number(10) not null,
     constraint jboard_qna_pk primary key(qna_num),
