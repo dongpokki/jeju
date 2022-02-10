@@ -271,7 +271,6 @@ public class SpotDAO {
 	}
 
 	// [정동윤 작성] 메인에 노출할 BEST3 spot 구하기
-	// 목록
 	public List<SpotVO> getRankingSpot() throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -315,4 +314,51 @@ public class SpotDAO {
 		return list;
 	}
 
+	// [정동윤 작성] 마이페이지에 노출할 내가 추천한 spot 구하기
+	public List<SpotVO> MyGoodSpot(int user_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<SpotVO> list = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+
+			// sql문 작성
+			sql = "select b.spot_num,b.title,b.content from jgood_spot g join jboard_spot b on g.spot_num = b.spot_num where g.user_num=? and good=1";
+
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, user_num);
+
+			// sql문 수행하여 결과 집합을 rs에 담음
+			rs = pstmt.executeQuery();
+
+			list = new ArrayList<SpotVO>();
+
+			while (rs.next()) {
+				SpotVO spot = new SpotVO();
+
+				spot.setSpot_num(rs.getInt("spot_num"));
+				spot.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				spot.setContent(rs.getString("content"));
+
+				// 자바빈(VO)을 ArrayList에 저장
+				list.add(spot);
+			}
+
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
+	}
+
+	
 }
