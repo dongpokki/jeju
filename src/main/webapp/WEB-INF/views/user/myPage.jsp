@@ -217,38 +217,17 @@
 		</div>
 
 		<hr class="featurette-divider">
-		
+
 		<!-- 내가 추천한 장소 시작 -->
-		<h1 class="text-primary">내가 추천한 장소</h1>
-		<div class="row">
-			<c:if test="${empty spot_list}">
-				<div class="alert alert-warning" style="width:100%;">등록된 추천 장소가 없습니다.</div>
-			</c:if>
-			<c:if test="${!empty spot_list}">
-				<c:forEach var="spot" items="${spot_list}">
-					<div class="col-sm-6 col-lg-4">
-						<h3 class="best-title">${spot.title}</h3>
-						<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
-						<p class="best-content">${spot.content}</p>
-		  				<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=${spot.spot_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
-					</div>
-				</c:forEach>
-			</c:if>
-		</div>
-		<!-- 내가 추천한 장소 끝 -->
-		
-		<hr class="featurette-divider">		
-		
-		<!-- (더보기)내가 추천한 장소 시작 -->
-		<h1 class="text-primary" >(더보기)내가 추천한 장소</h1>
+		<h1 class="text-primary" >내가 추천한 장소</h1>
 		<div class="row" id="output"></div>
 			<div class="paging-button" style="display: none">
-				<input type="button" value="더보기">
+				<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
 			</div>
 			<div id="loading" style="display: none">
 				<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
 			</div>
-		<!-- (더보기)내가 추천한 장소 끝 -->
+		<!-- 내가 추천한 장소 끝 -->
 		
 		<hr class="featurette-divider">
 

@@ -327,13 +327,15 @@ public class SpotDAO {
 			conn = DBUtil.getConnection();
 
 			// sql문 작성
-			sql = "select b.spot_num,b.title,b.content from jgood_spot g join jboard_spot b on g.spot_num = b.spot_num where g.user_num=? and good=1";
-
+			sql = "select * from (select a.*, rownum rnum from (select b.spot_num,b.title,b.content,g.good from jboard_spot b join jgood_spot g on b.spot_num = g.spot_num where g.user_num=? and good=1 order by b.spot_num)a) where rnum>=? and rnum<=?";
+			
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			
 			// ?에 데이터 바인딩
 			pstmt.setInt(1, user_num);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 
 			// sql문 수행하여 결과 집합을 rs에 담음
 			rs = pstmt.executeQuery();

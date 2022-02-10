@@ -25,9 +25,7 @@ public class MyGoodSpotAction implements Action{
 		request.setCharacterEncoding("utf-8");
 
 		String pageNum = request.getParameter("pageNum");
-		if(pageNum == null) {
-			pageNum = "1";
-		}
+		if(pageNum == null) {pageNum = "1";}
 
 		HttpSession session = request.getSession();
 		Integer session_user_num = (Integer)session.getAttribute("session_user_num");

@@ -30,12 +30,12 @@ public class MyPageAction implements Action{
 		
 		// 내가 추천한 장소 데이터를 가져오기 위한 작업
 		// SpotDAO 객체 생성
-		SpotDAO spot_dao = SpotDAO.getInstance();
+		//SpotDAO spot_dao = SpotDAO.getInstance();
 		// 로그인한 회원이 추천한 게시글 전부 가져와서 리스트에 담기
-		List<SpotVO> spot_list = spot_dao.MyGoodSpot(0,0,session_user_num); 
+		//List<SpotVO> spot_list = spot_dao.MyGoodSpot(0,0,session_user_num); 
 		
 		request.setAttribute("user", user);
-		request.setAttribute("spot_list", spot_list);
+		//request.setAttribute("spot_list", spot_list);
 		
 		// jsp 경로 반환
 		return "/WEB-INF/views/user/myPage.jsp";
