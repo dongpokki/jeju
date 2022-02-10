@@ -29,7 +29,7 @@ public class SpotListAction implements Action {
 
 		// 페이지 처리
 		// keyfield,keyword,currentPage,count,rowCount,pageCount,url
-		PagingUtil page = new PagingUtil("", keyword, Integer.parseInt(pageNum), count, 20, 10, "spotList.do", "&category="+Integer.parseInt(category));
+		PagingUtil page = new PagingUtil("", keyword, Integer.parseInt(pageNum), count, 9, 9, "spotList.do", "&category="+Integer.parseInt(category));
 
 		List<SpotVO> list = null;
 		if (count > 0) {
