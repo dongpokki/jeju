@@ -15,14 +15,25 @@
 	<div class="container mt-5">
 		<div class="page-banner">
 			<div class="row justify-content-center align-items-center h-100">
-				<img src="${pageContext.request.contextPath}/images/${category }.jpg" style="border-radius: 30px; width:100%; max-height: 320px;">
+				<img src="${pageContext.request.contextPath}/images/${category }.jpg" style="border-radius: 30px; width: 100%; max-height: 320px;">
 				<div class="col-md-6" style="position: absolute;">
-					<nav aria-label="Breadcrumb">
-						<ul class="breadcrumb justify-content-center py-0 bg-transparent">
-							<li class="breadcrumb-item active">Recommend Places</li>
-						</ul>
-					</nav>
-					<h1 class="text-center">Jeju</h1>
+					<c:choose>
+						<c:when test="${category ==0}">
+							<h1 class="text-center">JEJU</h1>
+						</c:when>
+						<c:when test="${category ==1}">
+							<h1 class="text-center">EAST</h1>
+						</c:when>
+						<c:when test="${category ==2}">
+							<h1 class="text-center">WEST</h1>
+						</c:when>
+						<c:when test="${category ==3}">
+							<h1 class="text-center">SOUTH</h1>
+						</c:when>
+						<c:when test="${category ==4}">
+							<h1 class="text-center">NORTH</h1>
+						</c:when>
+					</c:choose>
 				</div>
 			</div>
 		</div>
@@ -54,7 +65,7 @@
 
 					<!-- 등록된 내용이 없을 경우 -->
 					<c:if test="${count == 0}">
-						<p align="center">등록된 글이 없습니다.</p>
+						<p style="text-align: center">등록된 글이 없습니다.</p>
 					</c:if>
 					<!-- 게시글 목록 시작 -->
 					<c:if test="${count > 0}">
