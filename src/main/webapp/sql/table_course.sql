@@ -1,9 +1,9 @@
-/*추천 코스 테이블 안되면 노트북 다이다이*/
+/*추천 코스 테이블*/
 create table jboard_course(
     course_num number not null,
     title varchar2(150) not null,
     content clob not null,
-    hit number(5) not null,
+    hit number(5) default 0 not null,
     reg_date date default sysdate not null,
     modify_date date,
     filename varchar2(150),
