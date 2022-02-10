@@ -171,7 +171,6 @@ public class SpotDAO {
 						+ "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
 				pstmt = conn.prepareStatement(sql);
 				if (keyword != null && !"".equals(keyword)) {
-
 					pstmt.setString(++cnt, "%" + keyword + "%");
 				}
 				pstmt.setInt(++cnt, startRow);
