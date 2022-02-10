@@ -32,7 +32,7 @@ public class MyPageAction implements Action{
 		// SpotDAO 객체 생성
 		SpotDAO spot_dao = SpotDAO.getInstance();
 		// 로그인한 회원이 추천한 게시글 전부 가져와서 리스트에 담기
-		List<SpotVO> spot_list = spot_dao.MyGoodSpot(session_user_num); 
+		List<SpotVO> spot_list = spot_dao.MyGoodSpot(0,0,session_user_num); 
 		
 		request.setAttribute("user", user);
 		request.setAttribute("spot_list", spot_list);

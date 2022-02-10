@@ -315,7 +315,7 @@ public class SpotDAO {
 	}
 
 	// [정동윤 작성] 마이페이지에 노출할 내가 추천한 spot 구하기
-	public List<SpotVO> MyGoodSpot(int user_num) throws Exception {
+	public List<SpotVO> MyGoodSpot(int startRow, int endRow, int user_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -360,5 +360,38 @@ public class SpotDAO {
 		return list;
 	}
 
-	
+	// [정동윤 작성] 마이페이지에 노출할 내가 추천한 spot count구하기
+	public int MyGoodSpotCount(int session_user_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+		
+		try {
+			// 커넥션풀로부터 커넥션풀 할당
+			conn = DBUtil.getConnection();
+			
+			sql = "select count(*) from jgood_spot where user_num=? and good=1";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+						
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, session_user_num);
+						
+			// SQL문 수행하여 결과 집합을 rs에 담음
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return count;
+	}
 }
