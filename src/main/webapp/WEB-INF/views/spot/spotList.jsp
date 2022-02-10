@@ -14,8 +14,7 @@
 	<!-- 사진 섹션 시작 -->
 	<div class="container mt-5">
 		<div class="page-banner">
-			<div class="row justify-content-center align-items-center h-100">
-				<img src="${pageContext.request.contextPath}/images/${category }.jpg" style="border-radius: 30px; width: 100%; max-height: 320px;">
+			<div class="row justify-content-center align-items-center h-100" style="border-radius: 30px;background-image: URL(${pageContext.request.contextPath}/images/${category }.jpg)">
 				<div class="col-md-6" style="position: absolute;">
 					<c:choose>
 						<c:when test="${category ==0}">
