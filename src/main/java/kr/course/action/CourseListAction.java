@@ -25,7 +25,7 @@ public class CourseListAction implements Action{
 		if(keyword == null) keyword = "";
 		
 		CourseDAO dao = CourseDAO.getInstance();
-		int count = dao.getCourseBoardCount(keyfield, keyword);
+		int count = dao.getCoursecourseCount(keyfield, keyword);
 		
 		//페이지 처리
 		//keyfield,keyword,currentPage,count,rowCount,pageCount,url
@@ -34,7 +34,7 @@ public class CourseListAction implements Action{
 		
 		List<CourseVO> list = null;
 		if(count > 0) {
-			list = dao.getCourseListBoard(page.getStartCount(), page.getEndCount(), 
+			list = dao.getCourseListcourse(page.getStartCount(), page.getEndCount(), 
 					                                     keyfield, keyword);
 		}
 		

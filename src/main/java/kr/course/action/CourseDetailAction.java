@@ -16,7 +16,7 @@ public class CourseDetailAction implements Action {
 
 		CourseDAO dao = CourseDAO.getInstance();
 		// dao.updateReadcount(board_num);
-		CourseVO course = dao.getCourseBoard(board_co_num);
+		CourseVO course = dao.getCoursecourse(board_co_num);
 
 		course.setTitle(StringUtil.useBrNoHtml(course.getTitle()));
 		course.setContent(StringUtil.useBrNoHtml(course.getContent()));
