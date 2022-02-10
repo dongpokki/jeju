@@ -36,6 +36,10 @@ public class SpotWriteAction implements Action {
 		SpotDAO dao = SpotDAO.getInstance();
 		dao.insertSpot(spot);
 
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter writer = response.getWriter();
+		writer.println("<script>alert('게시글을 성공적으로 등록했습니다.'); location.href='spotList.do';</script>");
+		writer.close();
 		return "redirect:/spot/spotList.do";
 	}
 
