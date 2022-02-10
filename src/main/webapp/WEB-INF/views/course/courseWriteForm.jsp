@@ -65,22 +65,20 @@
 	<div class="container">
 		<div class="WritingWrap">
 			<div class="WritingHeader">
-				<h2 class="title">추천 장소 작성하기</h2>
+				<h2 class="title">추천 코스 작성하기</h2>
 			</div>
 			<div class="WritingContent">
 				<div class="WritingEditor">
 					<div class="ArticleWritingTitle">
 						<div class="column_title">
-							<div class="FormSelectBox menu_candidates_selectbox">
-								<div class="FormSelectButton">
-									<button type="button" aria-haspopup="true" aria-expanded="selectboxLayer" aria-pressed="selectboxLayer" class="button">게시판을 선택해 주세요.</button>
-								</div>
 							</div>
+						</div>
 						</div>
 						<div>
 							<div class="FlexableTextArea">
 								<textarea placeholder="제목을 입력해 주세요." class="textarea_input" style="height: 40px;"></textarea>
 							</div>
+<button class="btn-primary">장소 추가</button>
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
