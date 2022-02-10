@@ -268,7 +268,7 @@ public class SpotDAO {
 
 			// sql문 작성
 			// 추천수가 높은 순으로 랭킹컬럼 1부터 3까지 조회 [추천수(good)이 같은 경우에는, 조회수(hit) 높은순으로 추가 비교]
-			sql = "select * from (select spot_num,title,content,hit,good,row_number() over (order by good desc,hit desc) rank from jboard_spot join jgood_spot using(spot_num)) where rank < 4";
+						sql = "select * from (select spot_num,title,content,hit,good,row_number() over (order by good desc,hit desc) rank from jboard_spot join jgood_spot using(spot_num)) where rank < 4";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
