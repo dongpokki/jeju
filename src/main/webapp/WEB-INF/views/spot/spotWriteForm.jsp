@@ -24,36 +24,40 @@
 			<div class="WritingHeader">
 				<h2 class="title">추천 장소 작성하기</h2>
 			</div>
-			<div class="WritingContent">
-				<div class="WritingEditor">
-					<div class="ArticleWritingTitle">
-						<div class="column_title">
-							<div class="FormSelectBox menu_candidates_selectbox">
-								<div class="FormSelectButton">
-									<button type="button" aria-haspopup="true" aria-expanded="selectboxLayer" aria-pressed="selectboxLayer" class="button">게시판을 선택해 주세요.</button>
+			<form id="write_form" action="spotWrite.do" method="post" enctype="multipart/form-data">
+				<div class="WritingContent">
+					<div class="WritingEditor">
+						<div class="ArticleWritingTitle">
+							<div class="column_title">
+								<select class="nice-select">
+									<option data-display="Select" class="nice-select">지역을 선택해주세요</option>
+									<option value="1" >동부</option>
+									<option value="2">서부</option>
+									<option value="3">남부</option>
+									<option value="4">북부</option>
+								</select>
+							</div>
+							<div>
+								<div class="FlexableTextArea">
+									<textarea placeholder="제목을 입력해 주세요." class="textarea_input" style="height: 40px;" name="title"></textarea>
 								</div>
 							</div>
-						</div>
-						<div>
-							<div class="FlexableTextArea">
-								<textarea placeholder="제목을 입력해 주세요." class="textarea_input" style="height: 40px;" name="title"></textarea>
+							<div>
+								<form id="write_form" action="spotWrite.do" method="post" enctype="multipart/form-data">
+									<div class="form-group">
+										<textarea id="summernote" name="content"></textarea>
+									</div>
+								</form>
+								<label for="filename">파일</label> <input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg">
 							</div>
-						</div>
-						<div>
-							<form id="write_form" action="spotWrite.do" method="post" enctype="multipart/form-data">
-								<div class="form-group">
-									<textarea id="summernote" name="content"></textarea>
-								</div>
-							</form>
-
-						</div>
-						<div class="form-group" align="center">
-							<input type="submit" value="등록" class="btn btn-primary"> <input type="submit" value="취소" class="btn btn-primary" onclick="location.href='spotList.do'">
+							<div class="form-group" align="center">
+								<input type="submit" value="등록" class="btn btn-primary"> <input type="submit" value="취소" class="btn btn-primary" onclick="location.href='spotList.do'">
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+			</form>
 		</div>
+	</div>
 	</div>
 
 
