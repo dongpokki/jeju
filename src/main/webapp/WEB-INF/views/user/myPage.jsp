@@ -95,55 +95,64 @@
 		
 		// ↓ 내가 좋아하는 장소 & 내가 좋아하는 코스 스크립트문
 		
-		let currentPage;
-		let count;
-		let rowCount;
+		let spot_currentPage;
+		let spot_count;
+		let spot_rowCount;
 		
 		//내가 좋아하는 장소 목록
-		function selectData(pageNum){
-			currentPage = pageNum;
+		function spot_selectData(spot_pageNum){
+			spot_currentPage = spot_pageNum;
 			
 			//로딩 이미지 노출
-			$('#loading').show();
+			$('#spot_loading').show();
 			
 			$.ajax({
 				type:'post',
-				data:{pageNum:pageNum},
+				data:{pageNum:spot_pageNum},
 				url:'mygoodspot.do',
 				dataType:'json',
 				cache:false,
 				timeout:30000,
 				success:function(param){
 					//로딩 이미지 감추기
-					$('#loading').hide();
+					$('#spot_loading').hide();
 					
-					count = param.count;
-					rowCount = param.rowCount;
+					spot_count = param.count;
+					spot_rowCount = param.rowCount;
 					
-					if(pageNum == 1){
+					if(spot_pageNum == 1){
 						// 처음 호출시는 해당 ID의 div의 내부 내용물을 제거
-						$('#output').empty();
+						$('#spot_output').empty();
 					}	
-					
-					$(param.list).each(function(index,spot){
-						let output = '<div class="col-sm-6 col-lg-4">';
-						output += '<h3 class="best-title">' + spot.title + '</h3>';
-						output += '<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">';
-						output += '<p class="best-content">' + spot.content + '</p>';
-						output += '<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=' + spot.spot_num + '" class="btn btn-warning">상세보기 &raquo;</a></p>';
-						output += '</div>';
+
+					if($(param.list).length == 0){ // 내가 추천하는 장소가 없다면
+						let output = '<div class="alert alert-warning" style="width:100%;">등록된 추천 코스가 없습니다.</div>';
 						
 						//문서 객체에 추가
-						$('#output').append(output);	
+						$('#spot_output').append(output);
+					}
+					
+					
+					$(param.list).each(function(index,spot){
+
+							let output = '<div class="col-sm-6 col-lg-4">';
+							output += '<h3 class="best-title">' + spot.title + '</h3>';
+							output += '<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">';
+							output += '<p class="best-content">' + spot.content + '</p>';
+							output += '<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=' + spot.spot_num + '" class="btn btn-warning">상세보기 &raquo;</a></p>';
+							output += '</div>';
+						
+						//문서 객체에 추가
+						$('#spot_output').append(output);	
 					});
 					
 					//page button 처리
-					if(currentPage>=Math.ceil(count/rowCount)){
+					if(spot_currentPage>=Math.ceil(spot_count/spot_rowCount)){
 						//다음 페이지가 없음
-						$('.paging-button').hide();		
+						$('.spot_paging-button').hide();		
 					}else{
 						//다음 페이지가 존재
-						$('.paging-button').show();
+						$('.spot_paging-button').show();
 					}
 					
 				},
@@ -154,12 +163,12 @@
 		}
 		
 		// 페이지 처리 이벤트 연결(다음 댓글 보기 버튼 클릭 시 데이터 추가)
-		$('.paging-button input').click(function(){
-			selectData(currentPage + 1);		
+		$('.spot_paging-button input').click(function(){
+			spot_selectData(spot_currentPage + 1);		
 		});
 		
 		// 마이페이지 최초 진입 시 내가 좋아하는 장소 초기 데이터 3개(1page) 목록 호출
-		selectData(1);
+		spot_selectData(1);
 		
 		
 	});
@@ -220,11 +229,11 @@
 
 		<!-- 내가 추천한 장소 시작 -->
 		<h1 class="text-primary" >내가 추천한 장소</h1>
-		<div class="row" id="output"></div>
-			<div class="paging-button" style="display: none">
+		<div class="row" id="spot_output"></div>
+			<div class="spot_paging-button" style="display: none">
 				<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
 			</div>
-			<div id="loading" style="display: none">
+			<div id="spot_loading" style="display: none">
 				<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
 			</div>
 		<!-- 내가 추천한 장소 끝 -->
@@ -232,23 +241,15 @@
 		<hr class="featurette-divider">
 
 		<!-- 내가 추천한 코스 시작 -->
-		<h1 class="text-primary">내가 추천한 코스</h1>
-		<div class="row">
-			<c:if test="${empty course_list}">
-				<div class="alert alert-warning" style="width:100%;">등록된 추천 코스가 없습니다.</div>
-			</c:if>
-			<c:if test="${!empty course_list}">
-				<c:forEach var="course" items="${course_list}">
-					<div class="col-sm-6 col-lg-4">
-						<h3 class="best-title">${course.title}</h3>
-						<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
-						<p class="best-content">${course.content}</p>
-		  				<p><a href="${pageContext.request.contextPath}/spot/courseDetail.do?course_num=${course.course_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
-					</div>
-				</c:forEach>
-			</c:if>
-		</div>
-		<!-- 내가 추천한 장소 끝 -->
+		<h1 class="text-primary" >내가 추천한 코스</h1>
+		<div class="row" id="course_output"></div>
+			<div class="course_paging-button" style="display: none">
+				<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
+			</div>
+			<div id="course_loading" style="display: none">
+				<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
+			</div>
+		<!-- 내가 추천한 코스 끝 -->
 
 	</div>
 	<!-- 중앙 컨텐츠 끝 -->
