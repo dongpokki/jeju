@@ -8,7 +8,6 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
-
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -31,17 +30,23 @@
 	<main>
 		<div class="page-section">
 			<div class="container">
-				<form action="#" class="search-widget" align="right">
-					<input type="text" class="form-control" placeholder="검색어를 입력해주세요">
+				<form class="search-widget" align="right">
+					<c:if test="${!empty param.category}">
+				    <input type="hidden" name="category" value="${param.category}">
+				    </c:if>
+				    <c:if test="${empty param.category}">
+				    <input type="hidden" name="category" value="0">
+				    </c:if>
+					<input type="text" class="form-control" placeholder="검색어를 입력해주세요" value="${param.keyword}" name="keyword" id="keyword">
 					<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">검색</button>
 				</form>
 				<nav aria-label="Breadcrumb">
 					<ul class="breadcrumb p-0 mb-0 bg-transparent">
-						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${category==0 }">style="color:#FE9A2E;"</c:if>>전체</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=1" <c:if test="${category==2 }">style="color:#FE9A2E;"</c:if>>동부</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=2" <c:if test="${category==3 }">style="color:#FE9A2E;"</c:if>>서부</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${category==4 }">style="color:#FE9A2E;"</c:if>>남부</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=4" <c:if test="${category==5 }">style="color:#FE9A2E;"</c:if>>북부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${!empty category }">style="color:#FE9A2E;"</c:if>>전체</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=1" <c:if test="${category==1 }">style="color:#FE9A2E;"</c:if>>동부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=2" <c:if test="${category==2 }">style="color:#FE9A2E;"</c:if>>서부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${category==3 }">style="color:#FE9A2E;"</c:if>>남부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=4" <c:if test="${category==4 }">style="color:#FE9A2E;"</c:if>>북부</a></li>
 					</ul>
 				</nav>
 				<div class="row">

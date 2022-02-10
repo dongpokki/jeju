@@ -118,22 +118,39 @@ public class SpotDAO {
 		ResultSet rs = null;
 		String sql = null;
 		String sub_sql = "";
+		int cnt = 0;
 		int count = 0;
 
 		try {
 			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
-			if (keyword != null && !"".equals(keyword)) {
-				sub_sql = "AND content LIKE ? ";
+			if (keyword != null && !"".equals(keyword)) {//검색어가 있는 경우
+				sub_sql = "WHERE content LIKE ?";
+				if (category != 0) {
+					sub_sql += " AND category=? ";
+				}
+			}else {//검색어가 없는 경우
+				if (category != 0) {
+					sub_sql = "WHERE category=? ";
+				}
 			}
+			
 			// 전체 또는 검색 레코드 수
-			sql = "SELECT COUNT(*) FROM jboard_spot WHERE category = ? " + sub_sql;
+			sql = "SELECT COUNT(*) FROM jboard_spot " + sub_sql;
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, category);
-			if (keyword != null && !"".equals(keyword)) {
-				pstmt.setString(2, "%" + keyword + "%");
+			if (keyword != null && !"".equals(keyword)) {//검색어가 있는 경우
+				pstmt.setString(++cnt, "%" + keyword + "%");
+				if (category != 0) {
+					System.out.println(cnt);
+					pstmt.setInt(++cnt, category);
+				}
+			}else {//검색어가 없는 경우
+				if (category != 0) {
+					pstmt.setInt(++cnt, category);
+				}
 			}
+
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				count = rs.getInt(1);
@@ -162,34 +179,34 @@ public class SpotDAO {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			if (category == 0) {
-				if (keyword != null && !"".equals(keyword)) {
-					sub_sql = "WHERE content LIKE ?";
+			if (keyword != null && !"".equals(keyword)) {//검색어가 있는 경우
+				sub_sql = "WHERE content LIKE ?";
+				if (category != 0) {
+					sub_sql += " AND category=? ";
 				}
-
-				sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot " + sub_sql
-						+ "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
-				pstmt = conn.prepareStatement(sql);
-				if (keyword != null && !"".equals(keyword)) {
-
-					pstmt.setString(++cnt, "%" + keyword + "%");
+			}else {//검색어가 없는 경우
+				if (category != 0) {
+					sub_sql = "WHERE category=? ";
 				}
-				pstmt.setInt(++cnt, startRow);
-				pstmt.setInt(++cnt, endRow);
-			} else if (category != 0) {
-				if (keyword != null && !"".equals(keyword)) {
-					sub_sql = "AND content LIKE ?";
-				}
-				sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot WHERE category=? "
-						+ sub_sql + "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(++cnt, category);
-				if (keyword != null && !"".equals(keyword)) {
-					pstmt.setString(++cnt, "%" + keyword + "%");
-				}
-				pstmt.setInt(++cnt, startRow);
-				pstmt.setInt(++cnt, endRow);
 			}
+			
+			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot " + sub_sql
+					+ "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
+			pstmt = conn.prepareStatement(sql);
+
+			if (keyword != null && !"".equals(keyword)) {//검색어가 있는 경우
+				pstmt.setString(++cnt, "%" + keyword + "%");
+				if (category != 0) {
+					pstmt.setInt(++cnt, category);
+				}
+			}else {//검색어가 없는 경우
+				if (category != 0) {
+					pstmt.setInt(++cnt, category);
+				}
+			}
+			pstmt.setInt(++cnt, startRow);
+			pstmt.setInt(++cnt, endRow);
+
 
 			// SQL문을 테이블에 반영하고 결과행들을 ResultSet 담음
 			rs = pstmt.executeQuery();
