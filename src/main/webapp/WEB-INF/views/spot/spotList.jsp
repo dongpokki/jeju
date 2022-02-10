@@ -42,7 +42,7 @@
 				</form>
 				<nav aria-label="Breadcrumb">
 					<ul class="breadcrumb p-0 mb-0 bg-transparent">
-						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${!empty category }">style="color:#FE9A2E;"</c:if>>전체</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${category<1}">style="color:#FE9A2E;"</c:if>>전체</a></li>
 						<li class="breadcrumb-item"><a href="spotList.do?category=1" <c:if test="${category==1 }">style="color:#FE9A2E;"</c:if>>동부</a></li>
 						<li class="breadcrumb-item"><a href="spotList.do?category=2" <c:if test="${category==2 }">style="color:#FE9A2E;"</c:if>>서부</a></li>
 						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${category==3 }">style="color:#FE9A2E;"</c:if>>남부</a></li>
