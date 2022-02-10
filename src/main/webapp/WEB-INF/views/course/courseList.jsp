@@ -184,7 +184,8 @@
 	<c:if test="${count == 0}">
 	<div class="result-display">
 		표시할 게시물이 없습니다.
-	</div>	</c:if>
+	</div>
+	</c:if>
 	<c:if test="${count > 0}">
 	<table>
 		<tr>
@@ -193,7 +194,7 @@
 			<th>작성일</th>
 			<th>조회</th>
 		</tr>
-		<c:forEach var="board" items="${list}">
+		<c:forEach var="jboard_course" items="${list}">
 		<tr>
 			<td>${jboard_course.course_num}</td>
 			<td><a href="detail.do?course_num=${jboard_course.course_num}">${jboard_course.title}</a></td>

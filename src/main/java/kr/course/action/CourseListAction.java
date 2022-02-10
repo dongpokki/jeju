@@ -30,7 +30,7 @@ public class CourseListAction implements Action{
 		//페이지 처리
 		//keyfield,keyword,currentPage,count,rowCount,pageCount,url
 		PagingUtil page = new PagingUtil(keyfield,keyword,
-				          Integer.parseInt(pageNum),count,20,10,"list.do");
+				          Integer.parseInt(pageNum),count,20,10,"CourseList.do");
 		
 		List<CourseVO> list = null;
 		if(count > 0) {
