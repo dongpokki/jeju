@@ -30,7 +30,7 @@ public class SpotDAO {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			sql = "INSERT INTO jboard_spot (spot_num, title, content, filename, ip, user_num)"
+			sql = "INSERT INTO jboard_spot (spot_num, title, content, filename, category, user_num)"
 					+ "VALUES (jboard_spot_seq.nextval, ?,?,?,?,?)";
 
 			// PreparedStatement 객체 생성
@@ -39,7 +39,7 @@ public class SpotDAO {
 			pstmt.setString(1, Spot.getTitle());
 			pstmt.setString(2, Spot.getContent());
 			pstmt.setString(3, Spot.getFilename());
-			pstmt.setString(4, Spot.getIp());
+			pstmt.setInt(4, Spot.getCategory());
 			pstmt.setInt(5, Spot.getUser_num());
 			pstmt.executeUpdate();
 
@@ -67,7 +67,7 @@ public class SpotDAO {
 			}
 
 			sql = "UPDATE jboard_spot SET title=?, content=?, modify_date=SYSDATE" + sub_sql
-					+ ", ip=? WHERE spot_num=?";
+					+ ", user_num=? WHERE spot_num=?";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -77,7 +77,7 @@ public class SpotDAO {
 			if (Spot.getFilename() != null) {
 				pstmt.setString(++cnt, Spot.getFilename());
 			}
-			pstmt.setString(++cnt, Spot.getIp());
+			pstmt.setInt(++cnt, Spot.getUser_num());
 			pstmt.setInt(++cnt, Spot.getUser_num());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -124,28 +124,28 @@ public class SpotDAO {
 		try {
 			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
-			if (keyword != null && !"".equals(keyword)) {//검색어가 있는 경우
+			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
 				sub_sql = "WHERE content LIKE ?";
 				if (category != 0) {
 					sub_sql += " AND category=? ";
 				}
-			}else {//검색어가 없는 경우
+			} else {// 검색어가 없는 경우
 				if (category != 0) {
 					sub_sql = "WHERE category=? ";
 				}
 			}
-			
+
 			// 전체 또는 검색 레코드 수
 			sql = "SELECT COUNT(*) FROM jboard_spot " + sub_sql;
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			if (keyword != null && !"".equals(keyword)) {//검색어가 있는 경우
+			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
 				pstmt.setString(++cnt, "%" + keyword + "%");
 				if (category != 0) {
 					System.out.println(cnt);
 					pstmt.setInt(++cnt, category);
 				}
-			}else {//검색어가 없는 경우
+			} else {// 검색어가 없는 경우
 				if (category != 0) {
 					pstmt.setInt(++cnt, category);
 				}
@@ -179,34 +179,33 @@ public class SpotDAO {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			if (keyword != null && !"".equals(keyword)) {//검색어가 있는 경우
+			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
 				sub_sql = "WHERE content LIKE ?";
 				if (category != 0) {
 					sub_sql += " AND category=? ";
 				}
-			}else {//검색어가 없는 경우
+			} else {// 검색어가 없는 경우
 				if (category != 0) {
 					sub_sql = "WHERE category=? ";
 				}
 			}
-			
+
 			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot " + sub_sql
 					+ "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
 			pstmt = conn.prepareStatement(sql);
 
-			if (keyword != null && !"".equals(keyword)) {//검색어가 있는 경우
+			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
 				pstmt.setString(++cnt, "%" + keyword + "%");
 				if (category != 0) {
 					pstmt.setInt(++cnt, category);
 				}
-			}else {//검색어가 없는 경우
+			} else {// 검색어가 없는 경우
 				if (category != 0) {
 					pstmt.setInt(++cnt, category);
 				}
 			}
 			pstmt.setInt(++cnt, startRow);
 			pstmt.setInt(++cnt, endRow);
-
 
 			// SQL문을 테이블에 반영하고 결과행들을 ResultSet 담음
 			rs = pstmt.executeQuery();
@@ -283,7 +282,8 @@ public class SpotDAO {
 			conn = DBUtil.getConnection();
 
 			// sql문 작성
-			// 게시글별로 추천수의 합(total_good)이 높은 순으로 랭킹1~3위 까지 3개의 컬럼 조회 [추천수(good)이 같은 경우에는, 게시글번호(spot_num)이 낮은(먼저 등록한 순)순으로 추가 비교]
+			// 게시글별로 추천수의 합(total_good)이 높은 순으로 랭킹1~3위 까지 3개의 컬럼 조회 [추천수(good)이 같은 경우에는,
+			// 게시글번호(spot_num)이 낮은(먼저 등록한 순)순으로 추가 비교]
 			sql = "select b.spot_num,b.title,b.content,u.total_good,u.rank from jboard_spot b join (select * from (select spot_num,total_good,row_number() over (order by total_good desc,spot_num) rank from(select spot_num,count(*) total_good from jgood_spot where good =1 group by spot_num)) where rank<4) u on b.spot_num = u.spot_num";
 
 			// PreparedStatement 객체 생성
@@ -328,10 +328,10 @@ public class SpotDAO {
 
 			// sql문 작성
 			sql = "select * from (select a.*, rownum rnum from (select b.spot_num,b.title,b.content,g.good from jboard_spot b join jgood_spot g on b.spot_num = g.spot_num where g.user_num=? and good=1 order by b.spot_num)a) where rnum>=? and rnum<=?";
-			
+
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			
+
 			// ?에 데이터 바인딩
 			pstmt.setInt(1, user_num);
 			pstmt.setInt(2, startRow);
@@ -363,29 +363,29 @@ public class SpotDAO {
 	}
 
 	// [정동윤 작성] 마이페이지에 노출할 내가 추천한 spot count구하기
-	public int MyGoodSpotCount(int session_user_num)throws Exception{
+	public int MyGoodSpotCount(int session_user_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
 		int count = 0;
-		
+
 		try {
 			// 커넥션풀로부터 커넥션풀 할당
 			conn = DBUtil.getConnection();
-			
+
 			sql = "select count(*) from jgood_spot where user_num=? and good=1";
-			
+
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-						
+
 			// ?에 데이터 바인딩
 			pstmt.setInt(1, session_user_num);
-						
+
 			// SQL문 수행하여 결과 집합을 rs에 담음
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				count = rs.getInt(1);
 			}
 		} catch (Exception e) {
@@ -393,7 +393,7 @@ public class SpotDAO {
 		} finally {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
-		
+
 		return count;
 	}
 }

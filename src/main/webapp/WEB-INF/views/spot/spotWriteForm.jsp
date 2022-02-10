@@ -29,8 +29,8 @@
 					<div class="WritingEditor">
 						<div class="ArticleWritingTitle">
 							<div class="column_title">
-								<select class="nice-select">
-									<option data-display="Select" class="nice-select">지역을 선택해주세요</option>
+								<select class="nice-select" name="category">
+									<option data-display="Select" class="nice-select" >지역을 선택해주세요</option>
 									<option value="1" >동부</option>
 									<option value="2">서부</option>
 									<option value="3">남부</option>

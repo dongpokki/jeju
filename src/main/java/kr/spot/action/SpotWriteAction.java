@@ -29,7 +29,7 @@ public class SpotWriteAction implements Action {
 		SpotVO spot = new SpotVO();
 		spot.setTitle(multi.getParameter("title"));
 		spot.setContent(multi.getParameter("content"));
-		spot.setIp(request.getRemoteAddr());
+		spot.setCategory(Integer.parseInt(multi.getParameter("category")));
 		spot.setFilename(multi.getFilesystemName("filename"));
 		spot.setUser_num(session_user_num);
 

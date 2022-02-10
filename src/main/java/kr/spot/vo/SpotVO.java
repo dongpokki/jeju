@@ -11,7 +11,8 @@ public class SpotVO {
 	private Date reg_date; // 등록일
 	private Date modify_date; // 수정일
 	private String filename; // 파일명
-	private String ip; // ip주소
+	private int category;
+
 	private int user_num; // 회원번호(작성자)
 
 	public int getSpot_num() {
@@ -70,20 +71,20 @@ public class SpotVO {
 		this.filename = filename;
 	}
 
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
 	public int getUser_num() {
 		return user_num;
 	}
 
 	public void setUser_num(int user_num) {
 		this.user_num = user_num;
+	}
+
+	public int getCategory() {
+		return category;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
 	}
 
 }
