@@ -23,8 +23,21 @@
 </head>
 <body>
 <div class="page-main">
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<form id="search_form" action="list.do" method="get">
+	<jsp:include page="/WEB-INF/views/common/header.jsp"/></div>
+	<div class="container">
+		<div class="WritingWrap">
+			<div class="WritingHeader">
+				<h2 class="text-primary">추천 코스</h2>
+			</div>
+			</div>
+			<div class="list-space" align="right">
+		<input type="button" value="글쓰기" onclick="location.href='${pageContext.request.contextPath}/course/courseWriteForm.do'"
+		<c:if test="${empty user_num}"> onclick="location.href='${pageContext.request.contextPath}/user/loginForm.do'"</c:if>>
+		<input type="button" value="홈으로" 
+		 onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+	</div>
+			<div class="list-search" align="right">
+	<form id="search_form" action="courseList.do" method="get">
 		<ul class="search">
 			<li>
 				<select name="keyfield">
@@ -42,19 +55,16 @@
 			</li>
 		</ul>
 	</form>
+	
 	</div>
-	<div class="list-space align-center">
-		<input type="button" value="글쓰기" onclick="location.href='${pageContext.request.contextPath}/course/courseWriteForm.do'"
-		<c:if test="${empty user_num}"> onclick="location.href='${pageContext.request.contextPath}/user/loginForm.do'"</c:if>>
-		<input type="button" value="홈으로" 
-		 onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
-	</div>
-	<div class="page-title" align="center">
-    <h2>Jeju 추천!<br>2월에 가면 더 좋은 제주도 여행 코스</h2>
+	
+	<div class="page-title" align="left">
+    <h2>JE<span class="text-primary">JU</span> 추천!<br>2월에 가면 더 좋은 제주도 여행 코스</h2>
+    </div>
 	<c:if test="${count == 0}">
    
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f0f45ae09fd5fe9bd4014a783fa7b89"></script>
-<div id="map" style="width: 40%; height: 500px;"></div>
+<div id="map" style="width: 100%; height: 500px;"></div>
 <script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 	mapOption = {
