@@ -8,21 +8,28 @@ import kr.course.vo.CourseVO;
 import kr.controller.Action;
 import kr.util.StringUtil;
 
-public class CourseDetailAction implements Action {
+public class CourseDetailAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		int board_co_num = Integer.parseInt(request.getParameter("board_Co_num"));
-
+		
+		//글번호 반환
+		int course_num = Integer.parseInt(request.getParameter("course_num"));
+		
 		CourseDAO dao = CourseDAO.getInstance();
-		// dao.updateReadcount(board_num);
-		CourseVO course = dao.getCoursecourse(board_co_num);
-
-		course.setTitle(StringUtil.useBrNoHtml(course.getTitle()));
+		
+		//조회수 증가
+		dao.updateReadcount(course_num);
+		
+		CourseVO course = dao.getCoursecourse(course_num);
+		
+		//HTML태그를 허용하지 않음
+		course.setTitle(StringUtil.useNoHtml(course.getTitle()));
+		//HTML태그를 허용하지 않으면서 줄바꿈 처리
 		course.setContent(StringUtil.useBrNoHtml(course.getContent()));
+		
 		request.setAttribute("course", course);
-
-		// JSP 경로 반환
+		
 		return "/WEB-INF/views/course/courseDetail.jsp";
 	}
 

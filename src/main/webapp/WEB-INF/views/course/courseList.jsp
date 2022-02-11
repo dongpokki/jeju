@@ -197,7 +197,7 @@
 		<c:forEach var="jboard_course" items="${list}">
 		<tr>
 			<td>${jboard_course.course_num}</td>
-			<td><a href="detail.do?course_num=${jboard_course.course_num}">${jboard_course.title}</a></td>
+			<td><a href="courseDetail.do?course_num=${jboard_course.course_num}">${jboard_course.title}</a></td>
 			<td>${jboard_course.reg_date}</td>
 			<td>${jboard_course.hit}</td>
 		</tr>	

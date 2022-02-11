@@ -141,42 +141,70 @@ public class CourseDAO {
 		 return list;
 	 }
 	 // 추천 코스 상세
-	 public CourseVO getCoursecourse(int course_num) throws Exception {
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			CourseVO Course = null;
-			String sql = null;
-
-			try {
-				// 커넥션풀로부터 커넥션을 할당
-				conn = DBUtil.getConnection();
-				// SQL문 작성
-				sql = "SELECT * FROM jboard_course WHERE course_num = ?";
-				// PreparedStatement 객체 생성
-				pstmt = conn.prepareStatement(sql);
-				// ?에 데이터 바인딩
-				pstmt.setInt(1, course_num);
-				// SQL문 테이블에 반영하고 결과행을 ResultSet에 담음
-				rs = pstmt.executeQuery();
-				if (rs.next()) {
-					Course = new CourseVO();
-					Course.setCourse_num(rs.getInt("course_num"));
-					Course.setTitle(rs.getString("title"));
-					Course.setContent(rs.getString("content"));
-					Course.setHit(rs.getInt("hit"));
-					Course.setReg_date(rs.getDate("reg_date"));
-					Course.setModify_date(rs.getDate("modify_date"));
-					Course.setFilename(rs.getString("filename"));
-				}
-			} catch (Exception e) {
-				throw new Exception(e);
-			} finally {
-				// 자원정리
-				DBUtil.executeClose(rs, pstmt, conn);
-			}
-			return Course;
-		}
+	 public CourseVO getCoursecourse(int course_num)throws Exception{
+		 Connection conn = null;
+		 PreparedStatement pstmt = null;
+		 ResultSet rs = null;
+		 CourseVO course = null;
+		 String sql = null;
+		 
+		 try {
+			 //커넥션풀로부터 커넥션을 할당
+			 conn = DBUtil.getConnection();
+			 //SQL문 작성
+			 sql = "SELECT * FROM jboard_course c JOIN juser u "
+			 	+ "ON c.user_num=u.user_num WHERE c.course_num=?";
+			 //PreparedStatement 객체 생성
+			 pstmt = conn.prepareStatement(sql);
+			 //?에 데이터를 바인딩
+			 pstmt.setInt(1, course_num);
+			 //SQL문 실행해서 결과행을 ResultSet에 담음
+			 rs = pstmt.executeQuery();
+			 if(rs.next()) {
+				 course = new CourseVO();
+				 course.setCourse_num(rs.getInt("course_num"));
+				 course.setTitle(rs.getString("title"));
+				 course.setContent(rs.getString("content"));
+				 course.setHit(rs.getInt("hit"));
+				 course.setReg_date(rs.getDate("reg_date"));
+				 course.setModify_date(rs.getDate("modify_date"));
+				 course.setFilename(rs.getString("filename"));
+				 course.setUser_num(rs.getInt("user_num"));
+			 }
+			 
+		 }catch(Exception e) {
+			 throw new Exception(e);
+		 }finally {
+			 //자원정리
+			 DBUtil.executeClose(rs, pstmt, conn);
+		 }
+		 return course;
+	 }
+	 //조회수 증가
+	 public void updateReadcount(int course_num)throws Exception{
+		 Connection conn = null;
+		 PreparedStatement pstmt = null;
+		 String sql = null;
+		 
+		 try {
+			 //커넥션풀로부터 커넥션을 할당
+			 conn = DBUtil.getConnection();
+			 
+			 //SQL문 작성
+			 sql = "UPDATE jboard_course SET hit=hit+1 WHERE course_num=?";
+			 //PreparedStatement 객체 생성
+			 pstmt = conn.prepareStatement(sql);
+			 //?에 데이터를 바인딩
+			 pstmt.setInt(1, course_num);
+			 //SQL문 실행
+			 pstmt.executeUpdate();
+		 }catch(Exception e) {
+			 throw new Exception(e);
+		 }finally {
+			 //자원정리
+			 DBUtil.executeClose(null, pstmt, conn);
+		 }
+	 }
 	 
 		// 추천 코스 수정
 		public void updateCoursecourse(CourseVO Course) throws Exception {
