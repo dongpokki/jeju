@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.qna.vo.QnaCmtVO;
 import kr.qna.vo.QnaVO;
 import kr.user.vo.UserVO;
 import kr.util.DBUtil;
@@ -276,4 +277,20 @@ public class QnaDAO {
 		}
 	}
 	 
+	
+	/////////////////////////////////////////
+	//댓글
+	//댓글 등록
+	public void insertCmtQna(QnaCmtVO qnaCmtVO) throws Exception{
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		String sql =null;
+		try {
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 }

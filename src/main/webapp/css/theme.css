@@ -50,7 +50,7 @@ a:hover {
 
 .btn-primary {
 	color: #fff;
-	background-color: #FE9A2E;
+	background-color: #FEA82F;
 	border-color: transparent;
 }
 
@@ -62,7 +62,7 @@ a:hover {
 
 .btn-tertiary {
 	color: #fff;
-	background-color: #E8552A;
+	background-color: #FF6701;
 	border-color: transparent;
 }
 
@@ -1344,6 +1344,16 @@ a:hover {
 }
 
 /*QnA 게시판 */
+#qna-banner {
+	position: relative;
+	margin-top: 16px;
+	margin-bottom: 16px;
+	height: 400px;
+	color: #FEA82F;
+	border-radius: 30px;
+	height:50px;
+	background-color:#fff
+}
 label[for="title"] {
 	float: left;
 }

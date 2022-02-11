@@ -15,7 +15,7 @@
 	<div class="page-main">
 		<jsp:include page="/WEB-INF/views/common/header.jsp" />
 		<div class="container mt-5">
-			<div class="page-banner" style="height:50px;background-color:#fff">
+			<div id="qna-banner">
 				<h1>QnA</h1>
 			</div>
 			<div class="align-center">
@@ -24,7 +24,7 @@
 					<div>
 					<ul id="search">
 						<li>
-							<select name="keyfield" class="form-control" style="width:100px">
+							<select name="keyfield" class="form-control" style="width:100px;height:38px">
 							<option value="0"<c:if test="${param.keyfield==0}">selected</c:if>>전체</option>
 							<option value="1"<c:if test="${param.keyfield==1}">selected</c:if>>제목</option>
 							<option value="2"<c:if test="${param.keyfield==2}">selected</c:if>>작성자</option>
@@ -32,10 +32,10 @@
 							</select>
 						</li>
 						<li>
-							<input type="search" size="16" name="keyword" id="keyword" class="form-control" value="${param.keyword }" placeholder="검색어를 입력해주세요">
-						</li>
-						<li>
-							<button type="submit" class="btn btn-primary btn-block"><img src='${pageContext.request.contextPath }/images/search.png'width="25px"></button>
+							<input type="search" size="16" name="keyword" id="keyword" class="form-control" value="${param.keyword }" placeholder="검색어를 입력해주세요" style="height:38px">
+							<button style="height:38px;" type="submit" class="btn btn-primary btn-block" style="backgroun-color:#FEA82F">
+								<img src='${pageContext.request.contextPath }/images/search.png'width="25px">
+							</button>
 						</li>
 					</ul>
 					</div>
@@ -90,7 +90,7 @@
 				</table>	
 				<div class="d-grid gap-2 col-6">
 					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary btn-login fw-bold" type="button" value="삭제" onclick="location.href='qnaDelete.do'"></c:if>
-					<input <c:if test="${empty session_user_num}">disabled="disabled"</c:if> class="btn btn-primary btn-login fw-bold" type="button" value="작성" onclick="location.href='qnaWriteForm.do'"> 
+					<input <c:if test="${empty session_user_num}">disabled="disabled"</c:if> class="btn btn-primary btn-login fw-bold" type="button" value="작성" onclick="location.href='qnaWriteForm.do'" style="backgroun-color:#FEA82F"> 
 					<input class="btn btn-secondary btn-login fw-bold" type="button" value="목록" onclick="location.href='qnaList.do';">
 				</div>
 			</div>
