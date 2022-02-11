@@ -43,7 +43,7 @@
 	<main>
 		<!-- 카테고리 표시 -->
 		<div class="page-section pt-5">
-			<div class="container">
+			<div class="container" style="width: 1300px !important">
 				<nav aria-label="Breadcrumb">
 					<ul class="breadcrumb p-0 mb-0 bg-transparent">
 						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${spot.category<1}">style="color:#FE9A2E;"</c:if>>전체</a></li>
@@ -55,7 +55,7 @@
 				</nav>
 				<div class="row">
 					<!-- 게시글 시작 -->
-					<div class="col-lg-8">
+					<div class="col-lg-9">
 						<div class="blog-single-wrap">
 							<div class="header">
 								<div class="post-thumb">
@@ -69,7 +69,7 @@
 									<a href="#">덧글 수(누르면 덧글 창으로 이동)</a>
 								</div>
 							</div>
-							<div class="post-content">${spot.content }${spot.category }</div>
+							<div class="post-content">${spot.content }</div>
 						</div>
 						<div>
 							<p align="right">(좋아요 버튼)</p>
@@ -132,7 +132,7 @@
 					</div>
 					<!-- 게시글 끝 -->
 					<!-- 사이드 바 시작 -->
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="widget">
 							<!-- Widget Categories -->
 							<div class="widget-box">
