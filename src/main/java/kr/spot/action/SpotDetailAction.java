@@ -2,6 +2,7 @@ package kr.spot.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.controller.Action;
 import kr.spot.dao.SpotDAO;
@@ -24,6 +25,12 @@ public class SpotDetailAction implements Action {
 
 		spot.setTitle(StringUtil.useBrNoHtml(spot.getTitle()));
 		request.setAttribute("spot", spot);
+		HttpSession session = request.getSession();
+		Integer session_user_num = (Integer) session.getAttribute("session_user_num");
+		if (session_user_num == null) {// 로그인이 되지 않은 경우
+			session_user_num = 0;
+		}
+		request.setAttribute("user_num", session_user_num);
 
 		// JSP 경로 반환
 		return "/WEB-INF/views/spot/spotDetail.jsp";

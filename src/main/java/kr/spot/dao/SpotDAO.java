@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.spot.vo.SpotGoodVO;
 import kr.spot.vo.SpotVO;
 import kr.util.DBUtil;
 import kr.util.StringUtil;
@@ -292,6 +293,93 @@ public class SpotDAO {
 			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
+	}
+
+// 좋아요 여부 확인
+	public int getAlreadyDone(int user_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		int count = 0;
+
+		try {
+			// 커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+
+			// 전체 또는 검색 레코드 수
+			sql = "SELECT COUNT(*) FROM jgood_spot WHERE user_num = ?";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		return count;
+	}
+
+	// 좋아요 기능
+	public void jGood(SpotGoodVO good) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			sql = "INSERT INTO jgood_spot VALUES (?,?,?)";
+
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, good.getSpot_num());
+			pstmt.setInt(2, good.getUser_num());
+			pstmt.setInt(3, 1);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			// SQL문이 하나라도 실패하면
+			conn.rollback();
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+
+	public int getSpotGoodCount(int spot_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+
+		try {
+			// 커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+
+			// 전체 또는 검색 레코드 수
+			sql = "SELECT COUNT(*) FROM jGood_spot WHERE spot_num = ?";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
 	}
 
 	// [정동윤 작성] 메인에 노출할 BEST3 spot 구하기
