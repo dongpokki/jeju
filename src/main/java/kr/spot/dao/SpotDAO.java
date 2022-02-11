@@ -296,7 +296,7 @@ public class SpotDAO {
 	}
 
 // 좋아요 여부 확인
-	public int checkGood(int user_num) throws Exception {
+	public int checkGood(int user_num, int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -308,10 +308,11 @@ public class SpotDAO {
 			conn = DBUtil.getConnection();
 
 			// 전체 또는 검색 레코드 수
-			sql = "SELECT COUNT(*) FROM jgood_spot WHERE user_num = ?";
+			sql = "SELECT COUNT(*) FROM jgood_spot WHERE user_num = ? AND spot_num = ?";
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, user_num);
+			pstmt.setInt(2, spot_num);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				count = rs.getInt(1);
@@ -352,6 +353,7 @@ public class SpotDAO {
 		}
 	}
 
+//좋아요 개수
 	public int getSpotGoodCount(int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

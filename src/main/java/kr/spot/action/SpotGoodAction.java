@@ -25,7 +25,7 @@ public class SpotGoodAction implements Action {
 		}
 		SpotDAO dao = SpotDAO.getInstance();
 		int spot_num = Integer.parseInt(request.getParameter("spot_num"));
-		int checked = dao.checkGood(session_user_num);
+		int checked = dao.checkGood(session_user_num, spot_num);
 
 		Map<String, String> mapAjax = new HashMap<String, String>();
 		if (checked == 1) {
