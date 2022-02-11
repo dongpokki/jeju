@@ -296,7 +296,7 @@ public class SpotDAO {
 	}
 
 // 좋아요 여부 확인
-	public int getAlreadyDone(int user_num) throws Exception {
+	public int checkGood(int user_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;

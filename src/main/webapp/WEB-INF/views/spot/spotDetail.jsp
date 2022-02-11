@@ -31,7 +31,7 @@ $(function(){
 				dataType: 'json',
 				data : {spot_num: ${spot.spot_num}},
 				success:function(param){
-					if (param.result == 'alreadyDone') {
+					if (param.result == 'checked') {
 						alert('좋아요는 한번만 가능합니다.');
 					}else{
 						$('#good').css('color','red');
