@@ -18,7 +18,7 @@ public class SpotDetailAction implements Action {
 		SpotDAO dao = SpotDAO.getInstance();
 
 		// 조회수 증가
-		// dao.updateReadcount(spot_num);
+		dao.updateReadcount(spot_num);
 
 		SpotVO spot = dao.getSpotBoard(spot_num);
 

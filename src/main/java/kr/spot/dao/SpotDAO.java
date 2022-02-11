@@ -268,6 +268,32 @@ public class SpotDAO {
 		return spot;
 	}
 
+	// 조회수 증가
+	public void updateReadcount(int spot_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+
+			// SQL문 작성
+			sql = "UPDATE jboard_spot SET hit=hit+1 WHERE spot_num=?";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터를 바인딩
+			pstmt.setInt(1, spot_num);
+			// SQL문 실행
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+
 	// [정동윤 작성] 메인에 노출할 BEST3 spot 구하기
 	public List<SpotVO> getRankingSpot() throws Exception {
 		Connection conn = null;
