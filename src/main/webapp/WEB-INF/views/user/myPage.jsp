@@ -241,6 +241,7 @@
 		<hr class="featurette-divider">
 
 		<!-- 내가 추천한 코스 시작 -->
+		<!--
 		<h1 class="text-primary" >내가 추천한 코스</h1>
 		<div class="row" id="course_output"></div>
 			<div class="course_paging-button" style="display: none">
@@ -249,7 +250,17 @@
 			<div id="course_loading" style="display: none">
 				<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
 			</div>
+		 -->	
 		<!-- 내가 추천한 코스 끝 -->
+
+		<hr class="featurette-divider">
+
+		<!-- 내가 작성한 코스 시작 -->
+		<!-- 내가 작성한 코스 끝 -->
+		
+		<!-- 내가 작성한 문의사항 시작 -->
+		<!-- 내가 작성한 문의사항 끝 -->
+
 
 	</div>
 	<!-- 중앙 컨텐츠 끝 -->
