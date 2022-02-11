@@ -546,7 +546,7 @@ a:hover {
 	display: block;
 	margin-top: 16px;
 	margin-bottom: 32px;
-	width: 32px;
+	/* 	width: 32px; */
 	height: 3px;
 	border-radius: 40px;
 	background-color: #FE9A2E;
