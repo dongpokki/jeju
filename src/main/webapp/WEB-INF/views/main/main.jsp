@@ -31,7 +31,13 @@
 				<c:forEach var="spot" items="${spot_list}">
 					<div class="col-sm-6 col-lg-4">
 						<h3 class="best-title">${spot.title}</h3>
-						<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
+						<!-- DB 내 등록한 이미지가 있다면 이미지가 썸네일로 나오고 없는 경우 카테고리 대표 이미지가 썸네일 노출 -->
+						<c:if test="${empty spot.filename}">
+							<img src="${pageContext.request.contextPath}/images/${spot.category}.jpg" class="img-thumbnail">
+						</c:if>
+						<c:if test="${!empty spot.filename}">
+							<img src="${pageContext.request.contextPath}/upload/${spot.filename}" class="img-thumbnail">
+						</c:if>
 						<p class="best-content">${spot.content}</p>
 		  				<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=${spot.spot_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
 					</div>
