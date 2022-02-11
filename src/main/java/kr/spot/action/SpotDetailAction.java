@@ -30,6 +30,9 @@ public class SpotDetailAction implements Action {
 		if (session_user_num == null) {// 로그인이 되지 않은 경우
 			session_user_num = 0;
 		}
+
+		int good = dao.getSpotGoodCount(spot_num);
+		request.setAttribute("good", good);
 		request.setAttribute("user_num", session_user_num);
 
 		// JSP 경로 반환

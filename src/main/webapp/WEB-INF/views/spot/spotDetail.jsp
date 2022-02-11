@@ -34,7 +34,7 @@ $(function(){
 					if (param.result == 'checked') {
 						alert('좋아요는 한번만 가능합니다.');
 					}else{
-						$('#good').css('color','red');
+						$('#good').css('color','#FE9A2E');
 					}
 				}
 			});
@@ -99,8 +99,9 @@ $(function(){
 								<img src="${pageContext.request.contextPath }/upload/${spot.filename}" align="center">
 							</div>
 						</div>
-						<div>
-							<input type="button" value="♡" id="good">
+						<div align="right">
+							<input type="button" value="♡" id="good" <c:if test="${good==1}">style="color:#FE9A2E;"</c:if>>
+						 <c:if test="${good!=0}">좋아요 수 : ${good }</c:if>
 						</div>
 						<!-- 덧글 시작 -->
 						<div class="comment-form-wrap pt-5">

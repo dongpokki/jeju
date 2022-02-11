@@ -1343,6 +1343,10 @@ a:hover {
 	margin: 20px 0;
 }
 
+#good {
+	background-color: rgba(0, 0, 0, 0);
+	border-color: rgba(0, 0, 0, 0);
+}
 /*QnA 게시판 */
 #qna-banner {
 	position: relative;

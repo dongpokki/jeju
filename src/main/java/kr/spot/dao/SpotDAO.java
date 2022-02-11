@@ -369,7 +369,7 @@ public class SpotDAO {
 			sql = "SELECT COUNT(*) FROM jGood_spot WHERE spot_num = ?";
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-
+			pstmt.setInt(1, spot_num);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				count = rs.getInt(1);
