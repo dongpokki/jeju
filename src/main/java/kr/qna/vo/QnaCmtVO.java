@@ -5,7 +5,7 @@ import java.sql.Date;
 public class QnaCmtVO {
 	private int qnacmt_num;
 	private int qna_num;
-	private String content;
+	private String cmt_content;
 	private Date reg_date;
 	private Date modify_date;
 	private int user_num;
@@ -22,11 +22,11 @@ public class QnaCmtVO {
 	public void setQna_num(int qna_num) {
 		this.qna_num = qna_num;
 	}
-	public String getContent() {
-		return content;
+	public String getCmt_content() {
+		return cmt_content;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setCmt_content(String cmt_content) {
+		this.cmt_content = cmt_content;
 	}
 	public Date getReg_date() {
 		return reg_date;

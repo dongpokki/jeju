@@ -18,7 +18,7 @@ create sequence jboard_qna_seq;
 create table jcmt_qna(
     qnacmt_num number not null,
     qna_num number(10) not null,
-    content varchar2(300) not null,
+    cmt_content varchar2(300) not null,
     reg_date date default sysdate not null,
     modify_date date,
     user_num number not null,

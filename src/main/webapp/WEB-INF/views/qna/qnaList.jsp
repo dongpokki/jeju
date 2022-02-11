@@ -73,7 +73,7 @@
 						</td>
 						<td>${qna.name }
 							(<c:choose>
-								<c:when test="${fn:length(qna.id) gt 3}">
+								<c:when test="${fn:length(qna.id) gt 2}">
 									<c:out value="${fn:substring(qna.id, 0, 2)}"/><c:forEach begin="3" end="${fn:length(qna.id) }">*</c:forEach>
 								</c:when>
 							<c:otherwise>
