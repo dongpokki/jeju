@@ -15,6 +15,32 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </head>
+<script>
+$(function(){
+	let user_num = ${user_num };
+	$('#good').click(function() {
+		if (${user_num == 0}) {
+			alert('좋아요는 로그인 한 사용자만 가능합니다.');
+			$('#login').focus();
+			return;
+		}
+		if (${user_num != 0}) {
+			$.ajax({
+				url : 'spotGood.do',
+				type: 'post',
+				dataType: 'json',
+				data : {spot_num: ${spot.spot_num}},
+				success:function(param){
+					if (param.result == 'checked') {
+						alert('좋아요는 한번만 가능합니다.');
+					}else{
+						$('#good').css('color','#FE9A2E');
+					}
+				}
+			});
+		}
+	});	});
+</script>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<!-- 사진 섹션 시작 -->
@@ -73,8 +99,9 @@
 								<img src="${pageContext.request.contextPath }/upload/${spot.filename}" align="center">
 							</div>
 						</div>
-						<div>
-							<p align="right">(좋아요 버튼)</p>
+						<div align="right">
+							<input type="button" value="♡" id="good" <c:if test="${good==1}">style="color:#FE9A2E;"</c:if>>
+						 <c:if test="${good!=0}">좋아요 수 : ${good }</c:if>
 						</div>
 						<!-- 덧글 시작 -->
 						<div class="comment-form-wrap pt-5">

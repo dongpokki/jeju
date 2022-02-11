@@ -351,7 +351,7 @@ public class UserDAO {
 	//===============================================================================================================================================================//
 	/*								 [관리자] 							*/
 	// 총 회원 수
-	public int getUserByAdmin(String keyfield,String keyword) throws Exception{
+	public int getUserCountByAdmin(String keyfield,String keyword) throws Exception{
 		Connection conn =null;
 		PreparedStatement pstmt =null;
 		ResultSet rs =null;
@@ -361,9 +361,19 @@ public class UserDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			sql ="SELECT count(*) FROM zmember LEFT JOIN zmember_detail USING(member_num)";
+			if(keyword != null && !"".equals(keyword)) {
+				//검색글 처리
+				if(keyfield.equals("1")) sub_sql = "WHERE id LIKE ?";
+				else if(keyfield.equals("2")) sub_sql = "WHERE name LIKE ?";
+				else if(keyfield.equals("3")) sub_sql = "WHERE email LIKE ?";
+			}
+			
+			sql ="SELECT count(*) FROM juser LEFT JOIN juser_detail USING(user_num)" + sub_sql;
 			
 			pstmt = conn.prepareStatement(sql);
+			if(keyword != null && !"".equals(keyword)) {
+				pstmt.setString(1, "%" + keyword + "%");
+			}
 			
 			rs =pstmt.executeQuery();
 			if(rs.next()) {
@@ -384,18 +394,30 @@ public class UserDAO {
 		Connection conn =null;
 		PreparedStatement pstmt =null;
 		ResultSet rs =null;
+		List<UserVO> list =null;
 		String sql =null;
 		String sub_sql="";
-		List<UserVO> list =null;
+		int cnt = 0;
+		
 		try {
 			conn =DBUtil.getConnection();
 			
-			sql ="SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM zmember m LEFT OUTER JOIN zmember_detail d USING(mem_num) ORDER BY reg_date DESC NULLS LAST)a) WHERE rnum>=? AND rnum<=?";
+			if(keyword != null && !"".equals(keyword)) {
+				if(keyfield.equals("1")) sub_sql = "WHERE id LIKE ?";
+				else if(keyfield.equals("2")) sub_sql = "WHERE name LIKE ?";
+				else if(keyfield.equals("3")) sub_sql = "WHERE email LIKE ?";
+			}
 			
+			sql ="SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM juser u LEFT OUTER JOIN juser_detail d USING(user_num) " + sub_sql + " ORDER BY reg_date DESC NULLS LAST)a) WHERE rnum>=? AND rnum<=?";
+			
+			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-
+			if(keyword != null && !"".equals(keyword)) {
+				pstmt.setString(++cnt, "%" + keyword + "%");
+			}
+			pstmt.setInt(++cnt, startRow);
+			pstmt.setInt(++cnt, endRow);
+			
 			rs= pstmt.executeQuery();
 			list = new ArrayList<UserVO>();
 			while(rs.next()) {
@@ -424,7 +446,54 @@ public class UserDAO {
 		return list;
 	}
 
-
-	// 회원 정보 수정
-
-}
+	//회원 정보 수정
+		public void updateUserByAdmin(UserVO user)throws Exception{
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			PreparedStatement pstmt2 = null;
+			String sql = null;
+			
+			try {
+				//커넥션풀로부터 커넥션을 할당
+				conn = DBUtil.getConnection();
+				//오토 커밋 해제
+				conn.setAutoCommit(false);
+				
+				sql = "UPDATE juser SET auth=? WHERE user_num=?";
+				//PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				//?에 데이터 바인딩
+				pstmt.setInt(1, user.getAuth());
+				pstmt.setInt(2, user.getUser_num());
+				//SQL문 실행
+				pstmt.executeUpdate();
+				
+				sql = "UPDATE juser_detail SET name=?,phone=?,email=?,"
+					+ "zipcode=?,address1=?,address2=?,modify_date=SYSDATE "
+					+ "WHERE user_num=?";
+				//PreparedStatement 객체 생성
+				pstmt2 = conn.prepareStatement(sql);
+				//?에 데이터 바인딩
+				pstmt2.setString(1, user.getName());
+				pstmt2.setString(2, user.getPhone());
+				pstmt2.setString(3, user.getEmail());
+				pstmt2.setString(4, user.getZipcode());
+				pstmt2.setString(5, user.getAddress1());
+				pstmt2.setString(6, user.getAddress2());
+				pstmt2.setInt(7, user.getUser_num());
+				//SQL 실행
+				pstmt2.executeUpdate();
+				
+				//모든 SQL문이 정상적으로 실행
+				conn.commit();
+			}catch(Exception e) {
+				//SQL문이 하나라도 실패하면
+				conn.rollback();
+				throw new Exception(e);
+			}finally {
+				//자원정리
+				DBUtil.executeClose(null, pstmt2, null);
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+		}
+	}

@@ -76,7 +76,10 @@
 										<div class="post-title">
 											<a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.title }</a>
 										</div>
-										<div class="post-excerpt">${spot.content }</div>
+										<div class="post-excerpt" style="max-height: 200px !important;">
+											<a href="spotDetail.do?spot_num=${spot.spot_num}"><img src="${pageContext.request.contextPath }/upload/${spot.filename}" width="100%"></a>
+										</div>
+										<div class="post-excerpt" style="padding: 15px 0 0 0;">${spot.content }</div>
 									</div>
 									<div class="footer">
 										<a href="spotDetail.do?spot_num=${spot.spot_num}">Read More</a>
@@ -101,8 +104,7 @@
 				<!-- 관리자만 등록/삭제 버튼 보이게 -->
 				<c:if test="${session_user_auth == 3}">
 					<div class="col-12 mt-5" align="right">
-						<input class="btn btn-primary" type="button" value="등록" onclick="location.href='spotWriteForm.do'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;"> 
-						<input class="btn btn-secondary" type="button" value="삭제" onclick="location.href='spotDeleteForm.do';" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+						<input class="btn btn-primary" type="button" value="등록" onclick="location.href='spotWriteForm.do'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;"> <input class="btn btn-secondary" type="button" value="삭제" onclick="location.href='spotDeleteForm.do';" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
 					</div>
 				</c:if>
 			</div>

@@ -11,15 +11,15 @@
 		</script>
 	</c:when>
 	<c:otherwise>
-		<!DOCTYPE html>
-		<html>
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Qna 상세</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/bootstrap.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/theme.css">
+<link rel="stylesheet"href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet"href="${pageContext.request.contextPath}/css/theme.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/qna-cmt.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -66,7 +66,7 @@
 							value="수정"
 							onclick="location.href='qnaUpdateForm.do?qna_num=${qna.qna_num}'">
 					</c:if>
-					<c:if test="${session_user_num==qna.user_num}">
+					<c:if test="${session_user_num==qna.user_num || session_user_auth==3 }">
 						<input type="button" class="btn btn-tertiary btn-login fw-bold"
 							value="삭제" id="delete_btn">
 						<script type="text/javascript">
@@ -84,6 +84,33 @@
 					</c:if>
 				</div>
 			</div>
+			<!-- 댓글 시작 -->
+			<c:if test="${session_user_auth==3}" >
+			<div id="cmt_div">
+				<span class="cmt-title">답변 작성</span>
+				<form id="cmt_form">
+					<input type="hidden" name="qna_num" value="${qna.qna_num }" id="qna_num">
+					
+					<textarea rows="5" cols="30" name="cmt_content" id="cmt_content" class="cmtp-content"></textarea>
+					<div id="cmt_first">
+						<span class="letter-count">100/100</span>
+					</div>
+					<div id="cmt_second">
+						<input type="submit" value="답변">
+					</div>
+				</form>
+			</div>
+			</c:if>
+			<!-- 댓글 목록 출력 -->
+			<div id="output"></div>
+			<div class="paging-button" style="display:none;">
+				<input type="button" value="다음글 보기">
+			</div>
+			<div id="loading" style="display:none">
+				<img src="${pageContext.request.contextPath }/images/ajax-loader.gif">
+			</div>
+			<!-- 댓글 목록 출력 끝 -->
+			<!-- 댓글 끝 -->
 		</div>
 	</div>
 	<p>

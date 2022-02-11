@@ -286,6 +286,17 @@ public class QnaDAO {
 		PreparedStatement pstmt =null;
 		String sql =null;
 		try {
+			conn =DBUtil.getConnection();
+			
+			sql ="INSERT INTO jcmt_qna(qnacmt_num,qna_num,cmt_content,user_num) "
+					+ "VALUES (jcmt_qna_seq.nextval,?,?,?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qnaCmtVO.getQna_num());
+			pstmt.setString(2, qnaCmtVO.getCmt_content());
+			pstmt.setInt(3, qnaCmtVO.getUser_num());
+			
+			pstmt.executeUpdate();
 			
 		}catch(Exception e) {
 			throw new Exception(e);
