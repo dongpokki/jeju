@@ -9834,7 +9834,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .best-title{
 	display: inline-block;
-    width: 300px;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -9896,4 +9896,15 @@ a.text-dark:hover, a.text-dark:focus {
 	font-weight: bold;
 	width: 100px;
 	display: inline-block;
+}
+
+.my-best-title{
+	display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0px;
+    padding: 5px;
+    padding-left: 20px;	
 }

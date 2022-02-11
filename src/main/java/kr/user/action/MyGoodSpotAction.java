@@ -44,18 +44,19 @@ public class MyGoodSpotAction implements Action{
 			// 리스트를 빈 배열로 만든다.
 			list = Collections.emptyList();
 		}
-
+		
 
 		Map<String,Object> mapAjax = new HashMap<String, Object>();
 		mapAjax.put("count", count);
 		mapAjax.put("rowCount", rowCount);
 		mapAjax.put("list",list);
-
+		
 		//JSON 데이터로 반환
 		ObjectMapper mapper = new ObjectMapper();
 		String ajaxData = mapper.writeValueAsString(mapAjax);
 
 		request.setAttribute("ajaxData", ajaxData);
+		
 		return "/WEB-INF/views/common/ajax_view.jsp";
 	}
 }

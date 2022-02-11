@@ -135,11 +135,8 @@
 					
 					$(param.list).each(function(index,spot){
 
-							let output = '<div class="col-sm-6 col-lg-4">';
-							output += '<h3 class="best-title">' + spot.title + '</h3>';
-							output += '<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">';
-							output += '<p class="best-content">' + spot.content + '</p>';
-							output += '<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=' + spot.spot_num + '" class="btn btn-warning">상세보기 &raquo;</a></p>';
+							let output = '<div class="col-sm-12 col-lg-12">';
+							output += '<h5 class="my-best-title alert alert-warning"><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=' + spot.spot_num + '">' + spot.title + '</a></h5>';
 							output += '</div>';
 						
 						//문서 객체에 추가
@@ -230,37 +227,52 @@
 		<!-- 내가 추천한 장소 시작 -->
 		<h1 class="text-primary" >내가 추천한 장소</h1>
 		<div class="row" id="spot_output"></div>
-			<div class="spot_paging-button" style="display: none">
-				<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
-			</div>
-			<div id="spot_loading" style="display: none">
-				<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
-			</div>
+		<div class="spot_paging-button" style="display: none">
+			<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
+		</div>
+		<div id="spot_loading" style="display: none">
+			<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
+		</div>
 		<!-- 내가 추천한 장소 끝 -->
 		
 		<hr class="featurette-divider">
 
 		<!-- 내가 추천한 코스 시작 -->
-		<!--
 		<h1 class="text-primary" >내가 추천한 코스</h1>
 		<div class="row" id="course_output"></div>
-			<div class="course_paging-button" style="display: none">
-				<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
-			</div>
-			<div id="course_loading" style="display: none">
-				<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
-			</div>
-		 -->	
+		<div class="course_paging-button" style="display: none">
+			<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
+		</div>
+		<div id="course_loading" style="display: none">
+			<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
+		</div>
 		<!-- 내가 추천한 코스 끝 -->
 
 		<hr class="featurette-divider">
 
-		<!-- 내가 작성한 코스 시작 -->
-		<!-- 내가 작성한 코스 끝 -->
-		
-		<!-- 내가 작성한 문의사항 시작 -->
-		<!-- 내가 작성한 문의사항 끝 -->
+		<!-- 내가 추천한 코스 시작 -->
+		<h1 class="text-primary" >내가 작성한 코스</h1>
+		<div class="row" id="course_output"></div>
+		<div class="course_paging-button" style="display: none">
+			<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
+		</div>
+		<div id="course_loading" style="display: none">
+			<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
+		</div>
+		<!-- 내가 추천한 코스 끝 -->
 
+	<hr class="featurette-divider">
+
+		<!-- 내가 작성한 문의내역 시작 -->
+		<h1 class="text-primary" >내가 작성한 문의내역</h1>
+		<div class="row" id="course_output"></div>
+		<div class="course_paging-button" style="display: none">
+			<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
+		</div>
+		<div id="course_loading" style="display: none">
+			<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
+		</div>
+		<!-- 내가 작성한 문의내역 끝 -->
 
 	</div>
 	<!-- 중앙 컨텐츠 끝 -->
