@@ -21,7 +21,7 @@ public class SpotWriteAction implements Action {
 		Integer session_user_num = (Integer) session.getAttribute("session_user_num");
 
 		if (session_user_num == null) {// 로그인이 되지 않은 경우
-			return "redirect:/member/loginForm.do";
+			return "redirect:/user/loginForm.do";
 		}
 
 		// 로그인 된 경우

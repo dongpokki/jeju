@@ -12,14 +12,17 @@ public class SpotDetailAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// 글번호 반환
 		int spot_num = Integer.parseInt(request.getParameter("spot_num"));
 
 		SpotDAO dao = SpotDAO.getInstance();
-		// dao.updateReadcount(board_num);
+
+		// 조회수 증가
+		// dao.updateReadcount(spot_num);
+
 		SpotVO spot = dao.getSpotBoard(spot_num);
 
 		spot.setTitle(StringUtil.useBrNoHtml(spot.getTitle()));
-		spot.setContent(spot.getContent());
 		request.setAttribute("spot", spot);
 
 		// JSP 경로 반환
