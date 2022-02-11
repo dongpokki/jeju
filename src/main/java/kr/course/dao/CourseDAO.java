@@ -19,7 +19,7 @@ public class CourseDAO {
 	 private CourseDAO() {}
 	 
 	 // 추천 코스 등록
-	 public void insertCoursecourse(CourseVO course)throws Exception{
+	 public void insertCourse(CourseVO course)throws Exception{
 		 Connection conn = null;
 		 PreparedStatement pstmt = null;
 		 String sql = null;
@@ -48,7 +48,7 @@ public class CourseDAO {
 		 }
 	 }
 	 //총 레코드 수(검색 레코드 수)
-	 public int getCoursecourseCount(String keyfield,String keyword)throws Exception{
+	 public int getCourseCount(String keyfield,String keyword)throws Exception{
 		 Connection conn = null;
 		 PreparedStatement pstmt = null;
 		 ResultSet rs = null;
@@ -86,7 +86,7 @@ public class CourseDAO {
 		 return count;
 	 }
 	 // 추천 코스 목록
-	 public List<CourseVO> getCourseListcourse(int startRow, int endRow, 
+	 public List<CourseVO> getListCourse(int startRow, int endRow, 
 			                  String keyfield, String keyword)throws Exception{
 		 Connection conn = null;
 		 PreparedStatement pstmt = null;
@@ -141,7 +141,7 @@ public class CourseDAO {
 		 return list;
 	 }
 	 // 추천 코스 상세
-	 public CourseVO getCoursecourse(int course_num)throws Exception{
+	 public CourseVO getCourse(int course_num)throws Exception{
 		 Connection conn = null;
 		 PreparedStatement pstmt = null;
 		 ResultSet rs = null;
@@ -152,8 +152,7 @@ public class CourseDAO {
 			 //커넥션풀로부터 커넥션을 할당
 			 conn = DBUtil.getConnection();
 			 //SQL문 작성
-			 sql = "SELECT * FROM jboard_course c JOIN juser u "
-			 	+ "ON c.user_num=u.user_num WHERE c.course_num=?";
+			 sql = "SELECT * FROM jboard_course c JOIN juser u ON c.user_num=u.user_num WHERE c.course_num=?";
 			 //PreparedStatement 객체 생성
 			 pstmt = conn.prepareStatement(sql);
 			 //?에 데이터를 바인딩
@@ -207,7 +206,7 @@ public class CourseDAO {
 	 }
 	 
 		// 추천 코스 수정
-		public void updateCoursecourse(CourseVO Course) throws Exception {
+		public void updateCourse(CourseVO Course) throws Exception {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			String sql = null;

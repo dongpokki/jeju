@@ -6,14 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.oreilly.servlet.MultipartRequest;
-
-import kr.controller.Action;
 import kr.spot.dao.SpotDAO;
 import kr.spot.vo.SpotVO;
 import kr.util.FileUtil;
+import kr.controller.Action;
 
-public class SpotWriteAction implements Action {
+public class SpotDeleteAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -23,23 +21,19 @@ public class SpotWriteAction implements Action {
 		if (session_user_num == null) {// 로그인이 되지 않은 경우
 			return "redirect:/user/loginForm.do";
 		}
-
-		// 로그인 된 경우
-		MultipartRequest multi = FileUtil.createFile(request);
-		SpotVO spot = new SpotVO();
-		spot.setTitle(multi.getParameter("title"));
-		spot.setContent(multi.getParameter("content"));
-		spot.setCategory(Integer.parseInt(multi.getParameter("category")));
-		spot.setFilename(multi.getFilesystemName("filename"));
-		spot.setUser_num(session_user_num);
-
+		int spot_num = Integer.parseInt(request.getParameter("spot_num"));
 		SpotDAO dao = SpotDAO.getInstance();
-		dao.insertSpot(spot);
+		SpotVO db_spot = dao.getSpotBoard(spot_num);
+
+		dao.deleteSpotBoard(spot_num);
+		// 파일 삭제
+		FileUtil.removeFile(request, db_spot.getFilename());
 
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter writer = response.getWriter();
-		writer.println("<script>alert('게시글을 성공적으로 등록했습니다.'); location.href='spotList.do';</script>");
+		writer.println("<script>alert('게시글을 성공적으로 삭제했습니다.'); location.href='spotList.do';</script>");
 		writer.close();
+
 		return "redirect:/spot/spotList.do";
 	}
 

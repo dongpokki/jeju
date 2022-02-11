@@ -21,7 +21,7 @@ public class CourseDetailAction implements Action{
 		//조회수 증가
 		dao.updateReadcount(course_num);
 		
-		CourseVO course = dao.getCoursecourse(course_num);
+		CourseVO course = dao.getCourse(course_num);
 		
 		//HTML태그를 허용하지 않음
 		course.setTitle(StringUtil.useNoHtml(course.getTitle()));

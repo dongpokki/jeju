@@ -7,22 +7,38 @@
 
 <title>추천 장소 상세 페이지</title>
 
+<!-- css  -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
+
+<!-- js -->
+<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<!-- 사진 섹션 시작 -->
-	<div class="container mt-5">
+	<div class="container mt-5" style="width: 1300px !important;">
 		<div class="page-banner">
-			<div class="row justify-content-center align-items-center h-100">
-				<div class="col-md-6">
-					<nav aria-label="Breadcrumb">
-						<ul class="breadcrumb justify-content-center py-0 bg-transparent">
-							<li class="breadcrumb-item active">Recommend Places</li>
-						</ul>
-					</nav>
-					<h1 class="text-center">Jeju</h1>
+			<div class="row justify-content-center align-items-center h-100" style="border-radius: 30px;background-image: URL(${pageContext.request.contextPath}/images/${spot.category }.jpg)">
+				<div class="col-md-6" style="position: absolute;">
+					<c:choose>
+						<c:when test="${spot.category ==0}">
+							<h1 class="text-center">JEJU</h1>
+						</c:when>
+						<c:when test="${spot.category ==1}">
+							<h1 class="text-center">EAST</h1>
+						</c:when>
+						<c:when test="${spot.category ==2}">
+							<h1 class="text-center">WEST</h1>
+						</c:when>
+						<c:when test="${spot.category ==3}">
+							<h1 class="text-center">SOUTH</h1>
+						</c:when>
+						<c:when test="${spot.category ==4}">
+							<h1 class="text-center">NORTH</h1>
+						</c:when>
+					</c:choose>
 				</div>
 			</div>
 		</div>
@@ -32,18 +48,19 @@
 	<main>
 		<!-- 카테고리 표시 -->
 		<div class="page-section pt-5">
-			<div class="container">
+			<div class="container" style="width: 1300px !important">
 				<nav aria-label="Breadcrumb">
 					<ul class="breadcrumb p-0 mb-0 bg-transparent">
-						<li class="breadcrumb-item"><a href="spotList.do">전체</a></li>
-						<li class="breadcrumb-item active"><a href="#">동부/서부/남부/북부</a></li>
-						<li class="breadcrumb-item active">카테고리 1</li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${spot.category<1}">style="color:#FE9A2E;"</c:if>>전체</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=1" <c:if test="${spot.category==1 }">style="color:#FE9A2E;"</c:if>>동부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=2" <c:if test="${spot.category==2 }">style="color:#FE9A2E;"</c:if>>서부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${spot.category==3 }">style="color:#FE9A2E;"</c:if>>남부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=4" <c:if test="${spot.category==4 }">style="color:#FE9A2E;"</c:if>>북부</a></li>
 					</ul>
 				</nav>
-
 				<div class="row">
 					<!-- 게시글 시작 -->
-					<div class="col-lg-8">
+					<div class="col-lg-9">
 						<div class="blog-single-wrap">
 							<div class="header">
 								<div class="post-thumb">
@@ -98,14 +115,29 @@
 								</form>
 							</div>
 							<div align="right">
-								<a href="spotModifyForm.do?spot_num=${spot.spot_num}">수정</a> <a href="spotDeleteForm.do?spot_num=${spot.spot_num}">삭제</a>
+								<c:if test="${session_user_auth == 3}">
+									<input class="btn btn-primary" type="button" value="수정" onclick="location.href='spotUpdateForm.do?spot_num=${spot.spot_num}'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+
+									<input class="btn btn-secondary" type="button" value="삭제" id="delete_btn" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+									<script type="text/javascript">
+										let delete_btn = document
+												.getElementById('delete_btn');
+										delete_btn.onclick = function() {
+											let choice = confirm('삭제하시겠습니까?');
+											if (choice) {
+												location
+														.replace('spotDelete.do?spot_num=${spot.spot_num}');
+											}
+										};
+									</script>
+								</c:if>
 							</div>
 						</div>
 						<!-- 덧글 끝 -->
 					</div>
 					<!-- 게시글 끝 -->
 					<!-- 사이드 바 시작 -->
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="widget">
 							<!-- Widget Categories -->
 							<div class="widget-box">
@@ -127,7 +159,6 @@
 									<button type="submit" class="btn btn-primary btn-block">Search</button>
 								</form>
 							</div>
-
 						</div>
 					</div>
 					<!-- 사이드 바 끝 -->
@@ -138,9 +169,6 @@
 	<!-- 컨테이너 끝 -->
 	<!-- 	footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-
-	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

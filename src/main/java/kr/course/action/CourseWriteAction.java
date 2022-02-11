@@ -33,7 +33,7 @@ public class CourseWriteAction implements Action{
 		course.setUser_num(session_user_num);
 		
 		CourseDAO dao = CourseDAO.getInstance();
-		dao.insertCoursecourse(course);
+		dao.insertCourse(course);
 		
 		return "/WEB-INF/views/course/courseWrite.jsp";
 	}
