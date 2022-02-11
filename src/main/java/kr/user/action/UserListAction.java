@@ -34,7 +34,7 @@ public class UserListAction implements Action{
 		String keyword = request.getParameter("keyword");
 		
 		UserDAO dao =UserDAO.getInstance();
-		int count = dao.getUserByAdmin(keyfield, keyword);
+		int count = dao.getUserCountByAdmin(keyfield, keyword);
 		
 		PagingUtil page = new PagingUtil(keyfield,keyword,Integer.parseInt(pageNum),count,10,10,"userList.do");
 		
@@ -47,7 +47,7 @@ public class UserListAction implements Action{
 		request.setAttribute("list", list);
 		request.setAttribute("pagingHtml", page.getPagingHtml());
 		
-		return "/WEB-INF/views/member/userList.do";
+		return "/WEB-INF/views/user/userList.do";
 	}
 
 }
