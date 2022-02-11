@@ -31,7 +31,7 @@ public class MainAction implements Action{
 		// request에 list 저장
 		request.setAttribute("spot_list", spot_list);
 		request.setAttribute("course_list", "");
-
+		
 		//JSP 경로 반환
 		return "/WEB-INF/views/main/main.jsp";
 	}

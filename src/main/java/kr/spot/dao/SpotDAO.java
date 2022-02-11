@@ -300,7 +300,7 @@ public class SpotDAO {
 				spot.setSpot_num(rs.getInt("spot_num"));
 				spot.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				spot.setContent(rs.getString("content"));
-				spot.setContent(rs.getString("filename"));
+				spot.setFilename(rs.getString("filename"));
 				spot.setCategory(rs.getInt("category"));
 
 				// 자바빈(VO)을 ArrayList에 저장
