@@ -7,8 +7,13 @@
 
 <title>추천 장소 상세 페이지</title>
 
+<!-- css  -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
+
+<!-- js -->
+<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -111,7 +116,7 @@
 							</div>
 							<div align="right">
 								<c:if test="${session_user_auth == 3}">
-									<input class="btn btn-primary" type="button" value="수정" onclick="location.href='updateForm.do?spot_num=${spot.spot_num}'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+									<input class="btn btn-primary" type="button" value="수정" onclick="location.href='spotUpdateForm.do?spot_num=${spot.spot_num}'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
 
 									<input class="btn btn-secondary" type="button" value="삭제" id="delete_btn" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
 									<script type="text/javascript">
@@ -164,9 +169,6 @@
 	<!-- 컨테이너 끝 -->
 	<!-- 	footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-
-	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

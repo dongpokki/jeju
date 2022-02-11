@@ -39,12 +39,48 @@
 						</select>
 				</div>
 				<div class="FlexableTextArea">
-					<textarea placeholder="제목을 입력해 주세요." class="textarea_input" style="height: 40px;" name="title" id="title"></textarea>
+					<textarea placeholder="제목을 입력해 주세요." class="textarea_input" style="height: 40px;" name="title" id="title">${spot.title }</textarea>
 				</div>
 				<div class="form-group">
-					<textarea id="summernote" name="content"></textarea>
+					<textarea id="summernote" name="content">${spot.content }</textarea>
 				</div>
 				<label for="filename">파일</label> <input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg">
+				<c:if test="${!empty spot.filename}">
+					<br>
+					<span id="file_detail"> (${spot.filename})파일이 등록되어 있습니다. 다시 파일을 업로드하면 기존 파일은 삭제됩니다. <input type="button" value="파일삭제" id="file_del">
+					</span>
+					<script type="text/javascript">
+	$(function(){
+		$('#file_del').click(function(){
+			let choice = confirm('삭제하시겠습니까?');
+			if(choice){
+				$.ajax({
+					url:'deleteFile.do',
+					type:'post',
+					data:{board_num:${board.board_num}},
+					dataType:'json',
+					cache:false,
+					timeout:30000,
+					success:function(param){
+						if(param.result == 'logout'){
+							alert('로그인 후 사용하세요!');
+						}else if(param.result == 'success'){
+							$('#file_detail').hide();
+						}else if(param.result == 'wrongAccess'){
+							alert('잘못된 접속입니다.');
+						}else{
+							alert('파일 삭제 오류 발생');
+						}
+					},
+					error:function(){
+						alert('네트워크 오류 발생!');
+					}
+				});
+			}
+		});
+	});
+</script>
+				</c:if>
 				<div class="form-group" align="center">
 					<input type="submit" value="등록" class="btn btn-primary"> <input type="button" value="취소" class="btn btn-primary" onclick="location.href='spotList.do'">
 				</div>

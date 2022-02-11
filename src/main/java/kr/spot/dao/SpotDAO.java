@@ -52,7 +52,7 @@ public class SpotDAO {
 	}
 
 	// 추천 장소 수정
-	public void updateSpotBoard(SpotVO Spot) throws Exception {
+	public void updateSpotBoard(SpotVO spot) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -62,23 +62,22 @@ public class SpotDAO {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			if (Spot.getFilename() != null) {
+			if (spot.getFilename() != null) {
 				sub_sql = ",filename=?";
 			}
 
 			sql = "UPDATE jboard_spot SET title=?, content=?, modify_date=SYSDATE" + sub_sql
-					+ ", user_num=? WHERE spot_num=?";
+					+ ", category=? WHERE spot_num=?";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(++cnt, Spot.getTitle());
-			pstmt.setString(++cnt, Spot.getContent());
-			if (Spot.getFilename() != null) {
-				pstmt.setString(++cnt, Spot.getFilename());
+			pstmt.setString(++cnt, spot.getTitle());
+			pstmt.setString(++cnt, spot.getContent());
+			if (spot.getFilename() != null) {
+				pstmt.setString(++cnt, spot.getFilename());
 			}
-			pstmt.setInt(++cnt, Spot.getUser_num());
-			pstmt.setInt(++cnt, Spot.getUser_num());
+			pstmt.setInt(++cnt, spot.getCategory());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new Exception(e);
