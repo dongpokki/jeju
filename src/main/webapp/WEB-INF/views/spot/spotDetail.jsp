@@ -69,7 +69,7 @@
 									<a href="#">덧글 수(누르면 덧글 창으로 이동)</a>
 								</div>
 							</div>
-							<div class="post-content">${spot.content }</div>
+							<div class="post-content">${spot.content }${spot.category }</div>
 						</div>
 						<div>
 							<p align="right">(좋아요 버튼)</p>
@@ -110,14 +110,13 @@
 								</form>
 							</div>
 							<div align="right">
-							<%-- 	<c:if test="${user_num == board.mem_num}"> --%>
-									<input type="button" value="수정" onclick="location.href='updateForm.do?spot_num=${spot.spot_num}'">
-									<input type="button" value="삭제" onclick="location.href='spotDelete.do?spot_num=${spot.spot_num}'">
-									<!-- <input type="button" value="삭제" id="delete_btn">
+								<c:if test="${session_user_auth == 3}">
+									<input class="btn btn-primary" type="button" value="수정" onclick="location.href='updateForm.do?spot_num=${spot.spot_num}'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+
+									<input class="btn btn-secondary" type="button" value="삭제" id="delete_btn" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
 									<script type="text/javascript">
 										let delete_btn = document
 												.getElementById('delete_btn');
-										//이벤트 연결
 										delete_btn.onclick = function() {
 											let choice = confirm('삭제하시겠습니까?');
 											if (choice) {
@@ -125,8 +124,8 @@
 														.replace('spotDelete.do?spot_num=${spot.spot_num}');
 											}
 										};
-									</script> -->
-						<%-- 		</c:if> --%>
+									</script>
+								</c:if>
 							</div>
 						</div>
 						<!-- 덧글 끝 -->

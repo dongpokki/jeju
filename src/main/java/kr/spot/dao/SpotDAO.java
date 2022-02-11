@@ -255,10 +255,10 @@ public class SpotDAO {
 				spot.setSpot_num(rs.getInt("spot_num"));
 				spot.setTitle(rs.getString("title"));
 				spot.setContent(rs.getString("content"));
-				spot.setHit(rs.getInt("hit"));
 				spot.setReg_date(rs.getDate("reg_date"));
 				spot.setModify_date(rs.getDate("modify_date"));
 				spot.setFilename(rs.getString("filename"));
+				spot.setCategory(rs.getInt("category"));
 			}
 		} catch (Exception e) {
 			throw new Exception(e);

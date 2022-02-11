@@ -24,20 +24,16 @@ public class SpotDeleteAction implements Action {
 		int spot_num = Integer.parseInt(request.getParameter("spot_num"));
 		SpotDAO dao = SpotDAO.getInstance();
 		SpotVO db_spot = dao.getSpotBoard(spot_num);
-		/*
-		 * if (session_user_num != db_spot.getUser_num()) {// 로그인한 회원번호와 작성자 회원번호가 불일치
-		 * return "/WEB-INF/views/common/notice.jsp"; }
-		 */		// 로그인한 회원번호와 작성자 회원번호가 일치
+
 		dao.deleteSpotBoard(spot_num);
 		// 파일 삭제
 		FileUtil.removeFile(request, db_spot.getFilename());
 
-		/*
-		 * response.setContentType("text/html; charset=UTF-8"); PrintWriter writer =
-		 * response.getWriter(); writer.
-		 * println("<script>alert('게시글을 성공적으로 삭제했습니다.'); location.href='spotList.do';</script>"
-		 * ); writer.close();
-		 */
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter writer = response.getWriter();
+		writer.println("<script>alert('게시글을 성공적으로 삭제했습니다.'); location.href='spotList.do';</script>");
+		writer.close();
+
 		return "redirect:/spot/spotList.do";
 	}
 
