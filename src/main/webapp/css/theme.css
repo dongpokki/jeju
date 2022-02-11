@@ -710,7 +710,7 @@ a:hover {
 	position: relative;
 	display: block;
 	margin: 0 auto;
-	padding: 32px 20px 70px 20px;
+	padding: 32px 20px 60px 20px;
 	min-width: 300px;
 	max-height: 450px;
 	border-radius: 6px;
@@ -742,7 +742,7 @@ a:hover {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
-	-webkit-line-clamp: 4;
+	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 }
 
