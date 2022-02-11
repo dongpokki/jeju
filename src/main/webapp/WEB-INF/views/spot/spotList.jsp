@@ -12,7 +12,7 @@
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<!-- 사진 섹션 시작 -->
-	<div class="container mt-5">
+	<div class="container mt-5" style="width: 1300px !important;">
 		<div class="page-banner">
 			<div class="row justify-content-center align-items-center h-100" style="border-radius: 30px;background-image: URL(${pageContext.request.contextPath}/images/${category }.jpg)">
 				<div class="col-md-6" style="position: absolute;">
@@ -40,7 +40,7 @@
 	<!-- 사진 섹션 끝 -->
 	<main>
 		<div class="page-section">
-			<div class="container">
+			<div class="container" style="width: 1300px !important;">
 				<form class="search-widget" align="right">
 					<c:if test="${!empty param.category}">
 						<input type="hidden" name="category" value="${param.category}">
@@ -89,7 +89,7 @@
 					<!-- 게시글 목록 끝 -->
 					<!-- 페이지 시작 -->
 					<div class="col-12 mt-5">
-						<nav aria-label="Page Navigation">
+						<nav aria-label="Page Navigation" style="margin-top: 2rem;">
 							<ul class="pagination justify-content-center">
 								<div align="center">${pagingHtml}</div>
 							</ul>
@@ -100,8 +100,9 @@
 				</div>
 				<!-- 관리자만 등록/삭제 버튼 보이게 -->
 				<c:if test="${session_user_auth == 3}">
-					<div align="right">
-						<input class="btn btn-primary" type="button" value="등록" onclick="location.href='spotWriteForm.do'"> <input class="btn btn-secondary" type="button" value="삭제" onclick="location.href='spotDeleteForm.do';">
+					<div class="col-12 mt-5" align="right">
+						<input class="btn btn-primary" type="button" value="등록" onclick="location.href='spotWriteForm.do'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;"> 
+						<input class="btn btn-secondary" type="button" value="삭제" onclick="location.href='spotDeleteForm.do';" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
 					</div>
 				</c:if>
 			</div>
