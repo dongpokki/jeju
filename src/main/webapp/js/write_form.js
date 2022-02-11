@@ -1,10 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
-<script src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
-<script>
-	$('#summernote')
-			.summernote(
+$(function() {
+	$('#write_form').submit(function() {
+		if ($('#category').val() == '') {
+			alert('카테고리를 선택해주세요.');
+			$('#category').focus();
+			return false;
+		}
+		if ($('#title').val().trim() == '') {
+			alert('제목을 입력해주세요.');
+			$('#title').val('').focus();
+			return false;
+		}
+		if ($('#summernote').val().trim() == '') {
+			alert('내용을 입력해주세요.');
+			$('#summernote').val('').focus();
+			return false;
+		}
+		if ($('#filename').val() == '') {
+			alert('사진을 업로드해주세요.');
+			$('#filename').focus();
+			return false;
+		}
+	});
+	
+	$('#summernote').summernote(
 					{
 						toolbar : [
 								// [groupName, [list of button]]
@@ -30,4 +48,7 @@
 						lang : "ko-KR", // 한글 설정
 						placeholder : '내용을 입력해주세요.' //placeholder 설정
 					});
-</script>
+});
+
+
+
