@@ -17,12 +17,12 @@ public class UserListAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
-		Integer user_num =(Integer)session.getAttribute("user_num");
-		if(user_num==null) {
+		Integer session_user_num =(Integer)session.getAttribute("session_user_num");
+		if(session_user_num==null) {
 			return "redirect:/user/loginForm.do";
 		}
-		Integer user_auth = (Integer)session.getAttribute("user_auth");
-		if(user_auth<3) {
+		Integer session_user_auth = (Integer)session.getAttribute("session_user_auth");
+		if(session_user_auth<3) {
 			return "/WEB-INF/views/common/notice.jsp";
 		}
 		//관리자로 로그인한 경우
@@ -33,7 +33,7 @@ public class UserListAction implements Action{
 		String keyfield=request.getParameter("keyfield");
 		String keyword = request.getParameter("keyword");
 		
-		UserDAO dao =UserDAO.getInstance();
+		UserDAO dao = UserDAO.getInstance();
 		int count = dao.getUserCountByAdmin(keyfield, keyword);
 		
 		PagingUtil page = new PagingUtil(keyfield,keyword,Integer.parseInt(pageNum),count,10,10,"userList.do");
@@ -47,7 +47,7 @@ public class UserListAction implements Action{
 		request.setAttribute("list", list);
 		request.setAttribute("pagingHtml", page.getPagingHtml());
 		
-		return "/WEB-INF/views/user/userList.do";
+		return "/WEB-INF/views/user/userList.jsp";
 	}
 
 }
