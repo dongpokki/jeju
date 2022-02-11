@@ -101,7 +101,7 @@ public class SpotDAO {
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-
+			pstmt.setInt(1, spot_num);
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new Exception(e);
