@@ -193,11 +193,17 @@ $(function(){
 						$('#myqna_output').append(output);
 					}					
 					
+					// 답변여부 확인을 위한 변수
+					let viewable_check = '<b style="color:red;">(미답변) </b>';
 					
 					$(param.myqna_list).each(function(index,myqna){
+					
+							if(myqna.viewable_check == 1){
+								viewable_check = '<b style="color:blue;">(답변완료) </b>';
+							}
 							
 							let output = '<div class="col-sm-12 col-lg-12">';
-							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/qna/qnaDetail.do?qna_num=' + myqna.qna_num + '">' + myqna.title + '</a></h5>';
+							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/qna/qnaDetail.do?qna_num=' + myqna.qna_num + '">' + viewable_check + myqna.title + '</a></h5>';
 							output += '</div>';
 						
 						//문서 객체에 추가
