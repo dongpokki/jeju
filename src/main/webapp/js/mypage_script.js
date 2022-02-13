@@ -96,8 +96,8 @@ $(function(){
 			spot_currentPage = spot_pageNum;
 			myqna_currentPage = myqna_pageNum;
 			
-			alert('spot_pageNum : ' + spot_pageNum);
-			alert('myqna_pageNum : ' + myqna_pageNum);
+			alert('spot_pageNum/spot_currentPage : ' + spot_pageNum + '/' + spot_currentPage);
+			alert('myqna_pageNum/myqna_currentPage : ' + myqna_pageNum + '/' + myqna_currentPage);
 			
 			//로딩 이미지 노출
 			$('#spot_loading').show();
@@ -139,7 +139,7 @@ $(function(){
 						$('#spot_output').append(output);
 					}
 					
-					if($(param.qna_list).length == 0){ // 내가 작성한 문의사항이 없다면
+					if($(param.myqna_list).length == 0){ // 내가 작성한 문의사항이 없다면
 						let output = '<div class="alert alert-warning" style="width:100%;">등록된 문의사항이 없습니다.</div>';
 						
 						//문서 객체에 추가
@@ -167,15 +167,17 @@ $(function(){
 						$('.spot_paging-button').show();
 					}
 					
-					$(param.qna_list).each(function(index,qna){
+					$(param.myqna_list).each(function(index,myqna){
 							
 							let output = '<div class="col-sm-12 col-lg-12">';
-							output += '<h5 class="my-best-title alert alert-warning"><a href="${pageContext.request.contextPath}/qna/qnaDetail.do?qna_num=' + qna.qna_num + '">' + qna.title + '</a></h5>';
+							output += '<h5 class="my-best-title alert alert-warning"><a href="${pageContext.request.contextPath}/qna/qnaDetail.do?qna_num=' + myqna.qna_num + '">' + myqna.title + '</a></h5>';
 							output += '</div>';
 						
 						//문서 객체에 추가
 						$('#myqna_output').append(output);	
 					});
+					
+					//alert('myqna_count/myqna_rowCount : ' + myqna_count + '/' +myqna_rowCount);
 					
 					//page button 처리
 					if(myqna_currentPage>=Math.ceil(myqna_count/myqna_rowCount)){

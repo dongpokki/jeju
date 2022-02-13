@@ -36,8 +36,8 @@ public class MyGoodSpotAction implements Action{
 		if(spot_pageNum == null) {spot_pageNum = "1";}
 
 		//내가 작성한 문의사항 페이지 넘버 반환
-		String qna_pageNum = request.getParameter("qna_pageNum");
-		if(qna_pageNum == null) {qna_pageNum = "1";}
+		String myqna_pageNum = request.getParameter("myqna_pageNum");
+		if(myqna_pageNum == null) {myqna_pageNum = "1";}
 
 		// spotdao 객체 생성 및 페이지 넘버링 작업
 		SpotDAO spot_dao = SpotDAO.getInstance();
@@ -57,19 +57,19 @@ public class MyGoodSpotAction implements Action{
 		
 		
 		// qnadao 객체 생성 및 페이지 넘버링 작업
-		QnaDAO qna_dao = QnaDAO.getInstance();
-		int qna_count = qna_dao.getmyListQnaCount(session_user_id); 
-		int qna_rowCount = 3;
-		PagingUtil qna_page = new PagingUtil(Integer.parseInt(qna_pageNum),qna_count,qna_rowCount,1,null);
+		QnaDAO myqna_dao = QnaDAO.getInstance();
+		int myqna_count = myqna_dao.getmyListQnaCount(session_user_id); 
+		int myqna_rowCount = 3;
+		PagingUtil myqna_page = new PagingUtil(Integer.parseInt(myqna_pageNum),myqna_count,myqna_rowCount,1,null);
 
-		List<QnaVO> qna_list = null;
-		if(qna_count > 0) {
-			qna_list = qna_dao.getmyListQna(session_user_id,qna_page.getStartCount(), qna_page.getEndCount());
-			System.out.println("qna_page.getStartCount() : " + qna_page.getStartCount());
-			System.out.println("qna_page.getEndCount() : " + qna_page.getEndCount());
+		List<QnaVO> myqna_list = null;
+		if(myqna_count > 0) {
+			myqna_list = myqna_dao.getmyListQna(session_user_id,myqna_page.getStartCount(), myqna_page.getEndCount());
+			System.out.println("myqna_page.getStartCount() : " + myqna_page.getStartCount());
+			System.out.println("myqna_page.getEndCount() : " + myqna_page.getEndCount());
 		}else { // 조회 결과가 없는 경우
 			// 리스트를 빈 배열로 만든다.
-			qna_list = Collections.emptyList();
+			myqna_list = Collections.emptyList();
 		}
 		
 
@@ -77,9 +77,9 @@ public class MyGoodSpotAction implements Action{
 		mapAjax.put("spot_count", spot_count);
 		mapAjax.put("spot_rowCount", spot_rowCount);
 		mapAjax.put("spot_list",spot_list);
-		mapAjax.put("qna_count", qna_count);
-		mapAjax.put("qna_rowCount", qna_rowCount);
-		mapAjax.put("qna_list",qna_list);
+		mapAjax.put("myqna_count", myqna_count);
+		mapAjax.put("myqna_rowCount", myqna_rowCount);
+		mapAjax.put("myqna_list",myqna_list);
 		
 		//JSON 데이터로 반환
 		ObjectMapper mapper = new ObjectMapper();

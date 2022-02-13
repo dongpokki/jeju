@@ -444,7 +444,7 @@ public class SpotDAO {
 			conn = DBUtil.getConnection();
 
 			// sql문 작성
-			sql = "select * from (select a.*, rownum rnum from (select b.spot_num,b.title,b.content,b.filename,b.category,g.good from jboard_spot b join jgood_spot g on b.spot_num = g.spot_num where g.user_num=? and good=1 order by b.spot_num)a) where rnum>=? and rnum<=?";
+			sql = "select * from (select a.*, rownum rnum from (select b.spot_num,b.title,b.content,b.filename,b.category,g.good from jboard_spot b join jgood_spot g on b.spot_num = g.spot_num where b.user_num=? and good=1 order by b.spot_num)a) where rnum>=? and rnum<=?";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
