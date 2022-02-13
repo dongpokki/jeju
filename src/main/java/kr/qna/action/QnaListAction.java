@@ -23,7 +23,7 @@ public class QnaListAction implements Action{
 		String keyword=request.getParameter("keyword");
 		
 		QnaDAO dao = QnaDAO.getInstance();
-		int count = dao.getBoardCount(keyfield, keyword);
+		int count = dao.getQnaCount(keyfield, keyword);
 		
 		//페이지 처리
 		//keyfield,keyword,currentPage,count,rowCount,pageCount,url

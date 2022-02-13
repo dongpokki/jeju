@@ -10,6 +10,7 @@ import kr.qna.vo.QnaCmtVO;
 import kr.qna.vo.QnaVO;
 import kr.user.vo.UserVO;
 import kr.util.DBUtil;
+import kr.util.DurationFromNow;
 import kr.util.StringUtil;
 
 public class QnaDAO {
@@ -21,7 +22,7 @@ public class QnaDAO {
 	private QnaDAO() {};
 	
 	//글등록 
-	public void insertBoard(QnaVO qna) throws Exception{
+	public void insertQna(QnaVO qna) throws Exception{
 		Connection conn =null;
 		PreparedStatement pstmt = null;
 		String sql =null;
@@ -51,7 +52,7 @@ public class QnaDAO {
 	}
 	
 	//총레코드 수 (검색 레코드 수)
-	public int getBoardCount(String keyfield,String keyword) throws Exception{
+	public int getQnaCount(String keyfield,String keyword) throws Exception{
 		Connection conn =null;
 		PreparedStatement pstmt =null;
 		ResultSet rs =null;
@@ -303,6 +304,82 @@ public class QnaDAO {
 		}finally {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
+	}
+	
+	//댓글 갯수
+	public int getCmtQnaCount(int qna_num) throws Exception{
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs =null;
+		String sql=null;
+		int count=0;
+		try {
+			conn=DBUtil.getConnection();
+			
+			sql="SELECT COUNT(*) FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num) WHERE b.qna_num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qna_num);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
+	
+	//댓글 목록
+	public List<QnaCmtVO> getListCmtQna(int startRow,int endRow,int qna_num) throws Exception{
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs =null;
+		List<QnaCmtVO> list=null;
+		String sql=null;
+		try {
+			conn =DBUtil.getConnection();
+			
+			sql="SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT c.qnacmt_num, TO_CHAR(c.reg_date,'YYYY-MM-DD HH24:MI:SS') reg_date,"
+					+ "TO_CHAR(c.modify_date,'YYYY-MM-DD HH24:MI:SS') modify_date,"
+					+ "c.cmt_content,c.qna_num,user_num,u.id,d.name "
+					+ "FROM jcmt_qna c JOIN juser u USING(user_num) "
+					+ "JOIN juser_detail d USING(user_num) WHERE c.qna_num=? "
+					+ "ORDER BY c.qnacmt_num DESC)a) WHERE rnum>=? AND rnum<=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qna_num);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rs=pstmt.executeQuery();
+			list = new ArrayList<QnaCmtVO>();
+			while(rs.next()) {
+				QnaCmtVO cmt = new QnaCmtVO();
+				cmt.setQnacmt_num(rs.getInt("qnacmt_num"));
+				cmt.setReg_date(DurationFromNow.getTimeDiffLabel(rs.getString("reg_date")));
+				if(rs.getString("modify_date")!=null) {
+					cmt.setModify_date(DurationFromNow.getTimeDiffLabel(rs.getString("modify_date")));
+				}
+				cmt.setCmt_content(StringUtil.useBrHtml(rs.getString("cmt_content")));
+				cmt.setQna_num(rs.getInt("qna_num"));
+				cmt.setQnacmt_num(rs.getInt("qnacmt_num"));
+				cmt.setUser_num(rs.getInt("user_num"));
+				cmt.setName(rs.getString("name"));
+				
+				list.add(cmt);
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
 	}
 
 	// [정동윤 작성] - 마이페이지에서 노출할 내 문의사항 내역

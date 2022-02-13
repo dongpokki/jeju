@@ -5,8 +5,62 @@ $(function(){
 	
 	//댓글 목록
 	function selectData(pageNum){
+		currentPage = pageNum;
+		$('#loading').show();
 		
+		$.ajax({
+			url:'qnaListCmt.do',
+			type:'post',
+			data:{pageNum:pageNum,qna_num:$('#qna_num').val()},
+			dataType:'json',
+			cache:false,
+			timeout:30000,
+			success:function(param){
+				$('#loading').hide();
+				
+				count=param.count;
+				rowCount = param.rowCount;
+				
+				if(pageNum==1){
+					$('#output').empty();
+				}
+				
+				$(param.list).each(function(index,item){
+					let output ='<div class="item">';
+					output +='<h5>'+item.name+'</h5>';
+					output +='<div class="sub-item">';
+					output +='<p>'+item.cmt_content+'</p>';
+					
+					if(item.modfiy_date){
+						output+='<span class="modify_date">최근 수정일: '+item.modify_date+'</span>';
+					}else{
+						output +='<span class="modify_date">등록일 : '+item.reg_date+'</span>';
+					}
+					output +='<div style="text-align: right">'
+					if(param.user_num==item.user_num){
+						output +='<input type="button" data-qnacmtnum="'+item.qnacmt_num+'"value="수정" class="btn btn-primary" style="align-right">';
+						output +='<input type="button" data-qnacmtnum="'+item.qnacmt_num+'"value="삭제" class="btn btn-secondary style="align-right"">';
+					}
+					output +='</div>'
+					output +='<hr size="1" width="100%">';
+					
+					output +='</div>';
+					output +='<div>';
+					
+					$('#output').append(output);
+				});
+				if(currentPage >=Math.ceil(count/rowCount)){
+					$('.paging-button').hide();
+				}else{
+					$('.paging-button').show();
+				}
+			},
+			error:function(){
+				alert('네트워크 오류');
+			}
+		});
 	}
+	//페이지 처리 이벤트 연결 (다음 댓글 보기 버트 클릭시 데이터 추가 )
 	//댓글등록
 	$('#cmt_form').submit(function(event){
 		if($('#cmt_content').val().trim()==''){
@@ -54,18 +108,18 @@ $(function(){
 		//입력한 글자수 구함 
 		let inputLength=$(this).val().length;
 		
-		if(inputLength>100){//입력한 글자가 300자 넘어선 경우
+		if(inputLength>100){//입력한 글자가 100자 넘어선 경우
 			$(this).val($(this).val().substring(0,100));
 			if($(this).attr('id')=='cmt_content'){
 				//등록폼글자수
-				$('#cmt_first .letter-count').text('0/300');
+				$('#cmt_first .letter-count').text('0/100');
 			}else{
 				//수정폼 글자수 
-				$('#mcmt_second .letter-count').text('0/300');
+				$('#mcmt_second .letter-count').text('0/100');
 			}
-		}else{//300글자를 안 넘어선 경우
-			let remain = 300- inputLength;
-			remain+='/300';
+		}else{//100글자를 안 넘어선 경우
+			let remain = 100- inputLength;
+			remain+='/100';
 			if($(this).attr('id')=='cmt_content'){
 				//등록폼글자수
 				$('#cmt_first .letter-count').text(remain);
