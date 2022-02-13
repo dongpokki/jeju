@@ -97,11 +97,14 @@ $(function(){
 								</div>
 							</div>
 							<div class="post-content">${spot.content }
-								<img src="${pageContext.request.contextPath }/upload/${spot.filename}" align="center">
+								<c:if test="${!empty spot.filename }">
+									<img src="${pageContext.request.contextPath }/upload/${spot.filename}" align="center">
+								</c:if>
+
 							</div>
 						</div>
 						<div align="right" style="padding: 0 20px 0 0;">
-							<input type="button" value="♡" id="good" <c:if test="${good==1}">style="color:#FE9A2E;"</c:if>>
+							<input type="button" value="♡" id="good" <c:if test="${checked==1}">style="color:#FE9A2E;"</c:if>>
 							<div id="good_result" style="display: inline;">${good }</div>
 						</div>
 						<!-- 덧글 시작 -->
