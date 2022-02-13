@@ -80,32 +80,24 @@ $(function(){
 		});
 		
 		
+		// ================================================================================================================================
+		// ↓ 내가 좋아하는 장소 & 내가 좋아하는 코스 & 내가 작성한 문의사항 스크립트문
 		
-		// ↓ 내가 좋아하는 장소 & 내가 좋아하는 코스 스크립트문
 		
+		//내가 좋아하는 장소 목록
 		let spot_currentPage;
 		let spot_count;
 		let spot_rowCount;
-		
-		let myqna_currentPage;
-		let myqna_count;
-		let myqna_rowCount;
-		
-		//내가 좋아하는 장소 목록
-		function spot_selectData(spot_pageNum,myqna_pageNum){
+
+		function spot_selectData(spot_pageNum){
 			spot_currentPage = spot_pageNum;
-			myqna_currentPage = myqna_pageNum;
-			
-			alert('spot_pageNum/spot_currentPage : ' + spot_pageNum + '/' + spot_currentPage);
-			alert('myqna_pageNum/myqna_currentPage : ' + myqna_pageNum + '/' + myqna_currentPage);
 			
 			//로딩 이미지 노출
 			$('#spot_loading').show();
-			$('#myqna_loading').show();
 			
 			$.ajax({
 				type:'post',
-				data:{spot_pageNum:spot_pageNum, myqna_pageNum:myqna_pageNum},
+				data:{spot_pageNum:spot_pageNum},
 				url:'mygoodspot.do',
 				dataType:'json',
 				cache:false,
@@ -113,44 +105,26 @@ $(function(){
 				success:function(param){
 					//로딩 이미지 감추기
 					$('#spot_loading').hide();
-					$('#myqna_loading').hide();
-					
-					
+										
 					spot_count = param.spot_count;
 					spot_rowCount = param.spot_rowCount;
-					
-					myqna_count = param.myqna_count;
-					myqna_rowCount = param.myqna_rowCount;
 					
 					if(spot_pageNum == 1){
 						// 처음 호출시는 해당 영역의 div의 내부 내용물을 제거
 						$('#spot_output').empty();
 					}	
 					
-					if(myqna_pageNum == 1){
-						// 처음 호출시는 해당 영역의 div의 내부 내용물을 제거
-						$('#myqna_output').empty();
-					}
-
 					if($(param.spot_list).length == 0){ // 내가 추천하는 장소가 없다면
 						let output = '<div class="alert alert-warning" style="width:100%;">등록된 추천 코스가 없습니다.</div>';
 						
 						//문서 객체에 추가
 						$('#spot_output').append(output);
 					}
-					
-					if($(param.myqna_list).length == 0){ // 내가 작성한 문의사항이 없다면
-						let output = '<div class="alert alert-warning" style="width:100%;">등록된 문의사항이 없습니다.</div>';
-						
-						//문서 객체에 추가
-						$('#myqna_output').append(output);
-					}
-					
-					
+										
 					$(param.spot_list).each(function(index,spot){
 
 							let output = '<div class="col-sm-12 col-lg-12">';
-							output += '<h5 class="my-best-title alert alert-warning"><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=' + spot.spot_num + '">' + spot.title + '</a></h5>';
+							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/spot/spotDetail.do?spot_num=' + spot.spot_num + '">' + spot.title + '</a></h5>';
 							output += '</div>';
 						
 						//문서 객체에 추가
@@ -166,11 +140,64 @@ $(function(){
 						//다음 페이지가 존재
 						$('.spot_paging-button').show();
 					}
+				
+				},
+				error:function(){
+					alert('네트워크 오류');
+				}
+			});
+		}
+		
+		// 페이지 처리 이벤트 연결(다음 댓글 보기 버튼 클릭 시 데이터 추가)
+		$('.spot_paging-button input').click(function(){
+			spot_selectData(spot_currentPage + 1);		
+		});
+		
+		
+		
+		//내가 좋아하는 장소 목록
+		let myqna_currentPage;
+		let myqna_count;
+		let myqna_rowCount;
+
+		function myqna_selectData(myqna_pageNum){
+			myqna_currentPage = myqna_pageNum;
+
+			//로딩 이미지 노출
+			$('#myqna_loading').show();
+			
+				$.ajax({
+				type:'post',
+				data:{myqna_pageNum:myqna_pageNum},
+				url:'myqna.do',
+				dataType:'json',
+				cache:false,
+				timeout:30000,
+				success:function(param){
+					//로딩 이미지 감추기
+					$('#myqna_loading').hide();
+
+					myqna_count = param.myqna_count;
+					myqna_rowCount = param.myqna_rowCount;
+					
+					if(myqna_pageNum == 1){
+						// 처음 호출시는 해당 영역의 div의 내부 내용물을 제거
+						$('#myqna_output').empty();
+					}
+
+					
+					if($(param.myqna_list).length == 0){ // 내가 작성한 문의사항이 없다면
+						let output = '<div class="alert alert-warning" style="width:100%;">등록된 문의사항이 없습니다.</div>';
+						
+						//문서 객체에 추가
+						$('#myqna_output').append(output);
+					}					
+					
 					
 					$(param.myqna_list).each(function(index,myqna){
 							
 							let output = '<div class="col-sm-12 col-lg-12">';
-							output += '<h5 class="my-best-title alert alert-warning"><a href="${pageContext.request.contextPath}/qna/qnaDetail.do?qna_num=' + myqna.qna_num + '">' + myqna.title + '</a></h5>';
+							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/qna/qnaDetail.do?qna_num=' + myqna.qna_num + '">' + myqna.title + '</a></h5>';
 							output += '</div>';
 						
 						//문서 객체에 추가
@@ -187,28 +214,20 @@ $(function(){
 						//다음 페이지가 존재
 						$('.myqna_paging-button').show();
 					}
-					
-					
-					
-				
 				},
+				
 				error:function(){
 					alert('네트워크 오류');
 				}
-			});
+			});	
 		}
 		
-		// 페이지 처리 이벤트 연결(다음 댓글 보기 버튼 클릭 시 데이터 추가)
-		$('.spot_paging-button input').click(function(){
-			spot_selectData(spot_currentPage + 1, myqna_currentPage);		
-		});
-		
 		$('.myqna_paging-button input').click(function(){
-			spot_selectData(spot_currentPage , myqna_currentPage + 1);		
+			myqna_selectData(myqna_currentPage + 1);		
 		});
 		
-		// 마이페이지 최초 진입 시 내가 좋아하는 장소 초기 데이터 3개(1page) 목록 호출
-		spot_selectData(1,1);
-		
+		// 마이페이지 최초 진입 시 내가 좋아하는 장소 / 내가 좋아하는 코스 / 내가 작성한 코스 / 내가 작성한 문의사항 목록 호출
+		spot_selectData(1);
+		myqna_selectData(1);
 		
 	});
