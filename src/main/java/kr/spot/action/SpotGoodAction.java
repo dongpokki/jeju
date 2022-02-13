@@ -37,6 +37,8 @@ public class SpotGoodAction implements Action {
 			good.setSpot_num(spot_num);
 			good.setUser_num(session_user_num);
 			dao.jGood(good);
+			String good_result = String.valueOf(dao.getSpotGoodCount(spot_num));
+			mapAjax.put("good_result", good_result);
 		}
 
 		ObjectMapper mapper = new ObjectMapper();
