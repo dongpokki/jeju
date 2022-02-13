@@ -35,7 +35,7 @@ public class QnaWriteCmtAction implements Action{
 			cmt.setCmt_content(request.getParameter("cmt_content"));
 			cmt.setUser_num(user_num);
 			cmt.setQna_num(Integer.parseInt(request.getParameter("qna_num")));
-			
+			System.out.println(request.getParameter("qna_num"));
 			QnaDAO dao = QnaDAO.getInstance();
 			dao.insertCmtQna(cmt);
 			mapAjax.put("result", "success");

@@ -25,7 +25,7 @@ public class QnaDetailAction implements Action{
 		//HTML 태그르 허용하지 않음, 줄바꿈 허용하지 않음
 		qna.setTitle(StringUtil.useNoHtml(qna.getTitle()));
 		//HTML 태그 허용하지 않으면서 줄바꿈허용 
-		qna.setContent(StringUtil.useBrNoHtml(qna.getContent()));
+		//qna.setContent(StringUtil.useBrNoHtml(qna.getContent()));
 		
 		request.setAttribute("qna", qna);
 		

@@ -109,7 +109,7 @@ a:hover {
 	.btn-warning.focus, .btn-danger:focus, .btn-danger.focus, .btn-dark:focus,
 	.btn-dark.focus {
 	color: #fff;
-	background-color: #FBC16D;
+	background-color: #6c757d;
 	border-color: transparent;
 	box-shadow: none;
 }
@@ -995,7 +995,8 @@ a:hover {
 	color: #fff;
 }
 
-.blog-single-wrap .post-meta .post-date, .blog-single-wrap .post-meta .post-comment-count
+.blog-single-wrap .post-meta .post-date, .blog-single-wrap .post-meta .post-comment-count,
+.blog-single-wrap .post-meta .post-name, .blog-single-wrap .post-meta .post-lookup
 	{
 	display: inline-block;
 }

@@ -33,7 +33,7 @@ public class QnaWriteAction implements Action{
 		qna.setName(multi.getParameter("name"));
 		
 		QnaDAO dao = QnaDAO.getInstance();
-		dao.insertBoard(qna);
+		dao.insertQna(qna);
 		System.out.println(multi.getParameter("filename"));
 		
 		return "/WEB-INF/views/qna/qnaWrite.jsp";

@@ -12,13 +12,13 @@
 </head>
 <body>
 <div>
-	<div class="page-main">
-		<jsp:include page="/WEB-INF/views/common/header.jsp" />
+	<jsp:include page="/WEB-INF/views/common/header.jsp" />
+	<div class="page-section">
 		<div class="container mt-5">
 			<div id="qna-banner">
 				<h1>QnA</h1>
 			</div>
-			<div class="align-center">
+			<div class="search-form" >
 			<form action="qnaList.do" method="get" style="float: right;">
 				<div class="FormSelectButton">
 					<div>
@@ -33,7 +33,7 @@
 						</li>
 						<li>
 							<input type="search" size="16" name="keyword" id="keyword" class="form-control" value="${param.keyword }" placeholder="검색어를 입력해주세요" style="height:38px">
-							<button style="height:38px;" type="submit" class="btn btn-primary btn-block" style="backgroun-color:#FEA82F">
+							<button style="height:38px;" type="submit" class="btn btn-primary" style="backgroun-color:#FEA82F">
 								<img src='${pageContext.request.contextPath }/images/search.png'width="25px">
 							</button>
 						</li>
@@ -65,13 +65,14 @@
 							<input type="checkbox" name="delet_check" >
 						</td></c:if>
 						<td>${qna.qna_num }</td>
-						<td>
-							<a href="qnaDetail.do?qna_num=${qna.qna_num}">${qna.title }</a>
+						<td onclick="location.href='qnaDetail.do?qna_num=${qna.qna_num}'" style="cursor:pointer">
+							${qna.title }
 							<c:if test="${qna.viewable_check==1 }">
 								<img src="${pageContext.request.contextPath }/images/lock1.png" width="20px">
 							</c:if>
 						</td>
 						<td>${qna.name }
+						<c:if test="${qna.id ne 'admin'}">
 							(<c:choose>
 								<c:when test="${fn:length(qna.id) gt 2}">
 									<c:out value="${fn:substring(qna.id, 0, 2)}"/><c:forEach begin="3" end="${fn:length(qna.id) }">*</c:forEach>
@@ -80,6 +81,7 @@
 								<c:out value="${qna.id}"/>
 							</c:otherwise>
 							</c:choose>)
+						</c:if>
 						</td>
 						<td>${qna.reg_date }</td>
 						<td>${qna.hit }</td>
@@ -89,9 +91,9 @@
 					</c:if>
 				</table>	
 				<div class="d-grid gap-2 col-6">
-					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary btn-login fw-bold" type="button" value="삭제" onclick="location.href='qnaDelete.do'"></c:if>
-					<input <c:if test="${empty session_user_num}">disabled="disabled"</c:if> class="btn btn-primary btn-login fw-bold" type="button" value="작성" onclick="location.href='qnaWriteForm.do'" style="backgroun-color:#FEA82F"> 
-					<input class="btn btn-secondary btn-login fw-bold" type="button" value="목록" onclick="location.href='qnaList.do';">
+					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary" type="button" value="삭제" onclick="location.href='qnaDelete.do'"></c:if>
+					<input <c:if test="${empty session_user_num}">disabled="disabled"</c:if> class="btn btn-primary" type="button" value="작성" onclick="location.href='qnaWriteForm.do'" style="backgroun-color:#FEA82F"> 
+					<input class="btn btn-secondary" type="button" value="목록" onclick="location.href='qnaList.do'">
 				</div>
 			</div>
 		</div>
