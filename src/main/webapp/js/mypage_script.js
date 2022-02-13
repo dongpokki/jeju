@@ -96,6 +96,9 @@ $(function(){
 			spot_currentPage = spot_pageNum;
 			myqna_currentPage = myqna_pageNum;
 			
+			alert('spot_pageNum : ' + spot_pageNum);
+			alert('myqna_pageNum : ' + myqna_pageNum);
+			
 			//로딩 이미지 노출
 			$('#spot_loading').show();
 			$('#myqna_loading').show();
@@ -119,11 +122,15 @@ $(function(){
 					myqna_count = param.myqna_count;
 					myqna_rowCount = param.myqna_rowCount;
 					
-					if(spot_pageNum == 1 && myqna_pageNum == 1){
+					if(spot_pageNum == 1){
 						// 처음 호출시는 해당 영역의 div의 내부 내용물을 제거
 						$('#spot_output').empty();
-						$('#myqna_output').empty();
 					}	
+					
+					if(myqna_pageNum == 1){
+						// 처음 호출시는 해당 영역의 div의 내부 내용물을 제거
+						$('#myqna_output').empty();
+					}
 
 					if($(param.spot_list).length == 0){ // 내가 추천하는 장소가 없다면
 						let output = '<div class="alert alert-warning" style="width:100%;">등록된 추천 코스가 없습니다.</div>';
@@ -149,6 +156,7 @@ $(function(){
 						//문서 객체에 추가
 						$('#spot_output').append(output);	
 					});
+				
 					
 					//page button 처리
 					if(spot_currentPage>=Math.ceil(spot_count/spot_rowCount)){
@@ -170,7 +178,7 @@ $(function(){
 					});
 					
 					//page button 처리
-					if(qna_currentPage>=Math.ceil(qna_count/qna_rowCount)){
+					if(myqna_currentPage>=Math.ceil(myqna_count/myqna_rowCount)){
 						//다음 페이지가 없음
 						$('.myqna_paging-button').hide();		
 					}else{
@@ -193,7 +201,7 @@ $(function(){
 			spot_selectData(spot_currentPage + 1, myqna_currentPage);		
 		});
 		
-		$('.qna_paging-button input').click(function(){
+		$('.myqna_paging-button input').click(function(){
 			spot_selectData(spot_currentPage , myqna_currentPage + 1);		
 		});
 		

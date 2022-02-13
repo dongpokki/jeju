@@ -48,6 +48,8 @@ public class MyGoodSpotAction implements Action{
 		List<SpotVO> spot_list = null;
 		if(spot_count > 0) {
 			spot_list = spot_dao.MyGoodSpot(spot_page.getStartCount(), spot_page.getEndCount(), session_user_num);
+			System.out.println("spot_page.getStartCount() : " + spot_page.getStartCount());
+			System.out.println("spot_page.getEndCount() : " + spot_page.getEndCount());
 		}else { // 조회 결과가 없는 경우
 			// 리스트를 빈 배열로 만든다.
 			spot_list = Collections.emptyList();
@@ -56,13 +58,15 @@ public class MyGoodSpotAction implements Action{
 		
 		// qnadao 객체 생성 및 페이지 넘버링 작업
 		QnaDAO qna_dao = QnaDAO.getInstance();
-		int qna_count = qna_dao.getmyListQnaCount(session_user_id);
+		int qna_count = qna_dao.getmyListQnaCount(session_user_id); 
 		int qna_rowCount = 3;
 		PagingUtil qna_page = new PagingUtil(Integer.parseInt(qna_pageNum),qna_count,qna_rowCount,1,null);
 
 		List<QnaVO> qna_list = null;
 		if(qna_count > 0) {
 			qna_list = qna_dao.getmyListQna(session_user_id,qna_page.getStartCount(), qna_page.getEndCount());
+			System.out.println("qna_page.getStartCount() : " + qna_page.getStartCount());
+			System.out.println("qna_page.getEndCount() : " + qna_page.getEndCount());
 		}else { // 조회 결과가 없는 경우
 			// 리스트를 빈 배열로 만든다.
 			qna_list = Collections.emptyList();

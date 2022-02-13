@@ -352,7 +352,7 @@ public class QnaDAO {
 			conn = DBUtil.getConnection();
 			
 			//sql문 작성
-			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT b.title,b.viewable_check,b.qna_num,u.id FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num) ORDER BY u.auth DESC,b.qna_num DESC)a) WHERE id = ? and rnum>=? AND rnum<=?";
+			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT b.title,b.viewable_check,b.qna_num,u.id FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num) WHERE id = ? ORDER BY u.auth DESC,b.qna_num DESC)a) where rnum>=? AND rnum<=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -366,11 +366,11 @@ public class QnaDAO {
 			
 			while(rs.next()) {
 				QnaVO qna = new QnaVO();
-				qna.setTitle(rs.getString("id"));
+				qna.setTitle(rs.getString("title"));
 				qna.setViewable_check(rs.getInt("viewable_check"));;
 				qna.setQna_num(rs.getInt("qna_num"));
 				qna.setId(rs.getString("id"));
-
+				
 				//BoardVO를 ArrayList에 저장
 				list.add(qna);
 			}
