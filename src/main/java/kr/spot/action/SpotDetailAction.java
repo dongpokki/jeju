@@ -30,10 +30,12 @@ public class SpotDetailAction implements Action {
 		if (session_user_num == null) {// 로그인이 되지 않은 경우
 			session_user_num = 0;
 		}
-
+		
+		int checked = dao.checkGood(session_user_num, spot_num);
 		int good = dao.getSpotGoodCount(spot_num);
 		request.setAttribute("good", good);
 		request.setAttribute("user_num", session_user_num);
+		request.setAttribute("checked", checked);
 
 		// JSP 경로 반환
 		return "/WEB-INF/views/spot/spotDetail.jsp";
