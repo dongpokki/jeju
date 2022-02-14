@@ -51,9 +51,9 @@
 				<c:forEach var="course" items="${course_list}">
 					<div class="col-sm-6 col-lg-4">
 						<h3 class="best-title">${course.title}</h3>
-						<img src="${pageContext.request.contextPath}/images/Tulips.jpg" class="img-thumbnail">
+						<img src="${pageContext.request.contextPath}/upload/${course.filename}" class="img-thumbnail" style="width:300px; height: 300px;">
 						<p class="best-content">${course.content}</p>
-		  				<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=${course.course_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
+		  				<p><a href="${pageContext.request.contextPath}/course/courseDetail.do?course_num=${course.course_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
 					</div>
 				</c:forEach>
 			</c:if>

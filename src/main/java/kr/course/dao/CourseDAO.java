@@ -8,6 +8,7 @@ import java.util.List;
 
 import kr.course.vo.CourseVO;
 import kr.qna.vo.QnaVO;
+import kr.spot.vo.SpotVO;
 import kr.util.DBUtil;
 import kr.util.StringUtil;
 
@@ -266,7 +267,51 @@ public class CourseDAO {
 			}
 		}
 		
-		
+		// [정동윤 작성] 메인에 노출할 BEST3 spot 구하기
+		public List<CourseVO> getRankingCourse() throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<CourseVO> list = null;
+			String sql = null;
+
+			try {
+				// 커넥션풀로부터 커넥션 할당
+				conn = DBUtil.getConnection();
+
+				// sql문 작성
+				// 게시글별로 추천수의 합(total_good)이 높은 순으로 랭킹1~3위 까지 3개의 컬럼 조회 [추천수(good)이 같은 경우에는,
+				// 게시글번호(course_num)이 낮은(먼저 등록한 순)순으로 추가 비교]
+				sql = "select b.course_num,b.title,b.content,b.filename,u.total_good,u.rank from jboard_course b join (select * from (select course_num,total_good,row_number() over (order by total_good desc,course_num) rank from(select course_num,count(*) total_good from jgood_course where good =1 group by course_num)) where rank<4) u on b.course_num = u.course_num order by rank";
+
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+
+				// sql문 수행하여 결과 집합을 rs에 담음
+				rs = pstmt.executeQuery();
+
+				list = new ArrayList<CourseVO>();
+
+				while (rs.next()) {
+					CourseVO course = new CourseVO();
+
+					course.setCourse_num(rs.getInt("course_num"));
+					course.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+					course.setContent(rs.getString("content"));
+					course.setFilename(rs.getString("filename"));
+					
+					// 자바빈(VO)을 ArrayList에 저장
+					list.add(course);
+				}
+
+			} catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				// 자원정리
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return list;
+		}
 		
 		
 		// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 코스 내역
@@ -303,7 +348,7 @@ public class CourseDAO {
 			return count;
 		}
 		
-		
+		// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 코스 내역
 		// 내가 작성한 코스 리스트 조회
 		public List<CourseVO> getmyCourseList(int session_user_num,int startRow,int endRow) throws Exception{
 			Connection conn =null;
