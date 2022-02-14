@@ -38,8 +38,8 @@ $(function(){
 					}
 					output +='<div style="text-align: right">'
 					if(param.user_num==item.user_num){
-						output +='<input type="button" data-qnacmtnum="'+item.qnacmt_num+'"value="수정" class="btn btn-primary" style="align-right">';
-						output +='<input type="button" data-qnacmtnum="'+item.qnacmt_num+'"value="삭제" class="btn btn-secondary style="align-right"">';
+						output +='<input type="button" data-qnacmtnum="'+item.qnacmt_num+'"value="수정" id="modify_btn" class="btn btn-primary">';
+						output +='<input type="button" data-qnacmtnum="'+item.qnacmt_num+'"value="삭제" id="delete_btn" class="btn btn-secondary">';
 					}
 					output +='</div>'
 					output +='<hr size="1" width="100%">';
@@ -130,11 +130,64 @@ $(function(){
 		}
 	});
 	//댓글 수정 버튼 클릭시 수정폼 노출
-	
+	$(document).on('click','#modify_btn',function(){
+		let qnacmt_num=$(this).attr('data-qnacmtnum');
+		let content = $(this).parents('.sub-item').find('p').html().replace(/<br>/gi,'\n');
+		
+		let modifyUI = '<form id="mcmt_form" class="comment-form">';
+			modifyUI +='	<input type="hidden" name="qna_num" id="qna_num" value="'+qnacmt_num+'">';
+			modifyUI +='	<textarea rows="3" cols="50" name="cmt_content" id="mcmt_content" class="cmtp-content">'+ content +'</textarea>';
+			modifyUI +='	<div id="mcmt_first"><span class="letter-count">100/100</span></div>';
+			modifyUI +='	<div id="mcmt_second" style="text-align: right">';
+			modifyUI +='		<input type="submit" value="수정" class="btn btn-primary">';
+			modifyUI +='		<input type="button" value="취소" class="cmt-reset btn btn-secondary" >';
+			modifyUI +='	</div>';
+			modifyUI +='</form>';
+			
+			initModifyForm();
+			
+			$(this).parents('.sub-item').hide();
+			$(this).parents('.item').append(modifyUI);
+			
+			let inputLength=$('#mcmt_content').val().length;
+			let remain = 100-inputLength;
+			remain +='/100';
+			
+			$('#mcmt_first .letter-count').text(remain);
+			
+	});
+	//수정폼에서 취소 버튼 클릭시 수정폼 초기화 
+	$(document).on('click','.cmt-reset',function(){
+		initModifyForm();
+	})
 	//댓글 수정 폼 초기화
-
-	//댓글 수정
-	
+	function initModifyForm(){
+		$('.sub-item').show();
+		$('#mcmt_form').remove();
+	}
+	//댓글 수정 
+	$(document).on('submit','#mcmt_form',function(event){
+		if($('#mcmt_content').val().trim()==''){
+			alert('내용을 입력하세요.');
+			$('#mcmt_content').val('').focus();
+			return false;
+		}
+		let form_data =$(this).serialize();
+		
+		$.ajax({
+			url:'qnaUpdateCmt.do',
+			type:'post',
+			data:form_data,
+			dataType:'json',
+			cache:false,
+			timeout:30000,
+			success:function(param){
+				if(param.result=='logout'){
+					alert('로그인해야 작성 가능합니다.');
+				}
+			}
+		});
+	});
 	//댓글 삭제
 	
 	//초기 데이터(목록) 호출

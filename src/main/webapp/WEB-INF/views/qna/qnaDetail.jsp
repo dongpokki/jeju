@@ -81,8 +81,7 @@
 						<input type="button" class="btn btn-primary" value="수정"
 							onclick="location.href='qnaUpdateForm.do?qna_num=${qna.qna_num}'">
 					</c:if>
-					<c:if
-						test="${session_user_num==qna.user_num || session_user_auth==3 }">
+					<c:if test="${session_user_num==qna.user_num || session_user_auth==3 }">
 						<input type="button" class="btn btn-tertiary" value="삭제"
 							id="delete_btn">
 						<script type="text/javascript">
@@ -101,6 +100,11 @@
 						id="delete_btn" onclick="location.href='qnaList.do'">
 				</div>
 				<!-- 댓글 시작 -->
+				<c:if test="${session_user_auth!=3}">
+					<form id="cmt_form" class="comment-form" style="">
+						<input type="hidden" name="qna_num" value="${qna.qna_num }" id="qna_num">
+					</form>
+				</c:if>
 				<c:if test="${session_user_auth==3}">
 					<div id="cmt_div" class="comment-form-wrap">
 						<h5>
@@ -108,8 +112,7 @@
 						</h5>
 						<form id="cmt_form" class="comment-form">
 							<input type="hidden" name="qna_num" value="${qna.qna_num }" id="qna_num">
-							<textarea name="cmt_content" id="cmt_content"
-								class="cmtp-content"></textarea>
+							<textarea rows="3" cols="50" name="cmt_content" id="cmt_content" class="cmtp-content"></textarea>
 							<div id="cmt_first">
 								<span class="letter-count">100/100</span>
 							</div>
@@ -130,13 +133,6 @@
 						src="${pageContext.request.contextPath }/images/ajax-loader.gif">
 				</div>
 				<!-- 댓글 목록 출력 끝 -->
-				<div id="output"></div>
-				<div class="paging-button" style="display:none">
-					<input type="button" value="다음글보기">
-				</div>
-				<div class="paging-button" style="display:none;">
-					<input type="button" value="다음글 보기">
-				</div>
 				<!-- 댓글 끝 -->
 			</div>
 		</div>

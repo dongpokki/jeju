@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QnA 목록</title>
+<title>Q&amp;A 게시판</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 </head>
@@ -16,7 +16,7 @@
 	<div class="page-section">
 		<div class="container mt-5">
 			<div id="qna-banner">
-				<h1>QnA</h1>
+				<h1>Q&amp;A 게시판</h1>
 			</div>
 			<div class="search-form" >
 			<form action="qnaList.do" method="get" style="float: right;">
