@@ -31,7 +31,7 @@
 				<c:forEach var="spot" items="${spot_list}">
 					<div class="col-sm-6 col-lg-4">
 						<h3 class="best-title">${spot.title}</h3>
-						<img src="${pageContext.request.contextPath}/upload/${spot.filename}" class="img-thumbnail" style="width:303px; height: 103px;">
+						<img src="${pageContext.request.contextPath}/upload/${spot.filename}" class="img-thumbnail" style="width:300px; height: 300px;">
 						<p class="best-content">${spot.content}</p>
 		  				<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=${spot.spot_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
 					</div>

@@ -81,7 +81,7 @@ $(function(){
 		
 		
 		// ================================================================================================================================
-		// ↓ 내가 좋아하는 장소 & 내가 좋아하는 코스 & 내가 작성한 문의사항 스크립트문
+		// ↓ 내가 좋아하는 장소 & 내가 좋아하는 코스 & 내가 작성한 코스 & 내가 작성한 문의사항 스크립트문
 		
 		
 		//내가 좋아하는 장소 목록
@@ -152,10 +152,82 @@ $(function(){
 		$('.spot_paging-button input').click(function(){
 			spot_selectData(spot_currentPage + 1);		
 		});
+
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		//내가 작성한 코스 목록
+		let mywritecourse_currentPage;
+		let mywritecourse_count;
+		let mywritecourse_rowCount;
+
+		function mywritecourse_selectData(mywritecourse_pageNum){
+			mywritecourse_currentPage = mywritecourse_pageNum;
+
+			//로딩 이미지 노출
+			$('#mywritecourse_loading').show();
+			
+				$.ajax({
+				type:'post',
+				data:{mywritecourse_pageNum:mywritecourse_pageNum},
+				url:'mywritecourse.do',
+				dataType:'json',
+				cache:false,
+				timeout:30000,
+				success:function(param){
+					//로딩 이미지 감추기
+					$('#mywritecourse_loading').hide();
+
+					mywritecourse_count = param.mywritecourse_count;
+					mywritecourse_rowCount = param.mywritecourse_rowCount;
+					
+					if(mywritecourse_pageNum == 1){
+						// 처음 호출시는 해당 영역의 div의 내부 내용물을 제거
+						$('#mywritecourse_output').empty();
+					}
+
+					if($(param.mywritecourse_list).length == 0){ // 내가 작성한 문의사항이 없다면
+						let output = '<div class="alert alert-warning" style="width:100%;">등록된 문의사항이 없습니다.</div>';
+						
+						//문서 객체에 추가
+						$('#mywritecourse_output').append(output);
+					}					
+					
+					
+					$(param.mywritecourse_list).each(function(index,mywritecourse){
+					
+							let output = '<div class="col-sm-12 col-lg-12">';
+							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/course/courseDetail.do?course_num=' + mywritecourse.course_num + '">' + mywritecourse.title + '</a></h5>';
+							output += '</div>';
+						
+						//문서 객체에 추가
+						$('#mywritecourse_output').append(output);	
+					});
+					
+					//alert('mywritecourse_count/mywritecourse_rowCount : ' + mywritecourse_count + '/' +mywritecourse_rowCount);
+					
+					//page button 처리
+					if(mywritecourse_currentPage>=Math.ceil(mywritecourse_count/mywritecourse_rowCount)){
+						//다음 페이지가 없음
+						$('.mywritecourse_paging-button').hide();		
+					}else{
+						//다음 페이지가 존재
+						$('.mywritecourse_paging-button').show();
+					}
+				},
+				
+				error:function(){
+					alert('네트워크 오류');
+				}
+			});	
+		}
 		
+		$('.mywritecourse_paging-button input').click(function(){
+			mywritecourse_selectData(mywritecourse_currentPage + 1);		
+		});
 		
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------		
 		
-		//내가 좋아하는 장소 목록
+		//내가 작성한 문의사항 목록
 		let myqna_currentPage;
 		let myqna_count;
 		let myqna_rowCount;
@@ -232,8 +304,10 @@ $(function(){
 			myqna_selectData(myqna_currentPage + 1);		
 		});
 		
+
 		// 마이페이지 최초 진입 시 내가 좋아하는 장소 / 내가 좋아하는 코스 / 내가 작성한 코스 / 내가 작성한 문의사항 목록 호출
 		spot_selectData(1);
+		mywritecourse_selectData(1);
 		myqna_selectData(1);
 		
 	});
