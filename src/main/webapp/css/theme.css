@@ -1348,6 +1348,19 @@ a:hover {
 	background-color: rgba(0, 0, 0, 0);
 	border-color: rgba(0, 0, 0, 0);
 }
+
+.image-box {
+	width: 310px;
+	height :200px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.image-thumbnail {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
 /*QnA 게시판 */
 #qna-banner {
 	position: relative;

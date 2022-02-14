@@ -98,7 +98,7 @@ $(function(){
 							</div>
 							<div class="post-content">${spot.content }
 								<c:if test="${!empty spot.filename }">
-									<img src="${pageContext.request.contextPath }/upload/${spot.filename}" align="center">
+									<img src="${pageContext.request.contextPath }/upload/${spot.filename}" style="display: block; margin: auto; max-width: 690px">
 								</c:if>
 
 							</div>

@@ -95,8 +95,9 @@
 											<a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.title }</a>
 										</div>
 										<div class="post-excerpt" style="max-height: 200px !important;">
-											<a href="spotDetail.do?spot_num=${spot.spot_num}"><c:if test="${!empty spot.filename }">
-													<img src="${pageContext.request.contextPath }/upload/${spot.filename}" width="100%">
+											<a href="spotDetail.do?spot_num=${spot.spot_num}">
+											<c:if test="${!empty spot.filename }">
+											<div class="image-box"> <img class="image-thumbnail" src="${pageContext.request.contextPath }/upload/${spot.filename}"> </div>
 												</c:if></a>
 										</div>
 										<div class="post-excerpt" style="padding: 15px 0 0 0;">${spot.content }</div>
