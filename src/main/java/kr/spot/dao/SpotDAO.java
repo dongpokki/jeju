@@ -142,7 +142,6 @@ public class SpotDAO {
 			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
 				pstmt.setString(++cnt, "%" + keyword + "%");
 				if (category != 0) {
-					System.out.println(cnt);
 					pstmt.setInt(++cnt, category);
 				}
 			} else {// 검색어가 없는 경우

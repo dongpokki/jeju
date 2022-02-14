@@ -68,6 +68,9 @@
 						<c:if test="${empty param.category}">
 							<input type="hidden" name="category" value="0">
 						</c:if>
+						<c:if test="${!empty param.keyword}">
+							<input type="hidden" name="keyword" value="${param.keyword}">
+						</c:if>
 						<select name="sort" class="nice-select" onChange="this.form.submit()" style="border-color: transparent; margin: 0; height: none; padding: 0;">
 							<option <c:if test="${empty param.sort }">selected</c:if> value="spot_num">최신순</option>
 							<option <c:if test="${param.sort eq'hit' }">selected</c:if> value="hit">조회수순</option>

@@ -14,6 +14,7 @@ public class SpotListAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
 		String pageNum = request.getParameter("pageNum");
 		if (pageNum == null)
 			pageNum = "1";
@@ -27,10 +28,13 @@ public class SpotListAction implements Action {
 		}
 		int count = dao.getSpotBoardCount(keyword, Integer.parseInt(category));
 		String sort = request.getParameter("sort");
+		String addKey = "&category=" + Integer.parseInt(category);
+		if (sort != null) {
+			addKey += "&sort=" + sort;
+		}
 		// 페이지 처리
 		// keyfield,keyword,currentPage,count,rowCount,pageCount,url
-		PagingUtil page = new PagingUtil("", keyword, Integer.parseInt(pageNum), count, 9, 9, "spotList.do",
-				"&category=" + Integer.parseInt(category));
+		PagingUtil page = new PagingUtil("", keyword, Integer.parseInt(pageNum), count, 9, 9, "spotList.do", addKey);
 
 		List<SpotVO> list = null;
 		if (count > 0) {
