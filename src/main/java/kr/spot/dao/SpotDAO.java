@@ -199,8 +199,8 @@ public class SpotDAO {
 		List<SpotVO> list = null;
 		String sql = null;
 		String sub_sql = "";
-		String sub_sql2 = sort;
-		String sub_sql3 = "";
+		String sub_sql2 = "";
+		String sub_sql3 = sort;
 		int cnt = 0;
 
 		try {
@@ -210,20 +210,20 @@ public class SpotDAO {
 				sub_sql = " WHERE category=? ";
 			}
 
-			if (sort != null && sort.equals("good")) {
-				sub_sql2 = "good";
-			} else if (sort == null || sort.equals("spot_num")) {
-				sub_sql2 = "spot_num";
-			}
 			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
-				sub_sql3 = " aaa LIKE ? AND ";
+				sub_sql2 = " WHERE content LIKE ? ";
 			}
-
-			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT aa.*, (SELECT content FROM jboard_spot WHERE spot_num =  aa.spot_num) aaa"
-					+ " FROM (SELECT DISTINCT spot_num, title, filename, hit, good, category "
-					+ "FROM jboard_spot b LEFT OUTER JOIN (SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num) g USING (spot_num) "
-					+ sub_sql + "ORDER BY " + sub_sql2 + " DESC NULLS LAST) aa) a ) WHERE " + sub_sql3
-					+ "rnum>=? AND rnum <=?";
+			if (sort != null && sort.equals("good")) {
+				sub_sql3 = "good";
+			} else if (sort == null || sort.equals("spot_num")) {
+				sub_sql3 = "spot_num";
+			}
+			sql = "SELECT * FROM ( SELECT aa.*, rownum rnum FROM "
+					+ "(SELECT * FROM (SELECT content, spot_num FROM jboard_spot) JOIN "
+					+ "(SELECT DISTINCT spot_num, title, filename, hit, good, category FROM jboard_spot b LEFT OUTER JOIN "
+					+ "(SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num ) g USING (spot_num) "
+					+ sub_sql + ")a " + "USING (spot_num) " + sub_sql2 + ") aa ) WHERE rnum>=? AND rnum <=? ORDER BY "
+					+ sub_sql3 + " DESC NULLS LAST";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -245,7 +245,7 @@ public class SpotDAO {
 				spot.setSpot_num(rs.getInt("spot_num"));
 				spot.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				spot.setFilename(rs.getString("filename"));
-				spot.setContent(rs.getString("aaa"));
+				spot.setContent(rs.getString("content"));
 
 				// 자바빈(VO)을 ArrayList에 저장
 				list.add(spot);

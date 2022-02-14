@@ -33,7 +33,6 @@ public class SpotListAction implements Action {
 			addKey += "&sort=" + sort;
 		}
 		// 페이지 처리
-		// keyfield,keyword,currentPage,count,rowCount,pageCount,url
 		PagingUtil page = new PagingUtil("", keyword, Integer.parseInt(pageNum), count, 9, 9, "spotList.do", addKey);
 
 		List<SpotVO> list = null;
