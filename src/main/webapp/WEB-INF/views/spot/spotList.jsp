@@ -8,6 +8,8 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
+<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -59,11 +61,28 @@
 						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${category==3 }">style="color:#FE9A2E;"</c:if>>남부</a></li> /
 						<li class="breadcrumb-item"><a href="spotList.do?category=4" <c:if test="${category==4 }">style="color:#FE9A2E;"</c:if>>북부</a></li>
 					</ul>
-					<ul class="breadcrumb p-0 mb-0 bg-transparent">
-						<li class="breadcrumb-item"><a href="">최신순</a></li> |
-						<li class="breadcrumb-item"><a href="">좋아요순</a></li> |
-						<li class="breadcrumb-item"><a href="">조회수순</a></li>
-					</ul>
+					<%-- <div class="sort">
+						<c:if test="${!empty param.category}">
+							<input type="hidden" name="category" value="${param.category}">
+						</c:if>
+						<c:if test="${empty param.category}">
+							<input type="hidden" name="category" value="0">
+						</c:if>
+						<input type="button" value="최신순" id="sort_date"> | <input type="button" value="조회수 순" id="sort_view"> | <input type="button" value="좋아요 순" id="sort_good">
+					</div> --%>
+					<form action="spotList.do" method="post">
+						<c:if test="${!empty param.category}">
+							<input type="hidden" name="category" value="${param.category}">
+						</c:if>
+						<c:if test="${empty param.category}">
+							<input type="hidden" name="category" value="0">
+						</c:if>
+						<select name="sort" onChange="this.form.submit()">
+							<option data-display="Select" value="spot_num">최신순</option>
+							<option value="hit">조회수순</option>
+							<option value="good">좋아요순</option>
+						</select>
+					</form>
 				</nav>
 				<div class="row">
 
@@ -82,7 +101,9 @@
 											<a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.title }</a>
 										</div>
 										<div class="post-excerpt" style="max-height: 200px !important;">
-											<a href="spotDetail.do?spot_num=${spot.spot_num}"><c:if test="${!empty spot.filename }"><img src="${pageContext.request.contextPath }/upload/${spot.filename}" width="100%"></c:if></a>
+											<a href="spotDetail.do?spot_num=${spot.spot_num}"><c:if test="${!empty spot.filename }">
+													<img src="${pageContext.request.contextPath }/upload/${spot.filename}" width="100%">
+												</c:if></a>
 										</div>
 										<div class="post-excerpt" style="padding: 15px 0 0 0;">${spot.content }</div>
 									</div>

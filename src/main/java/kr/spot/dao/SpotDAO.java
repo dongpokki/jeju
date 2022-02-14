@@ -166,47 +166,69 @@ public class SpotDAO {
 	}
 
 	// 목록
-	public List<SpotVO> getList(int startRow, int endRow, String keyword, int category) throws Exception {
+	public List<SpotVO> getList(int startRow, int endRow, String keyword, int category, String sort) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<SpotVO> list = null;
 		String sql = null;
 		String sub_sql = "";
+		String sub_sql2 = sort;
+		String sub_sql3 = "";
 		int cnt = 0;
 
 		try {
 			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-
-			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
-				sub_sql = "WHERE content LIKE ?";
-				if (category != 0) {
-					sub_sql += " AND category=? ";
-				}
-			} else {// 검색어가 없는 경우
-				if (category != 0) {
-					sub_sql = "WHERE category=? ";
-				}
+			if (category != 0) {
+				sub_sql = " WHERE category=? ";
 			}
 
-			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot " + sub_sql
-					+ "ORDER BY spot_num DESC) a ) WHERE rnum>=? AND rnum <=? ";
+			/*
+			 * if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우 sub_sql =
+			 * "WHERE content LIKE ?"; if (category != 0) { sub_sql += " AND category=? "; }
+			 * } else {// 검색어가 없는 경우 if (category != 0) { sub_sql = "WHERE category=? "; } }
+			 */
+
+			if (sort != null && sort.equals("good")) {
+				sub_sql2 = "good";
+			} else if (sort == null || sort.equals("spot_num")) {
+				sub_sql2 = "spot_num";
+			}
+			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
+				sub_sql3 = " aaa LIKE ? AND ";
+			}
+
+			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT aa.*, (SELECT content FROM jboard_spot WHERE spot_num =  aa.spot_num) aaa"
+					+ " FROM (SELECT DISTINCT spot_num, title, filename, hit, good, category "
+					+ "FROM jboard_spot b LEFT OUTER JOIN (SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num) g USING (spot_num) " + sub_sql + "ORDER BY " + sub_sql2
+					+ " DESC NULLS LAST) aa) a ) WHERE " + sub_sql3 + "rnum>=? AND rnum <=?";
+			System.out.println(sql);
+
+			/*
+			 * sql =
+			 * "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot b JOIN jgood_spot g USING (spot_num) "
+			 * + sub_sql + "ORDER BY " + sub_sql2 +
+			 * " DESC) a ) WHERE rnum>=? AND rnum <=? ";
+			 */
 			pstmt = conn.prepareStatement(sql);
 
-			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
-				pstmt.setString(++cnt, "%" + keyword + "%");
-				if (category != 0) {
-					pstmt.setInt(++cnt, category);
-				}
-			} else {// 검색어가 없는 경우
-				if (category != 0) {
-					pstmt.setInt(++cnt, category);
-				}
+			/*
+			 * if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
+			 * pstmt.setString(++cnt, "%" + keyword + "%"); if (category != 0) {
+			 * pstmt.setInt(++cnt, category); } } else {// 검색어가 없는 경우 if (category != 0) {
+			 * pstmt.setInt(++cnt, category); } }
+			 */
+
+			if (category != 0) {
+				pstmt.setInt(++cnt, category);
 			}
+			if (keyword != null && !"".equals(keyword)) {
+				pstmt.setString(++cnt, "%" + keyword + "%");
+			}
+
 			pstmt.setInt(++cnt, startRow);
 			pstmt.setInt(++cnt, endRow);
-
 			// SQL문을 테이블에 반영하고 결과행들을 ResultSet 담음
 			rs = pstmt.executeQuery();
 			list = new ArrayList<SpotVO>();
@@ -216,7 +238,7 @@ public class SpotDAO {
 				spot.setSpot_num(rs.getInt("spot_num"));
 				spot.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				spot.setFilename(rs.getString("filename"));
-				spot.setContent(rs.getString("content"));
+				spot.setContent(rs.getString("aaa"));
 
 				// 자바빈(VO)을 ArrayList에 저장
 				list.add(spot);
@@ -295,7 +317,9 @@ public class SpotDAO {
 		}
 	}
 
-// 좋아요 여부 확인
+	// 조회수 순, 추천수 순 정렬
+
+	// 좋아요 여부 확인
 	public int checkGood(int user_num, int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -353,7 +377,7 @@ public class SpotDAO {
 		}
 	}
 
-//좋아요 개수
+	// 좋아요 개수
 	public int getSpotGoodCount(int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -399,7 +423,7 @@ public class SpotDAO {
 			// sql문 작성
 			// 게시글별로 추천수의 합(total_good)이 높은 순으로 랭킹1~3위 까지 3개의 컬럼 조회 [추천수(good)이 같은 경우에는,
 			// 게시글번호(spot_num)이 낮은(먼저 등록한 순)순으로 추가 비교]
-			sql = "select b.spot_num,b.title,b.content,b.filename,b.category,u.total_good,u.rank from jboard_spot b join (select * from (select spot_num,total_good,row_number() over (order by total_good desc,spot_num) rank from(select spot_num,count(*) total_good from jgood_spot where good =1 group by spot_num)) where rank<4) u on b.spot_num = u.spot_num order by rank";
+			sql = "select b.spot_num,b.title,b.content,b.filename,b.category,u.total_good,u.rank from jboard_spot b join (select * from (select spot_num,total_good,row_number() over (order by total_good desc,spot_num) rank from(select spot_num,count(*) total_good from jgood_spot where good =1 group by spot_num)) where rank<4) u on b.spot_num = u.spot_num";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -417,7 +441,7 @@ public class SpotDAO {
 				spot.setContent(rs.getString("content"));
 				spot.setFilename(rs.getString("filename"));
 				spot.setCategory(rs.getInt("category"));
-				
+
 				// 자바빈(VO)을 ArrayList에 저장
 				list.add(spot);
 			}
@@ -444,7 +468,7 @@ public class SpotDAO {
 			conn = DBUtil.getConnection();
 
 			// sql문 작성
-			sql = "select * from (select a.*, rownum rnum from (select b.spot_num,b.title,b.content,b.filename,b.category,g.good from jboard_spot b join jgood_spot g on b.spot_num = g.spot_num where g.user_num=? and good=1 order by b.spot_num)a) where rnum>=? and rnum<=?";
+			sql = "select * from (select a.*, rownum rnum from (select b.spot_num,b.title,b.content,b.filename,b.category,g.good from jboard_spot b join jgood_spot g on b.spot_num = g.spot_num where b.user_num=? and good=1 order by b.spot_num)a) where rnum>=? and rnum<=?";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);

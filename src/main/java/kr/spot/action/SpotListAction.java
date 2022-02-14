@@ -22,18 +22,19 @@ public class SpotListAction implements Action {
 
 		SpotDAO dao = SpotDAO.getInstance();
 		String category = request.getParameter("category");
-		if(category==null) {
+		if (category == null) {
 			category = "0";
 		}
 		int count = dao.getSpotBoardCount(keyword, Integer.parseInt(category));
-
+		String sort = request.getParameter("sort");
 		// 페이지 처리
 		// keyfield,keyword,currentPage,count,rowCount,pageCount,url
-		PagingUtil page = new PagingUtil("", keyword, Integer.parseInt(pageNum), count, 9, 9, "spotList.do", "&category="+Integer.parseInt(category));
+		PagingUtil page = new PagingUtil("", keyword, Integer.parseInt(pageNum), count, 9, 9, "spotList.do",
+				"&category=" + Integer.parseInt(category));
 
 		List<SpotVO> list = null;
 		if (count > 0) {
-			list = dao.getList(page.getStartCount(), page.getEndCount(), keyword, Integer.parseInt(category));
+			list = dao.getList(page.getStartCount(), page.getEndCount(), keyword, Integer.parseInt(category), sort);
 		}
 
 		request.setAttribute("count", count);
