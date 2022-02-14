@@ -15,11 +15,6 @@ $(function() {
 			$('#summernote').val('').focus();
 			return false;
 		}
-		if ($('#filename').val() == '') {
-			alert('사진을 업로드해주세요.');
-			$('#filename').focus();
-			return false;
-		}
 	});
 	
 	$('#summernote').summernote(

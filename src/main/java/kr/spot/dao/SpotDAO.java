@@ -64,7 +64,7 @@ public class SpotDAO {
 			conn = DBUtil.getConnection();
 
 			if (spot.getFilename() != null) {
-				sub_sql = ",filename=?";
+				sub_sql = ", filename=?";
 			}
 
 			sql = "UPDATE jboard_spot SET title=?, content=?, modify_date=SYSDATE" + sub_sql
@@ -79,6 +79,7 @@ public class SpotDAO {
 				pstmt.setString(++cnt, spot.getFilename());
 			}
 			pstmt.setInt(++cnt, spot.getCategory());
+			pstmt.setInt(++cnt, spot.getSpot_num());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new Exception(e);
@@ -102,6 +103,32 @@ public class SpotDAO {
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, spot_num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+
+	// 파일삭제
+	public void deleteFile(int spot_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "UPDATE jboard_spot SET filename='' WHERE spot_num=?";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, spot_num);
+
+			// SQL문 실행
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new Exception(e);

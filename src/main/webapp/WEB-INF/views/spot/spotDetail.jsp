@@ -96,11 +96,11 @@ $(function(){
 									<a href="#">덧글 수(누르면 덧글 창으로 이동)</a>
 								</div>
 							</div>
-							<div class="post-content">${spot.content }
+							<div class="post-content">
 								<c:if test="${!empty spot.filename }">
 									<img src="${pageContext.request.contextPath }/upload/${spot.filename}" style="display: block; margin: auto; max-width: 690px">
 								</c:if>
-
+								<div style="padding: 20px 10px 0 10px;">${spot.content }</div>
 							</div>
 						</div>
 						<div align="right" style="padding: 0 20px 0 0;">

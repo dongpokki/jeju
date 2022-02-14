@@ -29,13 +29,13 @@
 			</div>
 			<div class="WritingContent">
 				<div class="column_title">
-					<form id="write_form" action="spotWrite.do" method="post" enctype="multipart/form-data">
-						<select class="nice-select" name="category" id="category">
+					<form id="write_form" action="spotUpdate.do" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="spot_num" value="${spot.spot_num}"> <select class="nice-select" name="category" id="category">
 							<option data-display="Select" class="nice-select" value="">지역을 선택해주세요</option>
-							<option value="1">동부</option>
-							<option value="2">서부</option>
-							<option value="3">남부</option>
-							<option value="4">북부</option>
+							<option <c:if test="${spot.category ==1}">selected</c:if> value="1">동부</option>
+							<option <c:if test="${spot.category ==2}">selected</c:if> value="2">서부</option>
+							<option <c:if test="${spot.category ==3}">selected</c:if> value="3">남부</option>
+							<option <c:if test="${spot.category ==4}">selected</c:if> value="4">북부</option>
 						</select>
 				</div>
 				<div class="FlexableTextArea">
@@ -57,17 +57,14 @@
 				$.ajax({
 					url:'deleteFile.do',
 					type:'post',
-					data:{board_num:${board.board_num}},
+					data:{spot_num:${spot.spot_num}},
 					dataType:'json',
 					cache:false,
 					timeout:30000,
 					success:function(param){
-						if(param.result == 'logout'){
-							alert('로그인 후 사용하세요!');
-						}else if(param.result == 'success'){
+						 if(param.result == 'success'){
+							alert('파일을 정상적으로 삭제했습니다.');
 							$('#file_detail').hide();
-						}else if(param.result == 'wrongAccess'){
-							alert('잘못된 접속입니다.');
 						}else{
 							alert('파일 삭제 오류 발생');
 						}
