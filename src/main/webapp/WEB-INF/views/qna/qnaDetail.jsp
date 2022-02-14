@@ -125,8 +125,8 @@
 				</c:if>
 				<!-- 댓글 목록 출력 -->
 				<div id="output"></div>
-				<div class="paging-button" style="display: none;">
-					<input type="button" value="다음글 보기">
+				<div class="paging-button" style="display: none;text-align:right">
+					<input type="button" value="다음글 보기" class="btn btn-secondary">
 				</div>
 				<div id="loading" style="display: none">
 					<img

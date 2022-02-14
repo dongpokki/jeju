@@ -18,7 +18,7 @@ $(function(){
 			success:function(param){
 				$('#loading').hide();
 				
-				count=param.count;
+				count = param.count;
 				rowCount = param.rowCount;
 				
 				if(pageNum==1){
@@ -31,7 +31,7 @@ $(function(){
 					output +='<div class="sub-item">';
 					output +='<p>'+item.cmt_content+'</p>';
 					
-					if(item.modfiy_date){
+					if(item.modify_date){
 						output+='<span class="modify_date">최근 수정일: '+item.modify_date+'</span>';
 					}else{
 						output +='<span class="modify_date">등록일 : '+item.reg_date+'</span>';
@@ -61,6 +61,9 @@ $(function(){
 		});
 	}
 	//페이지 처리 이벤트 연결 (다음 댓글 보기 버트 클릭시 데이터 추가 )
+	$('.paging-button input').click(function(){
+		selectData(currentPage+1);
+	})
 	//댓글등록
 	$('#cmt_form').submit(function(event){
 		if($('#cmt_content').val().trim()==''){
@@ -135,7 +138,7 @@ $(function(){
 		let content = $(this).parents('.sub-item').find('p').html().replace(/<br>/gi,'\n');
 		
 		let modifyUI = '<form id="mcmt_form" class="comment-form">';
-			modifyUI +='	<input type="hidden" name="qna_num" id="qna_num" value="'+qnacmt_num+'">';
+			modifyUI +='	<input type="hidden" name="qnacmt_num" id="qnacmt_num" value="'+qnacmt_num+'">';
 			modifyUI +='	<textarea rows="3" cols="50" name="cmt_content" id="mcmt_content" class="cmtp-content">'+ content +'</textarea>';
 			modifyUI +='	<div id="mcmt_first"><span class="letter-count">100/100</span></div>';
 			modifyUI +='	<div id="mcmt_second" style="text-align: right">';
@@ -184,12 +187,51 @@ $(function(){
 			success:function(param){
 				if(param.result=='logout'){
 					alert('로그인해야 작성 가능합니다.');
+				}else if(param.result =='success'){
+					$('#mcmt_form').parent().find('p').html($('#mcmt_content').val().replace(/</g,'&lt;').replace(/>/g,'&gt').replace(/\n/g,'<br>'));
+					$('#mcmt_form').parent().find('.modify_date').text('최근 수정일 : 5초 미만');
+					
+					initModifyForm();
+				}else if(param.result=='wrongAccess'){
+					alert('관리자만 가능합니다.');
+				}else{
+					alert('수정시 오류 발생');
 				}
+			},
+			error:function(){
+				alert('네트워크 오류');
+			}
+		});
+		event.preventDefault();
+	});
+	//댓글 삭제
+	$(document).on('click','#delete_btn',function(){
+		let qnacmt_num = $(this).attr('data-qnacmtnum');
+		
+		$.ajax({
+			url:'qnaDeleteCmt.do',
+			type:'post',
+			data:{qnacmt_num:qnacmt_num},
+			dataType:'json',
+			cache:false,
+			timeout:30000,
+			success:function(param){
+				if(param.result=='logout'){
+					alert('로그인해야 가능합니다.');
+				}else if(param.result=='success'){
+					alert('삭제 완료');
+					selectData(1);
+				}else if(param.result=='wrongAccess'){
+					alert('관리자만 가능합니다.');
+				}else{
+					alert('삭제 시 오류 발생');
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
 			}
 		});
 	});
-	//댓글 삭제
-	
 	//초기 데이터(목록) 호출
 	selectData(1);
 })

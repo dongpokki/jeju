@@ -316,7 +316,7 @@ public class QnaDAO {
 		try {
 			conn=DBUtil.getConnection();
 			
-			sql="SELECT COUNT(*) FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num) WHERE b.qna_num=?";
+			sql="SELECT COUNT(*) FROM jcmt_qna c JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num) WHERE c.qna_num=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, qna_num);
@@ -381,7 +381,81 @@ public class QnaDAO {
 		}
 		return list;
 	}
-
+	//댓글 상세
+	public QnaCmtVO getCmtQna(int qnacmt_num) throws Exception{
+		Connection conn=null;
+		PreparedStatement pstmt =null;
+		ResultSet rs=null;
+		String sql=null;
+		QnaCmtVO cmt = null;
+		try {
+			conn = DBUtil.getConnection();
+			
+			sql="SELECT * FROM jcmt_qna c JOIN juser_detail u USING(user_num) WHERE qnacmt_num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qnacmt_num);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				cmt = new QnaCmtVO();
+				cmt.setQnacmt_num(rs.getInt("qnacmt_num"));
+				cmt.setQna_num(rs.getInt("qna_num"));
+				cmt.setUser_num(rs.getInt("user_num"));
+				cmt.setName(rs.getString("name"));
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return cmt;
+	}
+	//댓글 수정
+	public void updateCmtQna(QnaCmtVO cmt) throws Exception{
+		Connection conn=null;
+		PreparedStatement pstmt =null;
+		String sql=null;
+		try {
+			conn =DBUtil.getConnection();
+			
+			sql="UPDATE jcmt_qna SET cmt_content=?,modify_date=SYSDATE WHERE qnacmt_num=? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cmt.getCmt_content());
+			pstmt.setInt(2, cmt.getQnacmt_num());
+			
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	//댓글 삭제 
+	public void deleteCmtQna(int qnacmt_num) throws Exception{
+		Connection conn=null;
+		PreparedStatement pstmt =null;
+		String sql=null;
+		try {
+			conn = DBUtil.getConnection();
+			
+			sql="DELETE FROM jcmt_qna WHERE qnacmt_num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qnacmt_num);
+			
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
 	// [정동윤 작성] - 마이페이지에서 노출할 내 문의사항 내역
 	// 내가 작성한 문의사항 리스트 카운트 구하기
 	public int getmyListQnaCount(String session_user_id) throws Exception{
