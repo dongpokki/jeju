@@ -155,6 +155,77 @@ $(function(){
 
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+		//내가 좋아하는 코스 목록
+		let mygoodcourse_currentPage;
+		let mygoodcourse_count;
+		let mygoodcourse_rowCount;
+
+		function mygoodcourse_selectData(mygoodcourse_pageNum){
+			mygoodcourse_currentPage = mygoodcourse_pageNum;
+
+			//로딩 이미지 노출
+			$('#mygoodcourse_loading').show();
+			
+				$.ajax({
+				type:'post',
+				data:{mygoodcourse_pageNum:mygoodcourse_pageNum},
+				url:'mygoodcourse.do',
+				dataType:'json',
+				cache:false,
+				timeout:30000,
+				success:function(param){
+					//로딩 이미지 감추기
+					$('#mygoodcourse_loading').hide();
+
+					mygoodcourse_count = param.mygoodcourse_count;
+					mygoodcourse_rowCount = param.mygoodcourse_rowCount;
+					
+					if(mygoodcourse_pageNum == 1){
+						// 처음 호출시는 해당 영역의 div의 내부 내용물을 제거
+						$('#mygoodcourse_output').empty();
+					}
+
+					if($(param.mygoodcourse_list).length == 0){ // 내가 작성한 문의사항이 없다면
+						let output = '<div class="alert alert-warning" style="width:100%;">등록된 문의사항이 없습니다.</div>';
+						
+						//문서 객체에 추가
+						$('#mygoodcourse_output').append(output);
+					}					
+					
+					
+					$(param.mygoodcourse_list).each(function(index,mygoodcourse){
+					
+							let output = '<div class="col-sm-12 col-lg-12">';
+							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/course/courseDetail.do?course_num=' + mygoodcourse.course_num + '">' + mygoodcourse.title + '</a></h5>';
+							output += '</div>';
+						
+						//문서 객체에 추가
+						$('#mygoodcourse_output').append(output);	
+					});
+					
+					
+					//page button 처리
+					if(mygoodcourse_currentPage>=Math.ceil(mygoodcourse_count/mygoodcourse_rowCount)){
+						//다음 페이지가 없음
+						$('.mygoodcourse_paging-button').hide();		
+					}else{
+						//다음 페이지가 존재
+						$('.mygoodcourse_paging-button').show();
+					}
+				},
+				
+				error:function(){
+					alert('네트워크 오류');
+				}
+			});	
+		}
+		
+		$('.mygoodcourse_paging-button input').click(function(){
+			mygoodcourse_selectData(mygoodcourse_currentPage + 1);		
+		});
+		
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 		//내가 작성한 코스 목록
 		let mywritecourse_currentPage;
 		let mywritecourse_count;
@@ -203,7 +274,6 @@ $(function(){
 						$('#mywritecourse_output').append(output);	
 					});
 					
-					//alert('mywritecourse_count/mywritecourse_rowCount : ' + mywritecourse_count + '/' +mywritecourse_rowCount);
 					
 					//page button 처리
 					if(mywritecourse_currentPage>=Math.ceil(mywritecourse_count/mywritecourse_rowCount)){
@@ -307,6 +377,7 @@ $(function(){
 
 		// 마이페이지 최초 진입 시 내가 좋아하는 장소 / 내가 좋아하는 코스 / 내가 작성한 코스 / 내가 작성한 문의사항 목록 호출
 		spot_selectData(1);
+		mygoodcourse_selectData(1);
 		mywritecourse_selectData(1);
 		myqna_selectData(1);
 		

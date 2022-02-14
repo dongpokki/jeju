@@ -267,6 +267,9 @@ public class CourseDAO {
 			}
 		}
 		
+		// ----------------------------------------------------------- 이하 메서드 정동윤 작성 ------------------------------------------------------------------
+		
+		
 		// [정동윤 작성] 메인에 노출할 BEST3 spot 구하기
 		public List<CourseVO> getRankingCourse() throws Exception {
 			Connection conn = null;
@@ -314,6 +317,94 @@ public class CourseDAO {
 		}
 		
 		
+		// [정동윤 작성] - 마이페이지에서 노출할 내가 추천한 코스 내역
+		// 내가 추천한 코스 리스트 조회
+		public List<CourseVO> MyGoodCourse(int session_user_num,int startRow,int endRow) throws Exception{
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<CourseVO> list = null;
+			String sql = null;
+
+			try {
+				// 커넥션풀로부터 커넥션 할당
+				conn = DBUtil.getConnection();
+				
+				System.out.println("MyGoodCourse 메서드 실행");
+				System.out.println("session_user_num : " + session_user_num); //44
+				System.out.println("startRow : " + startRow); //1
+				System.out.println("endRow : " + endRow); //3
+				
+				// sql문 작성
+				sql = "select * from (select a.*, rownum rnum from (select b.course_num,b.title from jboard_course b join jgood_course g on b.course_num = g.course_num where g.user_num=? and good=1 order by b.course_num)a) where rnum>=? and rnum<=?";
+
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+
+				// ?에 데이터 바인딩
+				pstmt.setInt(1, session_user_num);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+
+				// sql문 수행하여 결과 집합을 rs에 담음
+				rs = pstmt.executeQuery();
+
+				list = new ArrayList<CourseVO>();
+
+				while (rs.next()) {
+					CourseVO course = new CourseVO();
+
+					course.setCourse_num(rs.getInt("course_num"));
+					course.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+
+					// 자바빈(VO)을 ArrayList에 저장
+					list.add(course);
+				}
+
+			} catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				// 자원정리
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return list;
+		}
+		
+		
+		// [정동윤 작성] - 마이페이지에서 노출할 내가 추천한 코스 내역
+		// 내가 추천한 코스 리스트 카운트 구하기
+		public int MyGoodCourseCount(int session_user_num) throws Exception{
+			Connection conn =null;
+			PreparedStatement pstmt =null;
+			ResultSet rs =null;
+			String sql=null;
+			int count=0;
+			
+			try {
+				//커넥션풀로부터 커넥션을 할당
+				conn = DBUtil.getConnection();
+				
+				//sQL문 작성
+				sql="select count(*) from jgood_course where user_num=? and good=1";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, session_user_num);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					count=rs.getInt(1);
+				}
+				
+			}catch(Exception e) {
+				throw new Exception(e);
+			}finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return count;
+		}
+		
 		// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 코스 내역
 		// 내가 작성한 코스 리스트 카운트 구하기
 		public int getmyCourseCount(int session_user_num) throws Exception{
@@ -347,6 +438,7 @@ public class CourseDAO {
 			}
 			return count;
 		}
+		
 		
 		// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 코스 내역
 		// 내가 작성한 코스 리스트 조회

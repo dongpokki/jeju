@@ -81,11 +81,11 @@
 
 		<!-- 내가 추천한 코스 시작 -->
 		<h1 class="text-primary" >내가 추천한 코스</h1>
-		<div class="row" id="course_output"></div>
-		<div class="course_paging-button" style="display: none">
+		<div class="row" id="mygoodcourse_output"></div>
+		<div class="mygoodcourse_paging-button" style="display: none">
 			<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
 		</div>
-		<div id="course_loading" style="display: none">
+		<div id="mygoodcourse_loading" style="display: none">
 			<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
 		</div>
 		<!-- 내가 추천한 코스 끝 -->
