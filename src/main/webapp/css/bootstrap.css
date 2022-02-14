@@ -116,7 +116,7 @@ a {
 
 a:hover {
 	color: #0056b3;
-	text-decoration: underline;
+	/* text-decoration: underline; */
 }
 
 a:not([href]) {
@@ -3374,7 +3374,8 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 .dropdown-item.active, .dropdown-item:active {
 	color: #fff;
 	text-decoration: none;
-	/* background-color: #007bff; */}
+	/* background-color: #007bff; */
+}
 
 .dropdown-item.disabled, .dropdown-item:disabled {
 	color: #6c757d;
@@ -4951,17 +4952,18 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 .breadcrumb-item {
 	display: -ms-flexbox;
 	display: flex;
+	padding: 0 0.3rem;
 }
 
-.breadcrumb-item+.breadcrumb-item {
-	padding-left: 0.5rem;
-}
+/* .breadcrumb-item+.breadcrumb-item {
+	
+} */
 
 .breadcrumb-item+.breadcrumb-item::before {
 	display: inline-block;
-	padding-right: 0.5rem;
+	padding-right: 0.3rem;
 	color: #6c757d;
-	content: "/";
+	/* content: "/"; */
 }
 
 .breadcrumb-item+.breadcrumb-item:hover::before {
@@ -9832,29 +9834,28 @@ a.text-dark:hover, a.text-dark:focus {
 	background-image: url("../images/jeju_main.jpg");
 }
 
-.best-title{
+.best-title {
 	display: inline-block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-.best-content{
+.best-content {
 	display: inline-block;
 	white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    line-height: 1.2;
-    height: 6em;
-    text-align: left;
-    word-wrap: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	line-height: 1.2;
+	height: 6em;
+	text-align: left;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
 }
-
 
 /* 마이페이지 사용 */
 .my-photo {
@@ -9886,8 +9887,8 @@ a.text-dark:hover, a.text-dark:focus {
 	margin-bottom: 10px;
 }
 
-.nonlabel_input{
-	width:100%;
+.nonlabel_input {
+	width: 100%;
 }
 
 /* 회원정보 수정 페이지 사용 */
@@ -9898,13 +9899,13 @@ a.text-dark:hover, a.text-dark:focus {
 	display: inline-block;
 }
 
-.my-best-title{
+.my-best-title {
 	display: inline-block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 0px;
-    padding: 5px;
-    padding-left: 20px;	
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0px;
+	padding: 5px;
+	padding-left: 20px;
 }

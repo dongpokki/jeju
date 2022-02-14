@@ -16,7 +16,7 @@ a {
 
 a:hover {
 	color: #FE9A2E;
-	text-decoration: underline;
+	/* text-decoration: underline; */
 }
 
 .text-xs {
@@ -152,7 +152,7 @@ a:hover {
 
 .breadcrumb-dark .breadcrumb-item a:hover {
 	color: #FE9A2E;
-	text-decoration: none;
+	/* text-decoration: none; */
 }
 
 .breadcrumb-dark .breadcrumb-item+.breadcrumb-item::before {
@@ -996,7 +996,7 @@ a:hover {
 }
 
 .blog-single-wrap .post-meta .post-date, .blog-single-wrap .post-meta .post-comment-count,
-.blog-single-wrap .post-meta .post-name, .blog-single-wrap .post-meta .post-lookup
+	.blog-single-wrap .post-meta .post-name, .blog-single-wrap .post-meta .post-lookup
 	{
 	display: inline-block;
 }
@@ -1268,7 +1268,7 @@ a:hover {
 .nice-select .list {
 	background-color: #fff;
 	border-radius: 5px;
-	box-shadow: 0 0 0 1px rgba(68, 68, 68, 0.11);
+	/* box-shadow: 0 0 0 1px rgba(68, 68, 68, 0.11); */
 	box-sizing: border-box;
 	margin-top: 4px;
 	opacity: 0;

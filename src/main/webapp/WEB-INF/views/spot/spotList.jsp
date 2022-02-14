@@ -51,13 +51,18 @@
 					<input type="text" class="form-control" placeholder="검색어를 입력해주세요" value="${param.keyword}" name="keyword" id="keyword">
 					<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">검색</button>
 				</form>
-				<nav aria-label="Breadcrumb">
+				<nav aria-label="Breadcrumb" style="display: flex; justify-content: space-between; margin-top: 10px;">
 					<ul class="breadcrumb p-0 mb-0 bg-transparent">
-						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${category<1}">style="color:#FE9A2E;"</c:if>>전체</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=1" <c:if test="${category==1 }">style="color:#FE9A2E;"</c:if>>동부</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=2" <c:if test="${category==2 }">style="color:#FE9A2E;"</c:if>>서부</a></li>
-						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${category==3 }">style="color:#FE9A2E;"</c:if>>남부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${category<1}">style="color:#FE9A2E;"</c:if>>전체</a></li> /
+						<li class="breadcrumb-item"><a href="spotList.do?category=1" <c:if test="${category==1 }">style="color:#FE9A2E;"</c:if>>동부</a></li> /
+						<li class="breadcrumb-item"><a href="spotList.do?category=2" <c:if test="${category==2 }">style="color:#FE9A2E;"</c:if>>서부</a></li> /
+						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${category==3 }">style="color:#FE9A2E;"</c:if>>남부</a></li> /
 						<li class="breadcrumb-item"><a href="spotList.do?category=4" <c:if test="${category==4 }">style="color:#FE9A2E;"</c:if>>북부</a></li>
+					</ul>
+					<ul class="breadcrumb p-0 mb-0 bg-transparent">
+						<li class="breadcrumb-item"><a href="">최신순</a></li> |
+						<li class="breadcrumb-item"><a href="">좋아요순</a></li> |
+						<li class="breadcrumb-item"><a href="">조회수순</a></li>
 					</ul>
 				</nav>
 				<div class="row">
@@ -77,7 +82,7 @@
 											<a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.title }</a>
 										</div>
 										<div class="post-excerpt" style="max-height: 200px !important;">
-											<a href="spotDetail.do?spot_num=${spot.spot_num}"><img src="${pageContext.request.contextPath }/upload/${spot.filename}" width="100%"></a>
+											<a href="spotDetail.do?spot_num=${spot.spot_num}"><c:if test="${!empty spot.filename }"><img src="${pageContext.request.contextPath }/upload/${spot.filename}" width="100%"></c:if></a>
 										</div>
 										<div class="post-excerpt" style="padding: 15px 0 0 0;">${spot.content }</div>
 									</div>
