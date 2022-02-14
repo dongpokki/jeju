@@ -40,7 +40,7 @@ public class DetailUserAction implements Action{
 		user.setAddress2(request.getParameter("address2"));
 		
 		UserDAO dao = UserDAO.getInstance();
-		dao.updateUserByAdmin(user);
+		dao.updateUser(user);
 		
 		return "/WEB-INF/views/user/detailUser.jsp";
 	}

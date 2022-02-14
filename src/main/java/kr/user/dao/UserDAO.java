@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import kr.user.vo.UserVO;
 import kr.util.DBUtil;
 
@@ -387,113 +388,72 @@ public class UserDAO {
 		}
 		return count;
 	}
-
-
-	// 회원 목록 조회
-	public List<UserVO> getListUserByAdmin(String keyfield,String keyword,int endRow,int startRow) throws Exception{
-		Connection conn =null;
-		PreparedStatement pstmt =null;
-		ResultSet rs =null;
-		List<UserVO> list =null;
-		String sql =null;
-		String sub_sql="";
-		int cnt = 0;
-		
-		try {
-			conn =DBUtil.getConnection();
-			
-			if(keyword != null && !"".equals(keyword)) {
-				if(keyfield.equals("1")) sub_sql = "WHERE id LIKE ?";
-				else if(keyfield.equals("2")) sub_sql = "WHERE name LIKE ?";
-				else if(keyfield.equals("3")) sub_sql = "WHERE email LIKE ?";
-			}
-			
-			sql ="SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM juser u LEFT OUTER JOIN juser_detail d USING(user_num) " + sub_sql + " ORDER BY reg_date DESC NULLS LAST)a) WHERE rnum>=? AND rnum<=?";
-			
-			//PreparedStatement 객체 생성
-			pstmt = conn.prepareStatement(sql);
-			if(keyword != null && !"".equals(keyword)) {
-				pstmt.setString(++cnt, "%" + keyword + "%");
-			}
-			pstmt.setInt(++cnt, startRow);
-			pstmt.setInt(++cnt, endRow);
-			
-			rs= pstmt.executeQuery();
-			list = new ArrayList<UserVO>();
-			while(rs.next()) {
-				UserVO user= new UserVO();
-				user.setUser_num(rs.getInt("user_num"));
-				user.setId(rs.getString("id"));
-				user.setAuth(rs.getInt("auth"));
-				user.setName(rs.getString("name"));
-				user.setPhone(rs.getString("phone"));
-				user.setEmail(rs.getString("email"));
-				user.setZipcode(rs.getString("zipcode"));
-				user.setAddress1(rs.getString("address1"));
-				user.setAddress2(rs.getString("address2"));
-				user.setPhoto(rs.getString("photo"));
-				user.setReg_date(rs.getDate("reg_date"));
-				user.setModify_date(rs.getDate("modify_date"));
-				
-				list.add(user);
-			}
-			
-		}catch(Exception e) {
-			throw new Exception(e);
-		}finally {
-			DBUtil.executeClose(rs, pstmt, conn);
-		}
-		return list;
-	}
-
-	//회원 정보 수정
-		public void updateUserByAdmin(UserVO user)throws Exception{
+	//회원 목록
+		public List<UserVO> getListUserByAdmin(int startRow, int endRow,
+				                 String keyfield, String keyword)throws Exception{
 			Connection conn = null;
 			PreparedStatement pstmt = null;
-			PreparedStatement pstmt2 = null;
+			ResultSet rs = null;
+			List<UserVO> list = null;
 			String sql = null;
+			String sub_sql = "";
+			int cnt = 0;
 			
 			try {
-				//커넥션풀로부터 커넥션을 할당
+				//커넥션풀로부터 커넥션 할당
 				conn = DBUtil.getConnection();
-				//오토 커밋 해제
-				conn.setAutoCommit(false);
 				
-				sql = "UPDATE juser SET auth=? WHERE user_num=?";
+				if(keyword != null && !"".equals(keyword)) {
+					if(keyfield.equals("1")) sub_sql = "WHERE id LIKE ?";
+					else if(keyfield.equals("2")) sub_sql = "WHERE name LIKE ?";
+					else if(keyfield.equals("3")) sub_sql = "WHERE email LIKE ?";
+				}
+				
+				//SQL문 작성
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
+					+ "(SELECT * FROM juser u LEFT OUTER JOIN juser_detail d "
+					+ "USING(user_num) " + sub_sql + " ORDER BY reg_date DESC NULLS LAST)a) "
+					+ "WHERE rnum >= ? AND rnum <= ?";
 				//PreparedStatement 객체 생성
 				pstmt = conn.prepareStatement(sql);
-				//?에 데이터 바인딩
-				pstmt.setInt(1, user.getAuth());
-				pstmt.setInt(2, user.getUser_num());
-				//SQL문 실행
-				pstmt.executeUpdate();
+				if(keyword != null && !"".equals(keyword)) {
+					pstmt.setString(++cnt, "%" + keyword + "%");
+				}
+				pstmt.setInt(++cnt, startRow);
+				pstmt.setInt(++cnt, endRow);
 				
-				sql = "UPDATE juser_detail SET name=?,phone=?,email=?,"
-					+ "zipcode=?,address1=?,address2=?,modify_date=SYSDATE "
-					+ "WHERE user_num=?";
-				//PreparedStatement 객체 생성
-				pstmt2 = conn.prepareStatement(sql);
-				//?에 데이터 바인딩
-				pstmt2.setString(1, user.getName());
-				pstmt2.setString(2, user.getPhone());
-				pstmt2.setString(3, user.getEmail());
-				pstmt2.setString(4, user.getZipcode());
-				pstmt2.setString(5, user.getAddress1());
-				pstmt2.setString(6, user.getAddress2());
-				pstmt2.setInt(7, user.getUser_num());
-				//SQL 실행
-				pstmt2.executeUpdate();
+				//SQL문을 테이블에 반영하고 결과행들을 ResultSet 담음
+				rs = pstmt.executeQuery();
+				list = new ArrayList<UserVO>();
+				while(rs.next()) {
+					UserVO user = new UserVO();
+					user.setUser_num(rs.getInt("user_num"));
+					user.setId(rs.getString("id"));
+					user.setAuth(rs.getInt("auth"));
+					user.setPasswd(rs.getString("passwd"));
+					user.setName(rs.getString("name"));
+					user.setPhone(rs.getString("phone"));
+					user.setEmail(rs.getString("email"));
+					user.setZipcode(rs.getString("zipcode"));
+					user.setAddress1(rs.getString("address1"));
+					user.setAddress2(rs.getString("address2"));
+					user.setPhoto(rs.getString("photo"));
+					user.setReg_date(rs.getDate("reg_date"));
+					user.setModify_date(rs.getDate("modify_date"));
+					
+					//자바빈(VO)을 ArrayList에 저장
+					list.add(user);
+				}
 				
-				//모든 SQL문이 정상적으로 실행
-				conn.commit();
 			}catch(Exception e) {
-				//SQL문이 하나라도 실패하면
-				conn.rollback();
 				throw new Exception(e);
 			}finally {
 				//자원정리
-				DBUtil.executeClose(null, pstmt2, null);
-				DBUtil.executeClose(null, pstmt, conn);
+				DBUtil.executeClose(rs, pstmt, conn);
 			}
+			return list;
 		}
-	}
+}
+
+
+	

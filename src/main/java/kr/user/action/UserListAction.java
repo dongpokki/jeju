@@ -15,32 +15,40 @@ public class UserListAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+		
 		HttpSession session = request.getSession();
-		Integer session_user_num =(Integer)session.getAttribute("session_user_num");
-		if(session_user_num==null) {
+		Integer user_num = (Integer)session.getAttribute("session_user_num");
+		if(user_num == null) {//로그인 되지 않은 경우
 			return "redirect:/user/loginForm.do";
 		}
-		Integer session_user_auth = (Integer)session.getAttribute("session_user_auth");
-		if(session_user_auth<3) {
+		
+		Integer user_auth = (Integer)session.getAttribute("session_user_auth");
+		if(user_auth < 3) {//관리자로 로그인하지 않은 경우
 			return "/WEB-INF/views/common/notice.jsp";
 		}
+		
 		//관리자로 로그인한 경우
 		String pageNum = request.getParameter("pageNum");
-		if(pageNum==null) {
-			pageNum="1";
-		}
-		String keyfield=request.getParameter("keyfield");
+		if(pageNum == null) pageNum = "1";
+		
+		String keyfield = request.getParameter("keyfield");
 		String keyword = request.getParameter("keyword");
+		if(keyfield == null) keyfield = "";
+		if(keyword == null) keyword = "";
 		
 		UserDAO dao = UserDAO.getInstance();
 		int count = dao.getUserCountByAdmin(keyfield, keyword);
 		
-		PagingUtil page = new PagingUtil(keyfield,keyword,Integer.parseInt(pageNum),count,10,10,"userList.do");
+		//페이지 처리
+		//keyfield,keyword,currentPage,count,rowCount,pageCount,url
+		PagingUtil page = new PagingUtil(keyfield,keyword,
+				          Integer.parseInt(pageNum),count,20,10,"userList.do");
 		
 		List<UserVO> list = null;
-		if(count>0) {
-			list = dao.getListUserByAdmin(keyfield,keyword,page.getStartCount(), page.getEndCount());
+		if(count > 0) {
+			list = dao.getListUserByAdmin(page.getStartCount(), 
+					                        page.getEndCount(), 
+					                        keyfield, keyword);
 		}
 		
 		request.setAttribute("count", count);
@@ -51,3 +59,6 @@ public class UserListAction implements Action{
 	}
 
 }
+
+
+

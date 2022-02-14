@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원목록(관리자 전용)</title>
+<title>회원목록</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -27,10 +27,12 @@
 	<div class="container mt-5">
 	<h2>회원목록(관리자 전용)</h2>
 	<form id="search_form" action="userList.do" method="get" align="right">
-				<input type="text" class="form-control" placeholder="검색어를 입력해주세요" value="${param.keyword}" name="keyword" id="keyword">
-				<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">찾기</button>
+		<input type="text" class="form-control" value="${param.keyword}" name="keyword" id="keyword">
+					<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">찾기</button>
 	</form>
-	
+	<div class="list-space align-right" align="right">
+		<input type="button" value="목록" onclick="location.href='userList.do'">
+	</div>
 	<c:if test="${count == 0}">
 	<div class="result-display">
 		표시할 내용이 없습니다.
@@ -50,7 +52,7 @@
 		<tr>
 			<td>
 				<c:if test="${user.auth > 0}">
-				<a href="detailUserForm.do?user_num=${user.user_num}">${user.id}</a>
+				<a href="detailuserForm.do?user_num=${user.user_num}">${user.id}</a>
 				</c:if>
 				<c:if test="${user.auth == 0}">${user.id}</c:if>
 			</td>
@@ -73,6 +75,10 @@
 	</c:if>
 </div>
 </div>
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
+
+
+
+
