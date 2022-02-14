@@ -27,12 +27,22 @@
 	<div class="container mt-5">
 	<h2>회원목록(관리자 전용)</h2>
 	<form id="search_form" action="userList.do" method="get" align="right">
+	<div class="SearchSelect">
+		<ul id="search">
+		<li>
+			<select name="keyfield" class="form-control" style="width:100px;height:42px;margin:3px">
+							<option value="1"<c:if test="${param.keyfield==1}">selected</c:if>>ID</option>
+							<option value="2"<c:if test="${param.keyfield==2}">selected</c:if>>이름</option>
+							<option value="3"<c:if test="${param.keyfield==3}">selected</c:if>>E-mail</option>
+							</select>
+						
+		<li>
 		<input type="text" class="form-control" value="${param.keyword}" name="keyword" id="keyword">
-					<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">찾기</button>
-	</form>
-	<div class="list-space align-right" align="right">
-		<input type="button" value="목록" onclick="location.href='userList.do'">
+		<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">찾기</button>
+	</li>
+	</ul>
 	</div>
+	</form>
 	<c:if test="${count == 0}">
 	<div class="result-display">
 		표시할 내용이 없습니다.
@@ -52,7 +62,7 @@
 		<tr>
 			<td>
 				<c:if test="${user.auth > 0}">
-				<a href="detailuserForm.do?user_num=${user.user_num}">${user.id}</a>
+				<a href="detailUserForm.do?admin_num=${user.user_num}">${user.id}</a>
 				</c:if>
 				<c:if test="${user.auth == 0}">${user.id}</c:if>
 			</td>
@@ -69,6 +79,9 @@
 		</tr>
 		</c:forEach>
 	</table>
+		<div class="list-space align-right" align="right">
+		<input class="btn btn-secondary" type="button" value="목록" onclick="location.href='userList.do';" style="margin-bottom: 3px;">
+	</div>
 	<div class="align-center">
 		${pagingHtml}
 	</div>

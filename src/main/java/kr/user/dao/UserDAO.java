@@ -453,6 +453,56 @@ public class UserDAO {
 			}
 			return list;
 		}
+//회원 목록 수정
+	public void updateUserByAdmin(UserVO user)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		String sql = null;
+		
+		try {
+			//커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+			//오토 커밋 해제
+			conn.setAutoCommit(false);
+			
+			sql = "UPDATE juser SET auth=? WHERE user_num=?";
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			//?에 데이터 바인딩
+			pstmt.setInt(1, user.getAuth());
+			pstmt.setInt(2, user.getUser_num());
+			//SQL문 실행
+			pstmt.executeUpdate();
+			
+			sql = "UPDATE juser_detail SET name=?,phone=?,email=?,"
+				+ "zipcode=?,address1=?,address2=?,modify_date=SYSDATE "
+				+ "WHERE user_num=?";
+			//PreparedStatement 객체 생성
+			pstmt2 = conn.prepareStatement(sql);
+			//?에 데이터 바인딩
+			pstmt2.setString(1, user.getName());
+			pstmt2.setString(2, user.getPhone());
+			pstmt2.setString(3, user.getEmail());
+			pstmt2.setString(4, user.getZipcode());
+			pstmt2.setString(5, user.getAddress1());
+			pstmt2.setString(6, user.getAddress2());
+			pstmt2.setInt(7, user.getUser_num());
+			//SQL 실행
+			pstmt2.executeUpdate();
+			
+			//모든 SQL문이 정상적으로 실행
+			conn.commit();
+		}catch(Exception e) {
+			//SQL문이 하나라도 실패하면
+			conn.rollback();
+			throw new Exception(e);
+		}finally {
+			//자원정리
+			DBUtil.executeClose(null, pstmt2, null);
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 }
 
 

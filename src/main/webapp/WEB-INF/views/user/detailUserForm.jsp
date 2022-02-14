@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보수정(관리자 전용)</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -49,59 +50,63 @@
 <body>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<h2>${user.id}의 정보 수정(관리자 전용)</h2>
-	<form action="detailUser.do" method="post" id="detail_form">
+	<div class="container">
+	<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+				<div class="card border-0 shadow rounded-3 my-5">
+					<div class="card-body p-4 p-sm-5">
+						<h5 class="card-title text-center mb-5 fw-light fs-5">${user.id} 님의 정보 수정(관리자 전용)</h5>
+	<form id="detail_form" action="detailUser.do" method="post">
 		<input type="hidden" name="user_num" value="${user.user_num}">
-		<ul>
-			<li>
-				<label>등급</label>
+			<div class="user-auth" align="center">
+				<label class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto" for="name">등급</label>
 				<c:if test="${user.auth != 3}">
-				<input type="radio" name="auth" value="1" id="auth1" <c:if test="${user.auth == 1}">checked</c:if>>정지
-				<input type="radio" name="auth" value="2" id="auth2" <c:if test="${user.auth == 2}">checked</c:if>>일반
+				<input type="radio" name="auth" value="1" id="auth1" <c:if test="${user.auth == 1}">checked</c:if> class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto">정지
+				<input type="radio" name="auth" value="2" id="auth2" <c:if test="${user.auth == 2}">checked</c:if> class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto">일반
 				</c:if>
 				<c:if test="${user.auth == 3}">
-				<input type="radio" name="auth" value="3" id="auth3" checked>관리
+				<input type="radio" name="auth" value="3" id="auth3" checked class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto">관리
 				</c:if>
-			</li>
-			<li>
-				<label for="name">이름</label>
-				<input type="text" name="name" id="name" value="${user.name}"
-				                                     maxlength="10">
-			</li>
-			<li>
-				<label for="phone">전화번호</label>
-				<input type="text" name="phone" id="phone" value="${user.phone}"
-				                                    maxlength="15">
-			</li>
-			<li>
-				<label for="email">이메일</label>
-				<input type="email" name="email" id="email" value="${user.email}"
-				                                    maxlength="50">
-			</li>
-			<li>
-				<label for="zipcode">우편번호</label>
-				<input type="text" name="zipcode" id="zipcode" 
-				              value="${user.zipcode}" maxlength="5">
-				<input type="button" onclick="sample2_execDaumPostcode()"
-				                                   value="우편번호 찾기">              
-			</li>
-			<li>
-				<label for="address1">주소</label>
-				<input type="text" name="address1" id="address1" 
-				               value="${user.address1}" maxlength="30">
-			</li>
-			<li>
-				<label for="address2">나머지 주소</label>
-				<input type="text" name="address2" id="address2"
-				             value="${user.address2}" maxlength="30">
-			</li>
-		</ul>
-		<div class="align-center">
-			<input type="submit" value="수정">
-			<input type="button" value="목록" 
-			                         onclick="location.href='userList.do'">
+			</div>
+			<div class="form-floating mb-3 row" style="align-items: baseline;">
+								<label class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto" for="name">이름</label>
+								<input type="text" id="name" name="name" maxlength="10" value="${user.name}" placeholder="이름 입력" class="form-control col-sm-10 col-md-10 col-lg-10 mx-auto">
+							</div>
+							<div class="form-floating mb-3 row" style="align-items: baseline;">
+								<label class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto" for="phone">전화번호</label>
+								<input type="text" id="phone" name="phone" maxlength="15" value="${user.phone}" placeholder="전화번호 입력" class="form-control col-sm-10 col-md-10 col-lg-10 mx-auto">
+							</div>
+							<div class="form-floating mb-3 row" style="align-items: baseline;">
+								<label class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto" for="email">이메일</label>
+								<input type="email" id="email" name="email" maxlength="50" value="${user.email}" placeholder="이메일 입력" class="form-control col-sm-10 col-md-10 col-lg-10 mx-auto">
+							</div>
+							<div class="form-floating mb-3 row" style="align-items: baseline;">
+								<label class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto" for="zipcode">우편번호</label>
+  								<input type="text" id="zipcode" name="zipcode" maxlength="5" value="${user.zipcode}" class="form-control col-sm-8 col-md-8 col-lg-8 mx-auto" placeholder="우편번호 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+  								<input type="button" value="우편번호 찾기" onclick="sample2_execDaumPostcode()" class="btn btn-outline-secondary col-sm-2 col-md-2 col-lg-2 mx-auto">
+							</div>
+							<div class="form-floating mb-3 row" style="align-items: baseline;">
+								<label class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto" for="address1">주소</label>
+								<input type="text" id="address1" name="address1" maxlength="30" value="${user.address1}" placeholder="주소 입력" class="form-control col-sm-10 col-md-10 col-lg-10 mx-auto">
+							</div>
+							<div class="form-floating mb-3 row" style="align-items: baseline;">
+								<label class="modifyUserForm-info col-sm-2 col-md-2 col-lg-2 mx-auto" for="address2">상세주소</label>
+								<input type="text" id="address2" name="address2" maxlength="30" value="${user.address2}" placeholder="상세 주소 입력" class="form-control col-sm-10 col-md-10 col-lg-10 mx-auto">
+							</div>
+							<div class="d-grid gap-2 col-6 mx-auto" style="text-align: center;">
+								<input class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" value="회원정보 수정"> 
+								<input class="btn btn-secondary btn-login text-uppercase fw-bold" type="button" value="회원목록" onclick="location.href='${pageContext.request.contextPath}/user/userList.do';">
+		
 		</div>
-	</form>
+		</form>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+
+	
 <!-- 우편번호 스크립트 시작 -->
 <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
@@ -200,7 +205,12 @@
     }
 </script>
 <!-- 우편번호 스크립트 끝 -->	
-</div>
+<!-- 푸터 시작 -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+	<!-- 푸터 끝 -->
+
 </body>
 </html>
 

@@ -20,8 +20,8 @@ public class DetailUserAction implements Action{
 			return "redirect:/user/loginForm.do";
 		}
 		
-		Integer session_user_auth = (Integer)session.getAttribute("session_user_auth");
-		if(session_user_auth < 3) {//관리자로 로그인하지 않은 경우
+		Integer user_auth = (Integer)session.getAttribute("session_user_auth");
+		if(user_auth < 3) {//관리자로 로그인하지 않은 경우
 			return "/WEB-INF/views/common/notice.jsp";
 		}
 		
@@ -30,8 +30,8 @@ public class DetailUserAction implements Action{
 		request.setCharacterEncoding("utf-8");
 		
 		UserVO user = new UserVO();
-		user.setUser_num(Integer.parseInt(request.getParameter("session_user_num")));
-		user.setAuth(Integer.parseInt(request.getParameter("session_user_auth")));
+		user.setUser_num(Integer.parseInt(request.getParameter("user_num")));
+		user.setAuth(Integer.parseInt(request.getParameter("auth")));
 		user.setName(request.getParameter("name"));
 		user.setPhone(request.getParameter("phone"));
 		user.setEmail(request.getParameter("email"));
@@ -40,7 +40,7 @@ public class DetailUserAction implements Action{
 		user.setAddress2(request.getParameter("address2"));
 		
 		UserDAO dao = UserDAO.getInstance();
-		dao.updateUser(user);
+		dao.updateUserByAdmin(user);
 		
 		return "/WEB-INF/views/user/detailUser.jsp";
 	}

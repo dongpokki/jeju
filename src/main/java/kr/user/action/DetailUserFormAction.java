@@ -15,21 +15,21 @@ public class DetailUserFormAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		HttpSession session = request.getSession();
-		Integer session_user_num = (Integer)session.getAttribute("session_user_num");
-		if(session_user_num == null) {//로그인 되지 않은 경우
+		Integer user_num = (Integer)session.getAttribute("session_user_num");
+		if(user_num == null) {//로그인 되지 않은 경우
 			return "redirect:/user/loginForm.do";
 		}
 		
-		Integer session_user_auth = (Integer)session.getAttribute("session_user_auth");
-		if(session_user_auth < 3) {//관리자로 로그인하지 않은 경우
+		Integer user_auth = (Integer)session.getAttribute("session_user_auth");
+		if(user_auth < 3) {//관리자로 로그인하지 않은 경우
 			return "/WEB-INF/views/common/notice.jsp";
 		}
 		
 		//관리자로 로그인 한 경우
-		int user_num = Integer.parseInt(request.getParameter("user_num"));
+		int admin_num = Integer.parseInt(request.getParameter("admin_num"));
 		
 		UserDAO dao = UserDAO.getInstance();
-		UserVO user = dao.getUser(user_num);
+		UserVO user = dao.getUser(admin_num);
 		
 		request.setAttribute("user", user);
 		
