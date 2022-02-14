@@ -82,11 +82,9 @@
 							onclick="location.href='qnaUpdateForm.do?qna_num=${qna.qna_num}'">
 					</c:if>
 					<c:if test="${session_user_num==qna.user_num || session_user_auth==3 }">
-						<input type="button" class="btn btn-tertiary" value="삭제"
-							id="delete_btn">
+						<input type="button" class="btn btn-tertiary" value="삭제" id="delete_btn_qna">
 						<script type="text/javascript">
-							let delete_btn = document
-									.getElementById('delete_btn');
+							let delete_btn = document.getElementById('delete_btn_qna');
 							//이벤트 연결
 							delete_btn.onclick = function() {
 								let choice = confirm('삭제하시겠습니까?');

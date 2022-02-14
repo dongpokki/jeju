@@ -277,7 +277,39 @@ public class QnaDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
-	 
+	 //글 삭제
+	public void deleteQna(int qna_num) throws Exception{
+		Connection conn=null;
+		PreparedStatement pstmt =null;
+		PreparedStatement pstmt2 =null;
+		String sql=null;
+		try {
+			conn = DBUtil.getConnection();
+			
+			conn.setAutoCommit(false);
+			
+			sql="DELETE FROM jcmt_qna WHERE qna_num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, qna_num);
+			pstmt.executeUpdate();
+			
+			sql="DELETE FROM jboard_qna WHERE qna_num=?";
+			
+			pstmt2= conn.prepareStatement(sql);
+			pstmt2.setInt(1, qna_num);
+			
+			pstmt2.executeUpdate();
+			
+			conn.commit();
+		}catch(Exception e) {
+			conn.rollback();
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt2, null);
+		}
+	}
 	
 	/////////////////////////////////////////
 	//댓글

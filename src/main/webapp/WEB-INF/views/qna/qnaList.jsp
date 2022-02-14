@@ -62,7 +62,7 @@
 					<c:forEach var="qna" items="${list }">
 					<tr>
 						<c:if test="${session_user_auth==3}"><td>
-							<input type="checkbox" name="delet_check" >
+							<input type="checkbox" name="delete_check" >
 						</td></c:if>
 						<td>${qna.qna_num }</td>
 						<td onclick="location.href='qnaDetail.do?qna_num=${qna.qna_num}'" style="cursor:pointer">
