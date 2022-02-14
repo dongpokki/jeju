@@ -184,12 +184,6 @@ public class SpotDAO {
 				sub_sql = " WHERE category=? ";
 			}
 
-			/*
-			 * if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우 sub_sql =
-			 * "WHERE content LIKE ?"; if (category != 0) { sub_sql += " AND category=? "; }
-			 * } else {// 검색어가 없는 경우 if (category != 0) { sub_sql = "WHERE category=? "; } }
-			 */
-
 			if (sort != null && sort.equals("good")) {
 				sub_sql2 = "good";
 			} else if (sort == null || sort.equals("spot_num")) {
@@ -201,24 +195,12 @@ public class SpotDAO {
 
 			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT aa.*, (SELECT content FROM jboard_spot WHERE spot_num =  aa.spot_num) aaa"
 					+ " FROM (SELECT DISTINCT spot_num, title, filename, hit, good, category "
-					+ "FROM jboard_spot b LEFT OUTER JOIN (SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num) g USING (spot_num) " + sub_sql + "ORDER BY " + sub_sql2
-					+ " DESC NULLS LAST) aa) a ) WHERE " + sub_sql3 + "rnum>=? AND rnum <=?";
+					+ "FROM jboard_spot b LEFT OUTER JOIN (SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num) g USING (spot_num) "
+					+ sub_sql + "ORDER BY " + sub_sql2 + " DESC NULLS LAST) aa) a ) WHERE " + sub_sql3
+					+ "rnum>=? AND rnum <=?";
 			System.out.println(sql);
 
-			/*
-			 * sql =
-			 * "SELECT * FROM ( SELECT a.*, rownum rnum FROM ( SELECT * FROM jboard_spot b JOIN jgood_spot g USING (spot_num) "
-			 * + sub_sql + "ORDER BY " + sub_sql2 +
-			 * " DESC) a ) WHERE rnum>=? AND rnum <=? ";
-			 */
 			pstmt = conn.prepareStatement(sql);
-
-			/*
-			 * if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
-			 * pstmt.setString(++cnt, "%" + keyword + "%"); if (category != 0) {
-			 * pstmt.setInt(++cnt, category); } } else {// 검색어가 없는 경우 if (category != 0) {
-			 * pstmt.setInt(++cnt, category); } }
-			 */
 
 			if (category != 0) {
 				pstmt.setInt(++cnt, category);
