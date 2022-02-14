@@ -55,21 +55,12 @@
 				</form>
 				<nav aria-label="Breadcrumb" style="display: flex; justify-content: space-between; margin-top: 10px;">
 					<ul class="breadcrumb p-0 mb-0 bg-transparent">
-						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${category<1}">style="color:#FE9A2E;"</c:if>>전체</a></li> /
-						<li class="breadcrumb-item"><a href="spotList.do?category=1" <c:if test="${category==1 }">style="color:#FE9A2E;"</c:if>>동부</a></li> /
-						<li class="breadcrumb-item"><a href="spotList.do?category=2" <c:if test="${category==2 }">style="color:#FE9A2E;"</c:if>>서부</a></li> /
-						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${category==3 }">style="color:#FE9A2E;"</c:if>>남부</a></li> /
+						<li class="breadcrumb-item"><a href="spotList.do?category=0" <c:if test="${category<1}">style="color:#FE9A2E;"</c:if>>전체</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=1" <c:if test="${category==1 }">style="color:#FE9A2E;"</c:if>>동부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=2" <c:if test="${category==2 }">style="color:#FE9A2E;"</c:if>>서부</a></li>
+						<li class="breadcrumb-item"><a href="spotList.do?category=3" <c:if test="${category==3 }">style="color:#FE9A2E;"</c:if>>남부</a></li>
 						<li class="breadcrumb-item"><a href="spotList.do?category=4" <c:if test="${category==4 }">style="color:#FE9A2E;"</c:if>>북부</a></li>
 					</ul>
-					<%-- <div class="sort">
-						<c:if test="${!empty param.category}">
-							<input type="hidden" name="category" value="${param.category}">
-						</c:if>
-						<c:if test="${empty param.category}">
-							<input type="hidden" name="category" value="0">
-						</c:if>
-						<input type="button" value="최신순" id="sort_date"> | <input type="button" value="조회수 순" id="sort_view"> | <input type="button" value="좋아요 순" id="sort_good">
-					</div> --%>
 					<form action="spotList.do" method="post">
 						<c:if test="${!empty param.category}">
 							<input type="hidden" name="category" value="${param.category}">
@@ -77,10 +68,10 @@
 						<c:if test="${empty param.category}">
 							<input type="hidden" name="category" value="0">
 						</c:if>
-						<select name="sort" onChange="this.form.submit()">
-							<option data-display="Select" value="spot_num">최신순</option>
-							<option value="hit">조회수순</option>
-							<option value="good">좋아요순</option>
+						<select name="sort" class="nice-select" onChange="this.form.submit()" style="border-color: transparent; margin: 0; height: none; padding: 0;">
+							<option <c:if test="${empty param.sort }">selected</c:if> value="spot_num">최신순</option>
+							<option <c:if test="${param.sort eq'hit' }">selected</c:if> value="hit">조회수순</option>
+							<option <c:if test="${param.sort eq'good' }">selected</c:if> value="good">좋아요순</option>
 						</select>
 					</form>
 				</nav>
@@ -125,7 +116,6 @@
 						</nav>
 					</div>
 					<!-- 페이지 끝 -->
-
 				</div>
 				<!-- 관리자만 등록/삭제 버튼 보이게 -->
 				<c:if test="${session_user_auth == 3}">

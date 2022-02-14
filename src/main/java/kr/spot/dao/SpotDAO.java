@@ -198,7 +198,6 @@ public class SpotDAO {
 					+ "FROM jboard_spot b LEFT OUTER JOIN (SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num) g USING (spot_num) "
 					+ sub_sql + "ORDER BY " + sub_sql2 + " DESC NULLS LAST) aa) a ) WHERE " + sub_sql3
 					+ "rnum>=? AND rnum <=?";
-			System.out.println(sql);
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -298,8 +297,6 @@ public class SpotDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
-
-	// 조회수 순, 추천수 순 정렬
 
 	// 좋아요 여부 확인
 	public int checkGood(int user_num, int spot_num) throws Exception {

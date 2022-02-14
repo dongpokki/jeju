@@ -41,7 +41,7 @@ public class SpotListAction implements Action {
 		request.setAttribute("list", list);
 		request.setAttribute("pagingHtml", page.getPagingHtml());
 		request.setAttribute("category", category);
-
+		request.setAttribute("sort", sort);
 		// JSP 경로 반환
 		return "/WEB-INF/views/spot/spotList.jsp";
 	}

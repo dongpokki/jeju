@@ -4963,7 +4963,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 	display: inline-block;
 	padding-right: 0.3rem;
 	color: #6c757d;
-	/* content: "/"; */
+	content: "/";
 }
 
 .breadcrumb-item+.breadcrumb-item:hover::before {
