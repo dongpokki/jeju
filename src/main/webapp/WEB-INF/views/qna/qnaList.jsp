@@ -11,14 +11,24 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 </head>
 <body>
-<div>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
+	<div class="container mt-5">
+		<div class="page-banner">
+			<div class="row justify-content-center align-items-center h-100" style="border-radius: 30px;background-size: cover;background-image: URL(${pageContext.request.contextPath}/images/qnaimage.jpg);background-position:center;">
+				<div style="position: absolute;">
+					<h1 class="text-center">Q&amp;A</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+<div>
 	<div class="page-section">
 		<div class="container mt-5">
-			<div id="qna-banner">
-				<h1>Q&amp;A 게시판</h1>
-			</div>
+			
 			<div class="search-form" >
+			<div style="float: left;font-size:20px">
+				전체 <span class="qna-text-primary">${count }</span>건 | 페이지 <span class="qna-text-primary">${pageNum }</span>/${pageCount }
+			</div>
 			<form action="qnaList.do" method="get" style="float: right;">
 				<div class="FormSelectButton">
 					<div>
@@ -42,9 +52,16 @@
 				</div>
 			</form>
 			</div>
+			<c:if test="${count==0 }">
+				<div style="clear:both;text-align: center">
+					<hr size="1" noshade="noshade" class="qna_hr">
+					<h5>게시물이 없습니다.</h5>
+					새로운 게시물을 등록해주세요.
+				</div>
+			</c:if>
 			<div>
-				<table id="Qna" style="width:100%">
-					<tr>
+				<table class="qnaTable" style="width:100%;">
+					<%-- <tr>
 						<c:if test="${session_user_auth==3}"><th>체크</th></c:if>
 						<th>글번호</th>
 						<th>제목</th>
@@ -52,12 +69,16 @@
 						<th>작성일</th>
 						<th>조회</th>
 						<th>답변여부</th>
-					</tr>
-					<c:if test="${count==0 }">
-					<tr>
-						<td class="table-none" colspan="<c:if test="${session_user_auth==3 }">7</c:if><c:if test="${session.user_auth<3 }">6</c:if> align-center">표시할 내용이 없습니다.</td>
-					</tr>
-					</c:if>
+					</tr> --%>
+					<colgroup>
+						<c:if test="${session_user_auth==3}"><col style="width:3%"></c:if>
+						<col style="width:5%">
+						<col style="width:30%">
+						<col style="width:15%">
+						<col style="width:20%">
+						<col style="width:8%">
+						<col style="width:10%">
+					</colgroup>
 					<c:if test="${count>0 }">
 					<c:forEach var="qna" items="${list }">
 					<tr>
@@ -66,12 +87,29 @@
 						</td></c:if>
 						<td>${qna.qna_num }</td>
 						<td onclick="location.href='qnaDetail.do?qna_num=${qna.qna_num}'" style="cursor:pointer">
-							${qna.title }
-							<c:if test="${qna.viewable_check==1 }">
+							<c:choose>
+								<c:when test="${fn:length(qna.title) gt 15}">
+								<div class="qna_title">
+								<c:out value="${fn:substring(qna.title, 0, 15)}"/>...
+								<c:if test="${qna.viewable_check==1 }">
 								<img src="${pageContext.request.contextPath }/images/lock1.png" width="20px">
-							</c:if>
+								</c:if>
+								</div>
+								</c:when>
+								<c:otherwise>
+								<div class="qna_title">
+									<c:out value="${qna.title}"/>
+									<c:if test="${qna.viewable_check==1 }">
+										<img src="${pageContext.request.contextPath }/images/lock1.png" width="20px">
+									</c:if>
+								</div>
+								</c:otherwise>
+							</c:choose>
+							
 						</td>
 						<td>${qna.name }
+						</td>
+						<%-- <td>${qna.name }
 						<c:if test="${qna.id ne 'admin'}">
 							(<c:choose>
 								<c:when test="${fn:length(qna.id) gt 2}">
@@ -82,14 +120,28 @@
 							</c:otherwise>
 							</c:choose>)
 						</c:if>
+						</td> --%>
+						<td><img src="${pageContext.request.contextPath }/images/time.png"> ${qna.reg_date }</td>
+						<td><img src="${pageContext.request.contextPath }/images/eyes.png"> ${qna.hit }</td>
+						<td>
+						<c:if test="${qna.cmt_count==0 }">
+							<div class="qna-">
+								답변예정
+							</div>
+						</c:if>
+						<c:if test="${qna.cmt_count!=0 }">
+							<div>
+								답변완료
+							</div>
+						</c:if>
 						</td>
-						<td>${qna.reg_date }</td>
-						<td>${qna.hit }</td>
-						<td></td>
 					</tr>
 					</c:forEach>
 					</c:if>
-				</table>	
+				</table>
+				<div style="text-align:center">
+					${pagingHtml }
+				</div>	
 				<div class="d-grid gap-2 col-6">
 					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary" type="button" value="삭제" onclick="location.href='qnaDelete.do'"></c:if>
 					<input <c:if test="${empty session_user_num}">disabled="disabled"</c:if> class="btn btn-primary" type="button" value="작성" onclick="location.href='qnaWriteForm.do'" style="backgroun-color:#FEA82F"> 
@@ -97,7 +149,6 @@
 				</div>
 			</div>
 		</div>
-		
 	</div>
 </div>
 <p>

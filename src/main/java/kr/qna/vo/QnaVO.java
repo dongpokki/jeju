@@ -16,6 +16,7 @@ public class QnaVO {
 	private String id;
 	private String name;
 	private int auth;
+	private String cmt_count;
 	
 	public int getQna_num() {
 		return qna_num;
@@ -94,5 +95,11 @@ public class QnaVO {
 	}
 	public void setAuth(int auth) {
 		this.auth = auth;
+	}
+	public String getCmt_count() {
+		return cmt_count;
+	}
+	public void setCmt_count(String cmt_count) {
+		this.cmt_count = cmt_count;
 	}
 }

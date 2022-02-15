@@ -206,31 +206,33 @@ $(function(){
 	});
 	//댓글 삭제
 	$(document).on('click','#delete_btn',function(){
+		let check = confirm('삭제하시겠습니까?');
 		let qnacmt_num = $(this).attr('data-qnacmtnum');
-		
-		$.ajax({
-			url:'qnaDeleteCmt.do',
-			type:'post',
-			data:{qnacmt_num:qnacmt_num},
-			dataType:'json',
-			cache:false,
-			timeout:30000,
-			success:function(param){
-				if(param.result=='logout'){
-					alert('로그인해야 가능합니다.');
-				}else if(param.result=='success'){
-					alert('삭제 완료');
-					selectData(1);
-				}else if(param.result=='wrongAccess'){
-					alert('관리자만 가능합니다.');
-				}else{
-					alert('삭제 시 오류 발생');
+		if(check){
+			$.ajax({
+				url:'qnaDeleteCmt.do',
+				type:'post',
+				data:{qnacmt_num:qnacmt_num},
+				dataType:'json',
+				cache:false,
+				timeout:30000,
+				success:function(param){
+					if(param.result=='logout'){
+						alert('로그인해야 가능합니다.');
+					}else if(param.result=='success'){
+						alert('삭제 완료');
+						selectData(1);
+					}else if(param.result=='wrongAccess'){
+						alert('관리자만 가능합니다.');
+					}else{
+						alert('삭제 시 오류 발생');
+					}
+				},
+				error:function(){
+					alert('네트워크 오류 발생');
 				}
-			},
-			error:function(){
-				alert('네트워크 오류 발생');
-			}
-		});
+			});
+		}
 	});
 	//초기 데이터(목록) 호출
 	selectData(1);

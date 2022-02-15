@@ -119,8 +119,16 @@ public class QnaDAO {
 			
 			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM "
 				+ "(SELECT * FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num)"
-				+sub_sql + " ORDER BY u.auth DESC,b.qna_num DESC)a) "
+				+sub_sql + " ORDER BY b.qna_num DESC)a) "
 				+ "WHERE rnum>=? AND rnum<=?";
+			
+			sql ="SELECT (SELECT COUNT(*) FROM jcmt_qna c WHERE c.qna_num =a.qna_num) as cnt,"
+					+ " a.* FROM (SELECT b.*, rownum rnum FROM "
+					+ "(SELECT * FROM jboard_qna q JOIN juser u USING(user_num) "
+					+ "JOIN juser_detail d USING(user_num) "
+					+ sub_sql
+					+ " ORDER BY q.qna_num DESC)b)a "
+					+ "WHERE a.rnum>=? AND rnum<=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			if(keyword!=null && !"".equals(keyword)) {
@@ -147,7 +155,9 @@ public class QnaDAO {
 				qna.setUser_num(rs.getInt("user_num"));
 				qna.setId(rs.getString("id"));
 				qna.setName(rs.getString("name"));
-				qna.setViewable_check(rs.getInt("viewable_check"));;
+				qna.setViewable_check(rs.getInt("viewable_check"));
+				qna.setCmt_count(rs.getString("cnt"));
+				
 				//BoardVO를 ArrayList에 저장
 				list.add(qna);
 			}
