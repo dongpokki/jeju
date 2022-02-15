@@ -225,8 +225,9 @@ public class SpotDAO {
 					+ "(SELECT * FROM (SELECT content, spot_num FROM jboard_spot) JOIN "
 					+ "(SELECT DISTINCT spot_num, title, filename, hit, good, category FROM jboard_spot b LEFT OUTER JOIN "
 					+ "(SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num ) g USING (spot_num) "
-					+ sub_sql + "ORDER BY " + sub_sql2 + " DESC NULLS LAST )a " + "USING (spot_num) " + sub_sql3
-					+ ") aa ) WHERE rnum>=? AND rnum <=?";
+					+ sub_sql + " )a " + "USING (spot_num) " + sub_sql3
+					+ ") aa ) WHERE rnum>=? AND rnum <=? ORDER BY " + sub_sql2 + " DESC NULLS LAST";
+			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 
 			if (category != 0) {

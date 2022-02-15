@@ -745,7 +745,6 @@ a:hover {
 }
 
 .card-blog .post-excerpt {
-	font-size: 14px !important;
 	color: #898798;
 	overflow: hidden;
 	text-overflow: ellipsis;
