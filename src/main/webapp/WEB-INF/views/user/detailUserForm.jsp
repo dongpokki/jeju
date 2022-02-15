@@ -55,7 +55,7 @@
 			<div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
 				<div class="card border-0 shadow rounded-3 my-5">
 					<div class="card-body p-4 p-sm-5">
-						<h5 class="card-title text-center mb-5 fw-light fs-5">${user.id} 님의 정보 수정(관리자 전용)</h5>
+						<h5 class="card-title text-center mb-5 fw-light fs-5">${user.id} 님의 정보 수정</h5>
 	<form id="detail_form" action="detailUser.do" method="post">
 		<input type="hidden" name="user_num" value="${user.user_num}">
 			<div class="user-auth" align="center">

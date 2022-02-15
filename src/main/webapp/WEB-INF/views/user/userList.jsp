@@ -20,12 +20,24 @@
 		});
 	});
 </script>
+<style>
+  table {
+    width: 100%;
+    border-top: 1px solid #665d57;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #665d57;
+    padding: 10px;
+    text-align: center;
+  }
+</style>
 </head>
 <body>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="container mt-5">
-	<h2>회원목록(관리자 전용)</h2>
+	<h2 class="text-primary">회원목록</h2>
 	<form id="search_form" action="userList.do" method="get" align="right">
 	<div class="SearchSelect">
 		<ul id="search">
@@ -80,7 +92,7 @@
 		</c:forEach>
 	</table>
 		<div class="list-space align-right" align="right">
-		<input class="btn btn-secondary" type="button" value="목록" onclick="location.href='userList.do';" style="margin-bottom: 3px;">
+		<input class="btn btn-secondary" type="button" value="목록" onclick="location.href='userList.do';" style="margin-top: 10px;">
 	</div>
 	<div class="align-center">
 		${pagingHtml}
