@@ -57,7 +57,6 @@ public class MyGoodCourseAction implements Action{
 
 		request.setAttribute("ajaxData", ajaxData);
 		
-		System.out.println(ajaxData);
 		
 		return "/WEB-INF/views/common/ajax_view.jsp";
 

@@ -59,6 +59,7 @@ public class MyGoodSpotAction implements Action{
 
 		request.setAttribute("ajaxData", ajaxData);
 		
+		
 		return "/WEB-INF/views/common/ajax_view.jsp";
 	}
 }

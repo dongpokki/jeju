@@ -330,11 +330,6 @@ public class CourseDAO {
 				// 커넥션풀로부터 커넥션 할당
 				conn = DBUtil.getConnection();
 				
-				System.out.println("MyGoodCourse 메서드 실행");
-				System.out.println("session_user_num : " + session_user_num); //44
-				System.out.println("startRow : " + startRow); //1
-				System.out.println("endRow : " + endRow); //3
-				
 				// sql문 작성
 				sql = "select * from (select a.*, rownum rnum from (select b.course_num,b.title from jboard_course b join jgood_course g on b.course_num = g.course_num where g.user_num=? and good=1 order by b.course_num)a) where rnum>=? and rnum<=?";
 

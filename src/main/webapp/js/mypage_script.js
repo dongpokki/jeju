@@ -115,7 +115,7 @@ $(function(){
 					}	
 					
 					if($(param.spot_list).length == 0){ // 내가 추천하는 장소가 없다면
-						let output = '<div class="alert alert-warning" style="width:100%;">등록된 추천 코스가 없습니다.</div>';
+						let output = '<div class="alert alert-warning" style="width:100%;">등록된 추천 장소가 없습니다.</div>';
 						
 						//문서 객체에 추가
 						$('#spot_output').append(output);
