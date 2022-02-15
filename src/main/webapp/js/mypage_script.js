@@ -5,6 +5,37 @@ $(function(){
 		$('#photo_btn').click(function(){
 			$('#photo_choice').show(); // 파일선택,전송,취소 버튼 노출
 			$(this).hide(); // 수정버튼 감추기
+			$('#delete_btn').hide(); //삭제버튼 감추기
+		});
+		
+		$('#delete_btn').click(function(){
+			let delete_check = confirm('프로필 사진을 삭제하시겠습니까?');
+			
+			if(delete_check){
+				
+				$.ajax({
+				url : 'deleteMyPhoto.do',
+				type : 'post', // 파일 업로드 시 반드시 post 방식 사용
+				dataType : 'json', //jackson 라이브러리를 사용하기위해 json 방식 
+				success : function(param){ // ajax 비동기처리가 성공하면 plain 형식의 파일에 데이터를 가져온다.
+					if(param.result == 'logout'){
+						alert('로그인 후 사용하세요!');
+					}else if(param.result == 'success'){
+						alert('프로필 사진이 삭제되었습니다.');
+						$('.my-photo').attr('src','../images/face.png');
+						$('#photo_btn').show();
+						$('#delete_btn').hide();
+					}else{
+						alert('파일 전송 오류 발생');	
+					}
+				},
+				error : function(){
+					alert('네트워크 오류발생');
+				}
+			});
+
+			}
+			
 		});
 		
 		//이미지 미리보기 취소
@@ -13,7 +44,7 @@ $(function(){
 			$('#photo').val(''); // 파일선택값 초기화
 			$('#photo_choice').hide(); // 파일선택,전송,취소 버튼 숨김
 			$('#photo_btn').show(); // 수정 버튼 노출
-		
+			$('#delete_btn').show(); //삭제버튼 노출
 		});
 		
 		//이미지 선택 및 이미지 미리보기
@@ -69,6 +100,7 @@ $(function(){
 						$('#photo').val('');
 						$('#photo_choice').hide();
 						$('#photo_btn').show();
+						$('#delete_btn').show(); //삭제버튼 노출
 					}else{
 						alert('파일 전송 오류 발생');	
 					}
@@ -336,16 +368,16 @@ $(function(){
 					}					
 					
 					// 답변여부 확인을 위한 변수
-					let viewable_check = '<b style="color:red;">(미답변) </b>';
+					let answer_check = '<b style="color:red;">(미답변) </b>';
 					
 					$(param.myqna_list).each(function(index,myqna){
 					
-							if(myqna.viewable_check == 1){
-								viewable_check = '<b style="color:blue;">(답변완료) </b>';
+							if(myqna.cmt_count == "1"){
+								answer_check = '<b style="color:blue;">(답변완료) </b>';
 							}
 							
 							let output = '<div class="col-sm-12 col-lg-12">';
-							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/qna/qnaDetail.do?qna_num=' + myqna.qna_num + '">' + viewable_check + myqna.title + '</a></h5>';
+							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/qna/qnaDetail.do?qna_num=' + myqna.qna_num + '">' + answer_check + myqna.title + '</a></h5>';
 							output += '</div>';
 						
 						//문서 객체에 추가

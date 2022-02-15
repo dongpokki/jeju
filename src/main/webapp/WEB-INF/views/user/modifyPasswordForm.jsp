@@ -56,7 +56,7 @@
 			if($('#passwd').val() == $('#cpasswd').val()){
 				$('#message_cpasswd').text('새비밀번호 일치').css('color','blue');
 			}else{
-				$('#message_cpasswd').text('');
+				$('#message_cpasswd').text('새비밀번호가 일치하지 않습니다.').css('color','red');
 			}
 		});
 		
