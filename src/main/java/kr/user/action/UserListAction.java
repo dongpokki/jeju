@@ -42,7 +42,7 @@ public class UserListAction implements Action{
 		//페이지 처리
 		//keyfield,keyword,currentPage,count,rowCount,pageCount,url
 		PagingUtil page = new PagingUtil(keyfield,keyword,
-				          Integer.parseInt(pageNum),count,20,10,"userList.do");
+				          Integer.parseInt(pageNum),count,10,10,"userList.do");
 		
 		List<UserVO> list = null;
 		if(count > 0) {
