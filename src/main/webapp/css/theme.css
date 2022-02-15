@@ -1123,6 +1123,30 @@ a:hover {
 	margin-top: 50px;
 }
 
+.comments-area .desc {
+	width: 100%;
+}
+
+.comments-area h6 {
+	font-size: 16px;
+	margin-bottom: 0px;
+}
+
+.comments-area .comment {
+	margin-bottom: 10px;
+	color: #777777;
+	font-size: 15px;
+}
+
+.thumb {
+	margin-right: 20px;
+}
+
+.comments-area .thumb img {
+	width: 50px;
+	border-radius: 50%;
+}
+
 .comment-list {
 	padding: 20px 0 48px 0;
 }
@@ -1138,8 +1162,11 @@ a:hover {
 	font-size: 12px;
 }
 
-.single-comment .date {
-	font-size: 11px;
+.comments-area .date {
+	font-size: 14px;
+	color: #999999;
+	margin-bottom: 0;
+	margin-left: 20px;
 }
 
 .comment {
@@ -1324,9 +1351,6 @@ a:hover {
 	cursor: default;
 }
 
-/* element.style {
-	height: 40px;
-} */
 .FlexableTextArea .textarea_input {
 	display: block;
 	width: 100%;
@@ -1351,7 +1375,7 @@ a:hover {
 
 .image-box {
 	width: 310px;
-	height :200px;
+	height: 200px;
 	overflow: hidden;
 	margin: 0 auto;
 }
@@ -1361,6 +1385,17 @@ a:hover {
 	height: 100%;
 	object-fit: cover;
 }
+
+.spot_cmt {
+	background-color: transparent;
+	border: solid 1px #D7D5E9;
+	border-radius: 5px;
+	font-size: 15px;
+	color: #645F88;
+	padding: 2px 5px;
+	margin: 0px 3px;
+}
+
 /*QnA 게시판 */
 /* #qna-banner {
 	position: relative;
@@ -1372,65 +1407,76 @@ a:hover {
 	height: 50px;
 	background-color: #fff;
 } */
-.qna_hr{
+.qna_hr {
 	border: 0;
-    height: 1px;
-    background: #ccc;
+	height: 1px;
+	background: #ccc;
 }
 
-.qna-text-primary{
-	color:#FEA82F;
-	font-weight:bold;
+.qna-text-primary {
+	color: #FEA82F;
+	font-weight: bold;
 }
-.search-none{
-	height:150px;
-	clear:both;
+
+.search-none {
+	height: 150px;
+	clear: both;
 	text-align: center;
 }
+
 table.qnaTable {
-  border-collapse: separate;
-  border-spacing: 1px;
-  text-align: left;
-  line-height: 1.5;
-  border-top: 1px solid #ccc;
-  width:100%;
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: left;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	width: 100%;
 }
+
 table.qnaTable th {
-  width: 150px;
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
+	width: 150px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
 }
+
 table.qnaTable td {
-  width: 350px;
-  padding: 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
-  height:50px;
+	width: 350px;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	height: 50px;
 }
-table .qna_title{
-	font-weight:bold;
+
+table .qna_title {
+	font-weight: bold;
 }
-table .qna_title:hover{
-	color:#FEA82F;
+
+table .qna_title:hover {
+	color: #FEA82F;
 }
-table .qna_preanswer{
+
+table .qna_preanswer {
 	border-color: #8b8b8b;
 	color: #000;
 	font-size: 12px;
 }
-table .qna_answer{
+
+table .qna_answer {
 	background-color: #e2e5ec;
 	font-size: 12px;
 	cursor: initial;
 }
-.paging{
-	padding:15px;
+
+.paging {
+	padding: 15px;
 }
-.btn.qna{
-	width:85px;
-	height:37px;
+
+.btn.qna {
+	width: 85px;
+	height: 37px;
 }
+
 label[for="title"] {
 	float: left;
 }

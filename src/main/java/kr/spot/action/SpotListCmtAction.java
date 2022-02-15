@@ -27,7 +27,6 @@ public class SpotListCmtAction implements Action {
 			pageNum = "1";
 
 		int spot_num = Integer.parseInt(request.getParameter("spot_num"));
-		// System.out.println(request.getParameter("spot_num"));
 
 		SpotDAO dao = SpotDAO.getInstance();
 		int count = dao.getCmtSpotCount(spot_num);

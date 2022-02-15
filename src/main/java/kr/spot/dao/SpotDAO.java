@@ -227,7 +227,6 @@ public class SpotDAO {
 					+ "(SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num ) g USING (spot_num) "
 					+ sub_sql + "ORDER BY " + sub_sql2 + " DESC NULLS LAST )a " + "USING (spot_num) " + sub_sql3
 					+ ") aa ) WHERE rnum>=? AND rnum <=?";
-			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 
 			if (category != 0) {
@@ -492,7 +491,7 @@ public class SpotDAO {
 			// SQL문 작성
 			sql = "SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT s.spotcmt_num, TO_CHAR(s.reg_date,'YYYY-MM-DD HH24:MI:SS') reg_date,"
 					+ "TO_CHAR(s.modify_date,'YYYY-MM-DD HH24:MI:SS') modify_date,"
-					+ "s.cmt_content,s.spot_num,user_num,u.id,d.name "
+					+ "s.cmt_content,s.spot_num,user_num,u.id,d.name,d.photo "
 					+ "FROM jcmt_spot s JOIN juser u USING(user_num) "
 					+ "JOIN juser_detail d USING(user_num) WHERE s.spot_num=? "
 					+ "ORDER BY s.spotcmt_num DESC)a) WHERE rnum>=? AND rnum<=?";
@@ -506,6 +505,7 @@ public class SpotDAO {
 
 			// SQL문을 실행해서 결과행들을 ResultSet에 담음
 			rs = pstmt.executeQuery();
+			System.out.println(sql);
 			list = new ArrayList<SpotCmtVO>();
 			while (rs.next()) {
 				SpotCmtVO cmt = new SpotCmtVO();
@@ -516,9 +516,9 @@ public class SpotDAO {
 				}
 				cmt.setCmt_content(StringUtil.useBrHtml(rs.getString("cmt_content")));
 				cmt.setSpot_num(rs.getInt("spot_num"));
-				cmt.setSpotcmt_num(rs.getInt("spotcmt_num"));
 				cmt.setUser_num(rs.getInt("user_num"));
 				cmt.setId(rs.getString("id"));
+				cmt.setUser_photo(rs.getString("photo"));
 
 				list.add(cmt);
 			}

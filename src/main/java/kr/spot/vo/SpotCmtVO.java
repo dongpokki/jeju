@@ -8,6 +8,7 @@ public class SpotCmtVO {
 	private String reg_date;
 	private int user_num;
 	private String id;
+	private String user_photo;
 
 	public int getSpotcmt_num() {
 		return spotcmt_num;
@@ -63,6 +64,14 @@ public class SpotCmtVO {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getUser_photo() {
+		return user_photo;
+	}
+
+	public void setUser_photo(String user_photo) {
+		this.user_photo = user_photo;
 	}
 
 }

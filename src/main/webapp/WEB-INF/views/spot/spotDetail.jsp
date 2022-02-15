@@ -43,6 +43,9 @@ $(function(){
 		}
 	});	});
 </script>
+<script type="text/javascript" charset="utf-8">
+sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
+</script>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<!-- 사진 섹션 시작 -->
@@ -109,8 +112,11 @@ $(function(){
 							<div id="good_result" style="display: inline;">${good }</div>
 						</div>
 						<!-- 댓글 시작 -->
-						<div class="comment-form-wrap pt-5">
-							<h5>comment</h5>
+						<div class="comments-area">
+							<h4>
+								<c:if test="">${cmt_count }</c:if>
+								comment
+							</h4>
 							<!-- 댓글 목록 출력 시작 -->
 							<div class="comment-list" id="output"></div>
 							<!-- 댓글 목록 출력 끝 -->
@@ -119,12 +125,10 @@ $(function(){
 									<input type="hidden" name="spot_num" value="${spot.spot_num}" id="spot_num">
 									<div class="row">
 										<div class="col-12">
-											<div class="form-group">
-												<textarea class="form-control w-100" name="cmt_content" id="cmt_content" cols="10" rows="2" placeholder="내용을 입력해주세요." <c:if test="${empty user_num}">disabled="disabled"</c:if>><c:if test="${empty user_num}">로그인해야 작성할 수 있습니다.</c:if></textarea>
-											</div>
+											<textarea class="form-control w-100" name="cmt_content" id="cmt_content" cols="10" rows="2" placeholder="내용을 입력해주세요." <c:if test="${empty session_user_num}">disabled="disabled"</c:if>><c:if test="${empty session_user_num}">로그인해야 작성할 수 있습니다.</c:if></textarea>
 										</div>
 									</div>
-									<c:if test="${!empty user_num}">
+									<c:if test="${!empty session_user_num}">
 										<div id="cmt_first">
 											<span class="letter-count">100/100</span>
 										</div>

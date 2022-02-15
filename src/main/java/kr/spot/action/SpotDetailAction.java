@@ -20,6 +20,7 @@ public class SpotDetailAction implements Action {
 
 		// 조회수 증가
 		dao.updateReadcount(spot_num);
+		int cmt_count = dao.getCmtSpotCount(spot_num);
 
 		SpotVO spot = dao.getSpotBoard(spot_num);
 
@@ -36,6 +37,7 @@ public class SpotDetailAction implements Action {
 		request.setAttribute("good", good);
 		request.setAttribute("user_num", session_user_num);
 		request.setAttribute("checked", checked);
+		request.setAttribute("cmt_count", cmt_count);
 
 		// JSP 경로 반환
 		return "/WEB-INF/views/spot/spotDetail.jsp";
