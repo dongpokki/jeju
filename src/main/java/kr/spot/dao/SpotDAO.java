@@ -201,8 +201,9 @@ public class SpotDAO {
 		List<SpotVO> list = null;
 		String sql = null;
 		String sub_sql = "";
-		String sub_sql2 = "";
-		String sub_sql3 = sort;
+		String sub_sql2 = sort;
+		String sub_sql3 = "";
+
 		int cnt = 0;
 
 		try {
@@ -211,22 +212,22 @@ public class SpotDAO {
 			if (category != 0) {
 				sub_sql = " WHERE category=? ";
 			}
-
-			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
-				sub_sql2 = " WHERE content LIKE ? ";
-			}
 			if (sort != null && sort.equals("good")) {
-				sub_sql3 = "good";
+				sub_sql2 = "good";
 			} else if (sort == null || sort.equals("spot_num")) {
-				sub_sql3 = "spot_num";
+				sub_sql2 = "spot_num";
 			}
+			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
+				sub_sql3 = " WHERE content LIKE ? ";
+			}
+
 			sql = "SELECT * FROM ( SELECT aa.*, rownum rnum FROM "
 					+ "(SELECT * FROM (SELECT content, spot_num FROM jboard_spot) JOIN "
 					+ "(SELECT DISTINCT spot_num, title, filename, hit, good, category FROM jboard_spot b LEFT OUTER JOIN "
 					+ "(SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num ) g USING (spot_num) "
-					+ sub_sql + ")a " + "USING (spot_num) " + sub_sql2 + ") aa ) WHERE rnum>=? AND rnum <=? ORDER BY "
-					+ sub_sql3 + " DESC NULLS LAST";
-
+					+ sub_sql + "ORDER BY " + sub_sql2 + " DESC NULLS LAST )a " + "USING (spot_num) " + sub_sql3
+					+ ") aa ) WHERE rnum>=? AND rnum <=?";
+			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 
 			if (category != 0) {
