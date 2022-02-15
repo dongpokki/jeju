@@ -541,7 +541,7 @@ public class QnaDAO {
 			conn = DBUtil.getConnection();
 			
 			//sql문 작성
-			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT b.title,b.viewable_check,b.qna_num,u.id FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num) WHERE id = ? ORDER BY u.auth DESC,b.qna_num DESC)a) where rnum>=? AND rnum<=?";
+			sql="SELECT (SELECT COUNT(*) FROM jcmt_qna c WHERE c.qna_num = a.qna_num) as cnt,a.* FROM (SELECT b.*, rownum rnum FROM (SELECT * FROM jboard_qna q JOIN juser u USING(user_num) LEFT JOIN juser_detail d USING(user_num) where u.id=? ORDER BY q.qna_num DESC)b)a WHERE rnum>=? AND rnum<=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -555,13 +555,14 @@ public class QnaDAO {
 			
 			while(rs.next()) {
 				QnaVO qna = new QnaVO();
-				qna.setTitle(rs.getString("title"));
-				qna.setViewable_check(rs.getInt("viewable_check"));;
+				
 				qna.setQna_num(rs.getInt("qna_num"));
 				qna.setId(rs.getString("id"));
+				qna.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				qna.setCmt_count(rs.getString("cnt"));
 				
 				//BoardVO를 ArrayList에 저장
-				list.add(qna);
+				list.add(qna);				
 			}
 		}catch(Exception e) {
 			throw new Exception(e);

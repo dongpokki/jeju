@@ -31,9 +31,8 @@
 				<c:forEach var="spot" items="${spot_list}">
 					<div class="col-sm-6 col-lg-4">
 						<h3 class="best-title">${spot.title}</h3>
-						<img src="${pageContext.request.contextPath}/upload/${spot.filename}" class="img-thumbnail" style="width:300px; height: 300px;">
+						<a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=${spot.spot_num}"><img src="${pageContext.request.contextPath}/upload/${spot.filename}" class="img-thumbnail" style="width:300px; height: 300px; object-fit: scale-down;"></a>
 						<p class="best-content">${spot.content}</p>
-		  				<p><a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=${spot.spot_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
 					</div>
 				</c:forEach>
 			</c:if>
@@ -41,7 +40,7 @@
 		<!-- 베스트 스팟 끝 -->	
 		<hr class="featurette-divider">
 		
-		<!-- 베스트 코스 시작 -->	
+		<!--	
 		<h1 class="text-primary">BEST COURSE</h1>
 		<div class="row">
 			<c:if test="${empty course_list}">
@@ -51,13 +50,13 @@
 				<c:forEach var="course" items="${course_list}">
 					<div class="col-sm-6 col-lg-4">
 						<h3 class="best-title">${course.title}</h3>
-						<img src="${pageContext.request.contextPath}/upload/${course.filename}" class="img-thumbnail" style="width:300px; height: 300px;">
+						<img src="${pageContext.request.contextPath}/upload/${course.filename}" class="img-thumbnail" style="width:300px; height: 300px; object-fit: scale-down;">
 						<p class="best-content">${course.content}</p>
-		  				<p><a href="${pageContext.request.contextPath}/course/courseDetail.do?course_num=${course.course_num}" class="btn btn-warning">상세보기 &raquo;</a></p>
 					</div>
 				</c:forEach>
 			</c:if>
 		</div>
+		-->
 	<!-- 중앙 컨텐츠 끝 -->
 	
 	<p><p>

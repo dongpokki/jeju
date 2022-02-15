@@ -27,14 +27,17 @@
 				<c:if test="${!empty user.photo}">
 					<img src="${pageContext.request.contextPath}/upload/${user.photo}" width="250" height="250" class="my-photo">
 				</c:if>
-				<div class="align-center">
+				<div class="align-center" style="width:250px;" id="update_delete">
 					<input type="button" value="수정" id="photo_btn" class="btn btn-warning">
+					<c:if test="${!empty user.photo}">
+					<input type="button" value="삭제" id="delete_btn" class="btn btn-warning">
+					</c:if>
 				</div>
 				<div id="photo_choice" style="display:none">
 					<input type="file" id="photo" accept="image/gif,image/png,image/jpeg">
 					<div class="align-center">
 						<input type="button" value="전송" id="photo_submit" class="btn btn-warning">
-						<input type="button" value="취소" id="photo_reset" class="btn btn-warning">
+						<input type="button" value="취소" id="photo_reset" class="btn btn-warning" style="margin-right: 55px;"> 
 					</div>
 				</div>
 			</div>

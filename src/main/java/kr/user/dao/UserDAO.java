@@ -274,7 +274,7 @@ public class UserDAO {
 		try {
 			//커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-			
+						
 			//sql문 작성
 			sql = "update juser_detail set photo=? where user_num=?";
 			
@@ -294,7 +294,7 @@ public class UserDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
-
+	
 
 	// 회원탈퇴(회원 정보 삭제)
 	public void deleteUser(int session_user_num)throws Exception{
