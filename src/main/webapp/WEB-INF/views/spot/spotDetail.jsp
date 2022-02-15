@@ -117,7 +117,7 @@ $(function(){
 											<div class="d-flex justify-content-between">
 												<div class="d-flex align-items-center">
 													<h6>닉네임</h6>
-													<p class="date">2022-02-06</p>
+													<p class="date" style="padding-left:2px;">2022-02-06</p>
 												</div>
 											</div>
 											<p class="comment">여기 어쩌구 저쩌구 해서 그렇게 좋지는 않았어요</p>
@@ -142,12 +142,13 @@ $(function(){
 									</div>
 								</form>
 							</div>
-							<div align="right">
-								<c:if test="${session_user_auth == 3}">
-									<input class="btn btn-primary" type="button" value="수정" onclick="location.href='spotUpdateForm.do?spot_num=${spot.spot_num}'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+						</div>
+						<div align="right">
+							<c:if test="${session_user_auth == 3}">
+								<input class="btn btn-primary" type="button" value="수정" onclick="location.href='spotUpdateForm.do?spot_num=${spot.spot_num}'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
 
-									<input class="btn btn-secondary" type="button" value="삭제" id="delete_btn" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
-									<script type="text/javascript">
+								<input class="btn btn-secondary" type="button" value="삭제" id="delete_btn" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+								<script type="text/javascript">
 										let delete_btn = document
 												.getElementById('delete_btn');
 										delete_btn.onclick = function() {
@@ -158,10 +159,9 @@ $(function(){
 											}
 										};
 									</script>
-								</c:if>
-							</div>
+							</c:if>
 						</div>
-						<!-- 덧글 끝 -->
+
 					</div>
 					<!-- 게시글 끝 -->
 					<!-- 사이드 바 시작 -->

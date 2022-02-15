@@ -27,7 +27,7 @@ create table jgood_spot(
 create table jcmt_spot(
   spotcmt_num number not null,
   spot_num number not null,
-  content varchar2(300) not null,
+  cmt_content varchar2(300) not null,
   reg_date date default sysdate not null,
   modify_date date,
   user_num number not null,

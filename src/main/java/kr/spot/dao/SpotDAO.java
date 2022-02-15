@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.spot.vo.SpotCmtVO;
 import kr.spot.vo.SpotGoodVO;
 import kr.spot.vo.SpotVO;
 import kr.util.DBUtil;
+import kr.util.DurationFromNow;
 import kr.util.StringUtil;
 
 public class SpotDAO {
@@ -411,6 +413,197 @@ public class SpotDAO {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		return count;
+	}
+
+	// 댓글 등록
+	public void insertCmtBoard(SpotCmtVO spotCmt) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "INSERT INTO jcmt_spot (spotcmt_num,cmt_content,user_num,spot_num) VALUES (jcmt_spot_seq.nextval,?,?,?)";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setString(1, spotCmt.getCmt_content());
+			pstmt.setInt(2, spotCmt.getUser_num());
+			pstmt.setInt(3, spotCmt.getSpot_num());
+			// SQL문 실행
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+
+	// 댓글 갯수
+	public int getCmtSpotCount(int spot_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "SELECT COUNT(*) FROM jcmt_spot s JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num) WHERE s.spot_num=?";
+
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, spot_num);
+
+			// SQL문을 실행해서 결과행을 ResultSet에 담음
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+
+		return count;
+	}
+
+	// 댓글 목록
+	public List<SpotCmtVO> getListReplyBoard(int startRow, int endRow, int spot_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<SpotCmtVO> list = null;
+		String sql = null;
+
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT s.spotcmt_num, TO_CHAR(s.reg_date,'YYYY-MM-DD HH24:MI:SS') reg_date,"
+					+ "TO_CHAR(s.modify_date,'YYYY-MM-DD HH24:MI:SS') modify_date,"
+					+ "s.cmt_content,s.spot_num,user_num,u.id,d.name "
+					+ "FROM jcmt_spot s JOIN juser u USING(user_num) "
+					+ "JOIN juser_detail d USING(user_num) WHERE s.spot_num=? "
+					+ "ORDER BY s.spotcmt_num DESC)a) WHERE rnum>=? AND rnum<=?";
+
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, spot_num);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			// SQL문을 실행해서 결과행들을 ResultSet에 담음
+			rs = pstmt.executeQuery();
+			list = new ArrayList<SpotCmtVO>();
+			while (rs.next()) {
+				SpotCmtVO cmt = new SpotCmtVO();
+				cmt.setSpotcmt_num(rs.getInt("spotcmt_num"));
+				cmt.setReg_date(DurationFromNow.getTimeDiffLabel(rs.getString("reg_date")));
+				if (rs.getString("modify_date") != null) {
+					cmt.setModify_date(DurationFromNow.getTimeDiffLabel(rs.getString("modify_date")));
+				}
+				cmt.setCmt_content(StringUtil.useBrHtml(rs.getString("cmt_content")));
+				cmt.setSpot_num(rs.getInt("spot_num"));
+				cmt.setSpotcmt_num(rs.getInt("spotcmt_num"));
+				cmt.setUser_num(rs.getInt("user_num"));
+				cmt.setId(rs.getString("id"));
+
+				list.add(cmt);
+			}
+
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
+	}// 댓글 상세
+
+	public SpotCmtVO getCmtspot(int spotcmt_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		SpotCmtVO cmt = null;
+		try {
+			conn = DBUtil.getConnection();
+
+			sql = "SELECT * FROM jcmt_spot s JOIN juser_detail u USING(user_num) WHERE spotcmt_num=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spotcmt_num);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				cmt = new SpotCmtVO();
+				cmt.setSpotcmt_num(rs.getInt("spotcmt_num"));
+				cmt.setSpot_num(rs.getInt("spot_num"));
+				cmt.setUser_num(rs.getInt("user_num"));
+				cmt.setId(rs.getString("id"));
+			}
+
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return cmt;
+	}
+
+	// 댓글 수정
+	public void updateCmtSpot(SpotCmtVO cmt) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		try {
+			conn = DBUtil.getConnection();
+
+			sql = "UPDATE jcmt_spot SET cmt_content=?,modify_date=SYSDATE WHERE spotcmt_num=? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cmt.getCmt_content());
+			pstmt.setInt(2, cmt.getSpotcmt_num());
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}// 댓글 삭제
+
+	public void deleteCmtSpot(int spotcmt_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		try {
+			conn = DBUtil.getConnection();
+
+			sql = "DELETE FROM jcmt_spot WHERE spotcmt_num=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spotcmt_num);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
 	}
 
 	// [정동윤 작성] 메인에 노출할 BEST3 spot 구하기
