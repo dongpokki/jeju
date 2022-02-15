@@ -14,6 +14,7 @@
 <!-- js -->
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/spot_cmt.js"></script>
 </head>
 <script>
 $(function(){
@@ -107,42 +108,35 @@ $(function(){
 							<input type="button" value="♡" id="good" <c:if test="${checked==1}">style="color:#FE9A2E;"</c:if>>
 							<div id="good_result" style="display: inline;">${good }</div>
 						</div>
-						<!-- 덧글 시작 -->
+						<!-- 댓글 시작 -->
 						<div class="comment-form-wrap pt-5">
 							<h5>comment</h5>
-							<div class="comment-list">
-								<div class="single-comment justify-content-btween d-flex">
-									<div class="user justify-content-btween d-flex">
-										<div class="desc">
-											<div class="d-flex justify-content-between">
-												<div class="d-flex align-items-center">
-													<h6>닉네임</h6>
-													<p class="date" style="padding-left:2px;">2022-02-06</p>
-												</div>
-											</div>
-											<p class="comment">여기 어쩌구 저쩌구 해서 그렇게 좋지는 않았어요</p>
-										</div>
-									</div>
-								</div>
-								<div align="right">
-									<a href="#" class="btn-reply">수정</a> <a href="#" class="btn-reply">삭제</a>
-								</div>
-							</div>
+							<!-- 댓글 목록 출력 시작 -->
+							<div class="comment-list" id="output"></div>
+							<!-- 댓글 목록 출력 끝 -->
 							<div class="comment-form">
-								<form class="form-contact comment_form" action="#" id="commentForm">
+								<form class="form-contact comment_form" id="cmt_form">
+									<input type="hidden" name="spot_num" value="${spot.spot_num}" id="spot_num">
 									<div class="row">
 										<div class="col-12">
 											<div class="form-group">
-												<textspot class="form-control w-100" name="comment" id="comment" cols="10" rows="2" placeholder="내용을 입력해주세요."></textspot>
+												<textarea class="form-control w-100" name="cmt_content" id="cmt_content" cols="10" rows="2" placeholder="내용을 입력해주세요." <c:if test="${empty user_num}">disabled="disabled"</c:if>><c:if test="${empty user_num}">로그인해야 작성할 수 있습니다.</c:if></textarea>
 											</div>
 										</div>
 									</div>
-									<div class="form-group">
-										<input type="submit" value="덧글 작성" class="btn btn-primary">
-									</div>
+									<c:if test="${!empty user_num}">
+										<div id="cmt_first">
+											<span class="letter-count">100/100</span>
+										</div>
+										<div class="form-group">
+											<input type="submit" value="덧글 등록" class="btn btn-primary" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+										</div>
+									</c:if>
 								</form>
 							</div>
 						</div>
+						<!-- 댓글 끝 -->
+
 						<div align="right">
 							<c:if test="${session_user_auth == 3}">
 								<input class="btn btn-primary" type="button" value="수정" onclick="location.href='spotUpdateForm.do?spot_num=${spot.spot_num}'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
@@ -160,8 +154,8 @@ $(function(){
 										};
 									</script>
 							</c:if>
+							<input class="btn btn-secondary" type="button" value="목록" onclick="location.href='spotList.do'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
 						</div>
-
 					</div>
 					<!-- 게시글 끝 -->
 					<!-- 사이드 바 시작 -->

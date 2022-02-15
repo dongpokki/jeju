@@ -416,7 +416,7 @@ public class SpotDAO {
 	}
 
 	// 댓글 등록
-	public void insertCmtBoard(SpotCmtVO spotCmt) throws Exception {
+	public void insertCmtSpot(SpotCmtVO spotCmt) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -478,7 +478,7 @@ public class SpotDAO {
 	}
 
 	// 댓글 목록
-	public List<SpotCmtVO> getListReplyBoard(int startRow, int endRow, int spot_num) throws Exception {
+	public List<SpotCmtVO> getListCmtSpot(int startRow, int endRow, int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -540,7 +540,7 @@ public class SpotDAO {
 		try {
 			conn = DBUtil.getConnection();
 
-			sql = "SELECT * FROM jcmt_spot s JOIN juser_detail u USING(user_num) WHERE spotcmt_num=?";
+			sql = "SELECT * FROM jcmt_spot s JOIN juser_detail u USING(user_num) JOIN juser u USING(user_num) WHERE spotcmt_num=?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, spotcmt_num);
