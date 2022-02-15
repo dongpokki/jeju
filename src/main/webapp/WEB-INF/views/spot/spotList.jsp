@@ -93,20 +93,34 @@
 									<div class="body">
 										<div class="post-title">
 											<a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.title }</a>
+											<p class="post-category">
+												<c:choose>
+													<c:when test="${spot.category ==1}">
+													&lt;동부&gt; 
+													</c:when>
+													<c:when test="${spot.category ==2}">&lt;서부&gt;
+													</c:when>
+													<c:when test="${spot.category ==3}">&lt;남부&gt;
+													</c:when>
+													<c:when test="${spot.category ==4}">&lt;북부&gt;
+													</c:when>
+												</c:choose>
+											</p>
 										</div>
 										<div class="post-excerpt" style="max-height: 200px !important;">
-											<a href="spotDetail.do?spot_num=${spot.spot_num}">
-											<c:if test="${!empty spot.filename }">
-											<div class="image-box"> <img class="image-thumbnail" src="${pageContext.request.contextPath }/upload/${spot.filename}"> </div>
+											<a href="spotDetail.do?spot_num=${spot.spot_num}"> <c:if test="${!empty spot.filename }">
+													<div class="image-box">
+														<img class="image-thumbnail" src="${pageContext.request.contextPath }/upload/${spot.filename}">
+													</div>
 												</c:if></a>
 										</div>
-										<div class="post-excerpt" style="padding: 15px 0 0 0;">${spot.content }</div>
-									</div>
-									<div class="footer">
-										<a href="spotDetail.do?spot_num=${spot.spot_num}">Read More</a>
+										<div class="post-excerpt"><a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.content }</a></div>
+										<div class="footer">
+											<div style="color: #898798;">
+												<img src="${pageContext.request.contextPath }/images/eyes.png" style="padding: 0 5px 1px 0;">${spot.hit }</div>
+										</div>
 									</div>
 								</div>
-
 							</div>
 						</c:forEach>
 					</c:if>
@@ -128,7 +142,6 @@
 					</div>
 				</c:if>
 			</div>
-
 		</div>
 	</main>
 

@@ -97,8 +97,7 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 							<div class="post-meta">
 								<div class="post-date">${spot.reg_date }</div>
 								<div class="post-comment-count ml-2">
-									<a href="#target"><c:if test="${cmt_count == 1 }">${cmt_count } comment</c:if>
-									<c:if test="${cmt_count > 1 }">${cmt_count } comments</c:if></a>
+									<a href="#target"><c:if test="${cmt_count == 1 }">${cmt_count } comment</c:if> <c:if test="${cmt_count > 1 }">${cmt_count } comments</c:if></a>
 								</div>
 							</div>
 							<div class="post-content">
@@ -121,7 +120,7 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 							<!-- 댓글 목록 출력 시작 -->
 							<div class="comment-list" id="output"></div>
 							<!-- 댓글 목록 출력 끝 -->
-							<div <c:if test="${cmt_count > 0 }">class="comment-form"</c:if> >
+							<div <c:if test="${cmt_count > 0 }">class="comment-form"</c:if>>
 								<form class="form-contact comment_form" id="cmt_form">
 									<input type="hidden" name="spot_num" value="${spot.spot_num}" id="spot_num">
 									<div class="row">
@@ -141,7 +140,6 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 							</div>
 						</div>
 						<!-- 댓글 끝 -->
-
 						<div align="right">
 							<c:if test="${session_user_auth == 3}">
 								<input class="btn btn-primary" type="button" value="수정" onclick="location.href='spotUpdateForm.do?spot_num=${spot.spot_num}'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">

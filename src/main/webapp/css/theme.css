@@ -710,7 +710,7 @@ a:hover {
 	position: relative;
 	display: block;
 	margin: 0 auto;
-	padding: 32px 20px 60px 20px;
+	padding: 20px 20px 45px 20px;
 	min-width: 300px;
 	max-height: 450px;
 	border-radius: 6px;
@@ -729,6 +729,14 @@ a:hover {
 .card-blog .post-title {
 	margin-bottom: 8px;
 	font-size: 18px;
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+.card-blog .post-title .post-category {
+	color: #FE9A2E;
+	margin-bottom: 0.5rem;
+	font-size: 15px;
 }
 
 .card-blog .post-title a {
@@ -737,19 +745,21 @@ a:hover {
 }
 
 .card-blog .post-excerpt {
-	font-size: 14px;
+	font-size: 14px !important;
 	color: #898798;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
-	-webkit-line-clamp: 3;
+	-webkit-line-clamp: 4;
 	-webkit-box-orient: vertical;
 }
 
 .card-blog .footer {
 	position: absolute;
-	bottom: 20px;
-	left: 20px;
+	bottom: 10px;
+	width: 90%;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .card-blog .footer a {
@@ -1133,7 +1143,7 @@ a:hover {
 }
 
 .comments-area .comment {
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 	color: #777777;
 	font-size: 15px;
 }
@@ -1386,6 +1396,7 @@ a:hover {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	padding: 0 0 10px 0;
 }
 
 .spot_cmt {
