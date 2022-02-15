@@ -1370,7 +1370,7 @@ a:hover {
 	color: #FEA82F;
 	border-radius: 30px;
 	height: 50px;
-	background-color: #fff
+	background-color: #fff;
 } */
 .qna_hr{
 	border: 0;
@@ -1382,14 +1382,18 @@ a:hover {
 	color:#FEA82F;
 	font-weight:bold;
 }
-
+.search-none{
+	height:150px;
+	clear:both;
+	text-align: center;
+}
 table.qnaTable {
   border-collapse: separate;
   border-spacing: 1px;
   text-align: left;
   line-height: 1.5;
   border-top: 1px solid #ccc;
-  margin : 20px 10px;
+  width:100%;
 }
 table.qnaTable th {
   width: 150px;
@@ -1402,6 +1406,7 @@ table.qnaTable td {
   padding: 10px;
   vertical-align: top;
   border-bottom: 1px solid #ccc;
+  height:50px;
 }
 table .qna_title{
 	font-weight:bold;
@@ -1409,7 +1414,23 @@ table .qna_title{
 table .qna_title:hover{
 	color:#FEA82F;
 }
-
+table .qna_preanswer{
+	border-color: #8b8b8b;
+	color: #000;
+	font-size: 12px;
+}
+table .qna_answer{
+	background-color: #e2e5ec;
+	font-size: 12px;
+	cursor: initial;
+}
+.paging{
+	padding:15px;
+}
+.btn.qna{
+	width:85px;
+	height:37px;
+}
 label[for="title"] {
 	float: left;
 }

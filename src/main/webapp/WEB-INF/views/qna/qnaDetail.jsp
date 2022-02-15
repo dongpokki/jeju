@@ -42,8 +42,8 @@
 						style="border-top: 2px dashed rgba(0, 0, 0, 0.1)">
 					<div class="post-meta">
 						<div class="post-name">
-							작성자 ${qna.name }
-							<c:if test="${qna.id ne 'admin'}">
+							작성자 ${qna.id }
+							<%-- <c:if test="${qna.id ne 'admin'}">
 						(<c:choose>
 									<c:when test="${fn:length(qna.id) gt 3}">
 										<c:out value="${fn:substring(qna.id, 0, 2)}" />
@@ -54,7 +54,7 @@
 										<c:out value="${qna.id}" />
 									</c:otherwise>
 								</c:choose>)
-						</c:if>
+						</c:if> --%>
 						</div>
 						<div class="post-lookup">| 조회 ${qna.hit } |</div>
 						<div class="post-date">

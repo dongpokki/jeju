@@ -71,7 +71,7 @@ public class QnaDAO {
 				else if(keyfield.equals("3")) sub_sql="WHERE b.content LIKE ?";
 			}
 			//sQL문 작성
-			sql="SELECT COUNT(*) FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num)"+sub_sql;
+			sql="SELECT COUNT(*) FROM jboard_qna b JOIN juser u USING(user_num) LEFT JOIN juser_detail d USING(user_num)"+sub_sql;
 			
 			pstmt = conn.prepareStatement(sql);
 			if(keyword!=null & !"".equals(keyword)) {
@@ -111,21 +111,17 @@ public class QnaDAO {
 			conn = DBUtil.getConnection();
 			
 			if(keyword!=null && !"".equals(keyword)) {
-				if(keyfield.equals("0")) sub_sql="WHERE b.title LIKE ? OR d.name LIKE ? OR b.content LIKE ?";
-				else if(keyfield.equals("1")) sub_sql="WHERE b.title LIKE ?";
+				if(keyfield.equals("0")) sub_sql="WHERE q.title LIKE ? OR d.name LIKE ? OR q.content LIKE ?";
+				else if(keyfield.equals("1")) sub_sql="WHERE q.title LIKE ?";
 				else if(keyfield.equals("2")) sub_sql="WHERE d.name LIKE ?";
-				else if(keyfield.equals("3")) sub_sql="WHERE b.content LIKE ?";
+				else if(keyfield.equals("3")) sub_sql="WHERE q.content LIKE ?";
 			}
 			
-			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM "
-				+ "(SELECT * FROM jboard_qna b JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num)"
-				+sub_sql + " ORDER BY b.qna_num DESC)a) "
-				+ "WHERE rnum>=? AND rnum<=?";
 			
 			sql ="SELECT (SELECT COUNT(*) FROM jcmt_qna c WHERE c.qna_num =a.qna_num) as cnt,"
 					+ " a.* FROM (SELECT b.*, rownum rnum FROM "
 					+ "(SELECT * FROM jboard_qna q JOIN juser u USING(user_num) "
-					+ "JOIN juser_detail d USING(user_num) "
+					+ "LEFT JOIN juser_detail d USING(user_num) "
 					+ sub_sql
 					+ " ORDER BY q.qna_num DESC)b)a "
 					+ "WHERE a.rnum>=? AND rnum<=?";
@@ -179,7 +175,7 @@ public class QnaDAO {
 			conn = DBUtil.getConnection();
 			
 			sql="SELECT * FROM jboard_qna b JOIN juser u USING(user_num) "
-					+ "JOIN juser_detail d USING(user_num) "
+					+ "LEFT JOIN juser_detail d USING(user_num) "
 					+ "WHERE b.qna_num=?";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -358,7 +354,7 @@ public class QnaDAO {
 		try {
 			conn=DBUtil.getConnection();
 			
-			sql="SELECT COUNT(*) FROM jcmt_qna c JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num) WHERE c.qna_num=?";
+			sql="SELECT COUNT(*) FROM jcmt_qna c JOIN juser u USING(user_num) LEFT JOIN juser_detail d USING(user_num) WHERE c.qna_num=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, qna_num);
@@ -390,7 +386,7 @@ public class QnaDAO {
 					+ "TO_CHAR(c.modify_date,'YYYY-MM-DD HH24:MI:SS') modify_date,"
 					+ "c.cmt_content,c.qna_num,user_num,u.id,d.name "
 					+ "FROM jcmt_qna c JOIN juser u USING(user_num) "
-					+ "JOIN juser_detail d USING(user_num) WHERE c.qna_num=? "
+					+ "LEFT JOIN juser_detail d USING(user_num) WHERE c.qna_num=? "
 					+ "ORDER BY c.qnacmt_num DESC)a) WHERE rnum>=? AND rnum<=?";
 			
 			pstmt = conn.prepareStatement(sql);

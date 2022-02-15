@@ -6,21 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Qna수정</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/bootstrap.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/theme.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css">
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/write_form.js"></script>
-<script
-	src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
-<script
-	src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
+<script src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
+<script src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -31,11 +24,10 @@
 					<h2 class="title">QnA 수정하기</h2>
 				</div>
 			</div>
-			<form id="write_form" action="qnaUpdate.do"
-				enctype="multipart/form-data" method="post">
+			<form id="write_form" action="qnaUpdate.do" enctype="multipart/form-data" method="post">
 				<input type="hidden" name="qna_num" value="${qna.qna_num}">
 				<div class="WritingContent">
-					<div class="FlexableTextArea">
+					<div class="FlexableTextArea" style="padding-top: 20px">
 						<p>
 							<input type="radio" name="viewable_check" value="0"
 								id="viewable_check0"
@@ -47,7 +39,7 @@
 						</p>
 						<div>
 							<div class="FlexableTextArea">
-								<input type="text" name="title" id="title"
+								<input type="text" name="title" id="title" maxlength="50"
 									class="textarea_input" placeholder="제목을 입력해 주세요."
 									value="${qna.title }">
 							</div>
