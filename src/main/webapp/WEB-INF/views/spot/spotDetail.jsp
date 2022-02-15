@@ -97,7 +97,8 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 							<div class="post-meta">
 								<div class="post-date">${spot.reg_date }</div>
 								<div class="post-comment-count ml-2">
-									<a href="#">덧글 수(누르면 덧글 창으로 이동)</a>
+									<a href="#target"><c:if test="${cmt_count == 1 }">${cmt_count } comment</c:if>
+									<c:if test="${cmt_count > 1 }">${cmt_count } comments</c:if></a>
 								</div>
 							</div>
 							<div class="post-content">
@@ -113,14 +114,14 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 						</div>
 						<!-- 댓글 시작 -->
 						<div class="comments-area">
-							<h4>
-								<c:if test="">${cmt_count }</c:if>
-								comment
-							</h4>
+							<a name="target"><h4>
+									<c:if test="${cmt_count == 1 }">${cmt_count } comment</c:if>
+									<c:if test="${cmt_count > 1 }">${cmt_count } comments</c:if>
+								</h4></a>
 							<!-- 댓글 목록 출력 시작 -->
 							<div class="comment-list" id="output"></div>
 							<!-- 댓글 목록 출력 끝 -->
-							<div class="comment-form">
+							<div <c:if test="${cmt_count > 0 }">class="comment-form"</c:if> >
 								<form class="form-contact comment_form" id="cmt_form">
 									<input type="hidden" name="spot_num" value="${spot.spot_num}" id="spot_num">
 									<div class="row">
@@ -129,11 +130,11 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 										</div>
 									</div>
 									<c:if test="${!empty session_user_num}">
-										<div id="cmt_first">
+										<div id="cmt_first" style="display: flex; justify-content: space-between;">
+											<div class="form-group">
+												<input type="submit" value="덧글 등록" class="btn btn-primary" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+											</div>
 											<span class="letter-count">100/100</span>
-										</div>
-										<div class="form-group">
-											<input type="submit" value="덧글 등록" class="btn btn-primary" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
 										</div>
 									</c:if>
 								</form>

@@ -494,7 +494,7 @@ public class SpotDAO {
 					+ "s.cmt_content,s.spot_num,user_num,u.id,d.name,d.photo "
 					+ "FROM jcmt_spot s JOIN juser u USING(user_num) "
 					+ "JOIN juser_detail d USING(user_num) WHERE s.spot_num=? "
-					+ "ORDER BY s.spotcmt_num DESC)a) WHERE rnum>=? AND rnum<=?";
+					+ "ORDER BY s.spotcmt_num ASC)a) WHERE rnum>=? AND rnum<=?";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -505,7 +505,6 @@ public class SpotDAO {
 
 			// SQL문을 실행해서 결과행들을 ResultSet에 담음
 			rs = pstmt.executeQuery();
-			System.out.println(sql);
 			list = new ArrayList<SpotCmtVO>();
 			while (rs.next()) {
 				SpotCmtVO cmt = new SpotCmtVO();

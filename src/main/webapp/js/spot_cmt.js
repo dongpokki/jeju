@@ -30,7 +30,7 @@ $(function() {
 				$(param.list).each(function(index, item) {
 					let output = '<div id="item">'
 					output += '<div id="sub-item">'
-					output += '<div class="user justify-content-btween d-flex" style="margin : 10px 0;">';
+					output += '<div class="user justify-content-btween d-flex" style="margin : 20px 0;">';
 					output += '<div class="thumb">';
 
 					if (item.user_num && item.user_photo) {
@@ -50,10 +50,10 @@ $(function() {
 						output += '<p class="date"  id="modify_date">' + item.reg_date + '</p>';
 					}
 					output += '</div>';
-					output += '<div class="btn-reply">';
+					output += '<div>';
 					if (param.user_num == item.user_num) {
-						output += '<input type="button" data-spotcmtnum="' + item.spotcmt_num + '"value="수정" id="modify_btn" class="btn-reply" >';
-						output += '<input type="button" data-spotcmtnum="' + item.spotcmt_num + '"value="삭제" id="delete_btn" class="btn-reply " >';
+						output += '<input type="button" data-spotcmtnum="' + item.spotcmt_num + '"value="수정" id="modify_btn" class="btn-cmt"  >';
+						output += '<input type="button" data-spotcmtnum="' + item.spotcmt_num + '"value="삭제" id="delete_btn" class="btn-cmt"  >';
 					}
 					output += '</div>';
 					output += '</div>';

@@ -1119,7 +1119,7 @@ a:hover {
 .comments-area {
 	background: transparent;
 	border-top: 1px solid #eee;
-	padding: 45px 0;
+	padding: 20px 0;
 	margin-top: 50px;
 }
 
@@ -1140,15 +1140,13 @@ a:hover {
 
 .thumb {
 	margin-right: 20px;
+	display: flex;
+	align-items: center;
 }
 
 .comments-area .thumb img {
 	width: 50px;
 	border-radius: 50%;
-}
-
-.comment-list {
-	padding: 20px 0 48px 0;
 }
 
 .comment-form {
@@ -1175,13 +1173,17 @@ a:hover {
 	font-size: 15px;
 }
 
-.btn-reply {
+.btn-cmt {
 	background-color: transparent;
 	color: #888888;
 	font-size: 14px;
 	display: inline-block;
 	align-content: center;
-	font-weight: 400;
+	border: transparent;
+}
+
+.btn-cmt:hover {
+	color: #FEA82F;
 }
 
 /* 글 작성 */
