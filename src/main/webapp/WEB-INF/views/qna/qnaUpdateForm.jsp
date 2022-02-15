@@ -6,14 +6,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Qna수정</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/theme.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/write_form.js"></script>
-<script src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
-<script src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -32,10 +39,11 @@
 						<p>
 							<input type="radio" name="viewable_check" value="0"
 								id="viewable_check0"
-								<c:if test="${qna.viewable_check ==0}">checked</c:if>><label for="viewable_check0">공개</label>
-							<input type="radio" name="viewable_check" value="1"
-								id="viewable_check1"
-								<c:if test="${qna.viewable_check ==1}">checked</c:if>><label for="viewable_check1">비공개</label>
+								<c:if test="${qna.viewable_check ==0}">checked</c:if>><label
+								for="viewable_check0">공개</label> <input type="radio"
+								name="viewable_check" value="1" id="viewable_check1"
+								<c:if test="${qna.viewable_check ==1}">checked</c:if>><label
+								for="viewable_check1">비공개</label>
 						</p>
 						<div>
 							<div class="FlexableTextArea">
@@ -43,20 +51,20 @@
 									class="textarea_input" placeholder="제목을 입력해 주세요."
 									value="${qna.title }">
 							</div>
-							<label for="content" class="col-lg-2">내용</label>
-							${qna.content }
 							<div class="form-group">
 								<textarea id="summernote" name="content">${qna.content }</textarea>
 							</div>
-							<input type="file" name="filename" accept="image/gif,image/png,image/jpeg">
+							<input type="file" name="filename"
+								accept="image/gif,image/png,image/jpeg">
 						</div>
+						<br>
 						<div>
-						<c:if test="${!empty qna.filename }">
-							<span id="file_detail"> <input type="button" class="btn btn-tertiary btn-login fw-bold" value="파일삭제"
-								id="file_del"> 현재 <b>(${qna.filename })</b> 파일이 등록되었습니다.<br>
-								다시 파일을 업로드하면 기존 파일은 삭제됩니다. 
-							</span>
-							<script type="text/javascript">
+							<c:if test="${!empty qna.filename }">
+								<span id="file_detail"> <input type="button"
+									value="파일 삭제" id="file_del"> 현재 <b>(${qna.filename })</b>
+									파일이 등록되었습니다.<br> 다시 파일을 업로드하면 기존 파일은 삭제됩니다.
+								</span>
+								<script type="text/javascript">
 	$(function(){
 		$('#file_del').click(function(){
 			let choice = confirm('삭제하시겠습니까?');
@@ -90,10 +98,11 @@
 		});
 	});
 </script>
-						</c:if>
+							</c:if>
+						</div>
 					</div>
 					<p>
-					<div style="text-align:center">
+					<div style="text-align: center">
 						<input class="btn btn-primary btn-login fw-bold" type="submit"
 							value="수정" id="update_submit"> <input
 							class="btn btn-secondary btn-login fw-bold" type="button"

@@ -1362,7 +1362,7 @@ a:hover {
 	object-fit: cover;
 }
 /*QnA 게시판 */
-#qna-banner {
+/* #qna-banner {
 	position: relative;
 	margin-top: 16px;
 	margin-bottom: 16px;
@@ -1371,6 +1371,43 @@ a:hover {
 	border-radius: 30px;
 	height: 50px;
 	background-color: #fff
+} */
+.qna_hr{
+	border: 0;
+    height: 1px;
+    background: #ccc;
+}
+
+.qna-text-primary{
+	color:#FEA82F;
+	font-weight:bold;
+}
+
+table.qnaTable {
+  border-collapse: separate;
+  border-spacing: 1px;
+  text-align: left;
+  line-height: 1.5;
+  border-top: 1px solid #ccc;
+  margin : 20px 10px;
+}
+table.qnaTable th {
+  width: 150px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+}
+table.qnaTable td {
+  width: 350px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+}
+table .qna_title{
+	font-weight:bold;
+}
+table .qna_title:hover{
+	color:#FEA82F;
 }
 
 label[for="title"] {

@@ -27,7 +27,7 @@ public class QnaListAction implements Action{
 		
 		//페이지 처리
 		//keyfield,keyword,currentPage,count,rowCount,pageCount,url
-		PagingUtil page =new PagingUtil(keyfield, keyword, Integer.parseInt(pageNum),count,10,10,"list.do");
+		PagingUtil page =new PagingUtil(keyfield, keyword, Integer.parseInt(pageNum),count,10,10,"qnaList.do");
 		List<QnaVO> list =null;
 		if(count>0) {
 			list = dao.getListQna(page.getStartCount(), page.getEndCount(), keyfield, keyword);
@@ -35,6 +35,8 @@ public class QnaListAction implements Action{
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);
 		request.setAttribute("pagingHtml", page.getPagingHtml());
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("pageCount", count/10+1);
 		
 		return "/WEB-INF/views/qna/qnaList.jsp";
 	}
