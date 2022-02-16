@@ -8,7 +8,6 @@
 <title>게시판 목록</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -21,36 +20,42 @@
 		});
 	});
 </script>
+<style>
+  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+    text-align: center;
+  }
+  #search-form {
+  	text-align: right;
+  	}
+</style>
 </head>
 <body>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="container">
-	<h2 class="text-primary">게시판 목록</h2>
+	<h2 class="text-primary" style="margin: 20px 0px 30px 0px;">게시판 목록</h2>
+	<div id="search-form">
 	<form id="search_form" action="boardList.do" method="get">
 		<ul class="search">
-			<li>
-				<select name="keyfield">
+		<li>
+				<select name="keyfield" class="form-control" style="width:100px;height:42px;margin:3px">
 					<option value="1">제목</option>
 					<option value="2">작성자</option>
 					<option value="3">내용</option>
 				</select>
-			</li>
-			<li>
-				<input type="search" size="16" name="keyword" id="keyword"
-				                                   value="${param.keyword}">
-			</li>
-			<li>
-				<input type="submit" value="검색">
+			
+				<input type="text" class="form-control" value="${param.keyword}" name="keyword" id="keyword">
+		<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px;">찾기</button>
 			</li>
 		</ul>
 	</form>
-	<div class="list-space align-right">
-		<input type="button" value="글쓰기" onclick="location.href='boardWriteForm.do'" 
-		<c:if test="${empty user_num}"> onclick="location.href='${pageContext.request.contextPath}/main/loginform.do'"</c:if>>
-		<input type="button" value="목록" onclick="location.href='boardList.do'">
-		<input type="button" value="홈으로" 
-		 onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 	</div>
 	<c:if test="${count == 0}">
 	<div class="result-display">
@@ -76,11 +81,17 @@
 		</tr>	
 		</c:forEach>
 	</table>
-	<div class="align-center">
+	<div class="align-center" style="margin-top: 20px;">
 		${pagingHtml}
 	</div>
 	</c:if>
+	<div class="list-space" align="right">
+		<input class="btn btn-primary" type="button" value="글쓰기" style="margin: 10px 0px 10px 0px;" onclick="location.href='boardWriteForm.do'"
+		<c:if test="${empty user_num}"> onclick="location.href='${pageContext.request.contextPath}/main/loginform.do'"</c:if>>
+		<input class="btn btn-secondary" type="button" value="목록" onclick="location.href='boardList.do';">
+	</div>
 </div>
+
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
