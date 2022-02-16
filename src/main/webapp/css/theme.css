@@ -1471,11 +1471,16 @@ table .qna_answer{
 	font-size: 12px;
 	cursor: initial;
 }
-textarea#cmt_content{
+td#qna_file {
+    background-color: #f7f7f7;
+    text-align: center;
+    vertical-align: middle;
+}
+textarea#cmt_content ,textarea#mcmt_content{
 	width: 100%;
-	height: 100px;
-	padding: 10px 10px;
-	font-size: 15px;
+	height: 110px;
+	padding: 20px;
+	font-size: 17px;
 	border:1px solid #8b8b8b;
 	border-radius: 10px;
 }
@@ -1500,6 +1505,11 @@ form#cmt_form{
     border-radius: 10px;
     margin: 20px 0 10px 0;
 }
+form#cmtForm_qna{
+    padding: 18px 0 26px 0;
+    border-radius: 10px;
+    margin: 20px 0 10px 0;
+}
 .textarea_title {
 	display: block;
 	width: 100%;
@@ -1516,11 +1526,20 @@ form#cmt_form{
 	outline: none;
 	margin: 15px 0;
 }
-
+.letter-count-qna {
+    font-weight: bold;
+}
 ul {
 	list-style: none;
 }
 
 #search li {
 	display: inline-block;
+}
+p.cmtList_content {
+    background-color: #f7f7f7;
+    padding: 30px 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    word-break:break-all;
 }

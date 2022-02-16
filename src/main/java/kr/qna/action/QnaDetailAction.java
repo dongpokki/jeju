@@ -22,9 +22,6 @@ public class QnaDetailAction implements Action{
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer)session.getAttribute("session_user_num");
 		Integer user_auth = (Integer)session.getAttribute("session_user_auth");
-		if(user_num==null) {
-			return "redirect:/user/loginForm.do";
-		}
 		if(qna.getViewable_check()==1) {
 			if(user_num==qna.getUser_num() || user_auth==3) {
 				//조회수증가

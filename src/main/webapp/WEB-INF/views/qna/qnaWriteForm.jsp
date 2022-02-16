@@ -48,8 +48,8 @@
 					</div>
 					<p>
 					<div style="text-align: center">
-						<input class="btn btn-primary" type="submit" value="등록"> <input
-							class="btn btn-secondary" type="button" value="취소"
+						<input class="btn btn-primary qna" type="submit" value="등록"> <input
+							class="btn btn-secondary qna" type="button" value="취소"
 							onclick="location.href='qnaList.do';">
 					</div>
 				</div>

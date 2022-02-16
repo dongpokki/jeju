@@ -10,7 +10,6 @@ import kr.qna.vo.QnaCmtVO;
 import kr.qna.vo.QnaVO;
 import kr.user.vo.UserVO;
 import kr.util.DBUtil;
-import kr.util.DurationFromNow;
 import kr.util.StringUtil;
 
 public class QnaDAO {
@@ -382,8 +381,8 @@ public class QnaDAO {
 		try {
 			conn =DBUtil.getConnection();
 			
-			sql="SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT c.qnacmt_num, TO_CHAR(c.reg_date,'YYYY-MM-DD HH24:MI:SS') reg_date,"
-					+ "TO_CHAR(c.modify_date,'YYYY-MM-DD HH24:MI:SS') modify_date,"
+			sql="SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT c.qnacmt_num, c.reg_date,"
+					+ "c.modify_date,"
 					+ "c.cmt_content,c.qna_num,user_num,u.id,d.name "
 					+ "FROM jcmt_qna c JOIN juser u USING(user_num) "
 					+ "LEFT JOIN juser_detail d USING(user_num) WHERE c.qna_num=? "
@@ -399,9 +398,9 @@ public class QnaDAO {
 			while(rs.next()) {
 				QnaCmtVO cmt = new QnaCmtVO();
 				cmt.setQnacmt_num(rs.getInt("qnacmt_num"));
-				cmt.setReg_date(DurationFromNow.getTimeDiffLabel(rs.getString("reg_date")));
+				cmt.setReg_date(rs.getDate("reg_date"));
 				if(rs.getString("modify_date")!=null) {
-					cmt.setModify_date(DurationFromNow.getTimeDiffLabel(rs.getString("modify_date")));
+					cmt.setModify_date(rs.getDate("modify_date"));
 				}
 				cmt.setCmt_content(StringUtil.useBrHtml(rs.getString("cmt_content")));
 				cmt.setQna_num(rs.getInt("qna_num"));

@@ -34,12 +34,11 @@
 					<h2 class="title">${qna.qna_num }번.QnA상세 페이지</h2>
 				</div>
 				<div class="blog-single-wrap" style="padding-top: 28px">
-					<h4 class="post-title">
+					<h5 class="post-title">
 						<c:if test="${qna.viewable_check==1}">[ 비공개 ]</c:if>
 						${qna.title }
-					</h4>
-					<hr size="1" width="100%"
-						style="border-top: 2px dashed rgba(0, 0, 0, 0.1)">
+					</h5>
+					<hr size="1" width="100%" style="border-top: 2px dashed rgba(0, 0, 0, 0.1)">
 					<div class="post-meta"style="text-align:right">
 						<div class="post-name">
 							작성자 ${qna.id }
@@ -66,15 +65,27 @@
 					</c:if>
 						</div>
 					</div>
-					<c:if test="${!empty qna.filename }">
-						<div>
-							<img alt="파일"
-								src="${pageContext.request.contextPath }/upload/${qna.filename}"
-								width="100px">
-						</div>
-					</c:if>
+					
 					<div class="post-content">${qna.content }</div>
 				</div>
+				<c:if test="${!empty qna.filename }">
+					<div>
+						<table class="qnaTable">
+							<colgroup>
+								<col style="width:20%">
+								<col style="width:80%">
+							</colgroup>
+							<tr>
+								<td id="qna_file">파일</td>
+								<td onclick="location.href='${pageContext.request.contextPath }/upload/${qna.filename}'" style="cursor:pointer;text-align:center">
+									${qna.filename}<br>
+									<a class="btn qna_answer">파일보기</a>
+								</td>
+							</tr>
+							<tr></tr>
+						</table>
+					</div>
+				</c:if>
 				<hr size="1" width="100%">
 				<div style="text-align: right">
 					<c:if test="${session_user_num==qna.user_num}">
@@ -98,7 +109,18 @@
 					</c:if>
 					<input type="button" class="btn btn-secondary qna" value="목록" onclick="location.href='qnaList.do'">
 				</div>
+				<hr size="1" width="100%" style="border-top: 2px solid rgba(0, 0, 0, 0.1)">
 				<!-- 댓글 시작 -->
+				<!-- 댓글 목록 출력 -->
+				<div id="output" class="blog-single-wrap" style="padding: 24px 0 0 0;"></div>
+				<div class="paging-button" style="display: none; text-align: right">
+					<input type="button" value="다음글 보기" class="btn btn-secondary">
+				</div>
+				<div id="loading" style="display: none">
+					<img
+						src="${pageContext.request.contextPath }/images/ajax-loader.gif">
+				</div>
+				<!-- 댓글 목록 출력 끝 -->
 				<c:if test="${session_user_auth!=3}">
 					<form style="">
 						<input type="hidden" name="qna_num" value="${qna.qna_num }"
@@ -107,13 +129,13 @@
 				</c:if>
 				<div>
 				<c:if test="${session_user_auth==3}">
-					<div id="cmt_div" class="blog-single-wrap" style="padding-top:10px">
+					<div class="blog-single-wrap" style="padding-top:10px">
 						
-						<form id="cmt_form">
-							<div class="post-meta" style="padding: 12px;">
+						<form id="cmtForm_qna">
+							<div class="post-meta" style="padding: 12px 0;">
 								<span class="post-cmt" style="float:left"><img alt="답변이미지" src="${pageContext.request.contextPath }/images/cmt-speech.png"> <b>답변</b></span>
 								<div id="cmt_first" style="float:right">
-									<span class="letter-count qna">100/100</span>
+									<span class="letter-count-qna">300 / 300</span>
 								</div>
 							</div>
 							
@@ -127,16 +149,7 @@
 					</div>
 				</c:if>
 				</div>
-				<!-- 댓글 목록 출력 -->
-				<div id="output"></div>
-				<div class="paging-button" style="display: none; text-align: right">
-					<input type="button" value="다음글 보기" class="btn btn-secondary">
-				</div>
-				<div id="loading" style="display: none">
-					<img
-						src="${pageContext.request.contextPath }/images/ajax-loader.gif">
-				</div>
-				<!-- 댓글 목록 출력 끝 -->
+				
 				<!-- 댓글 끝 -->
 			</div>
 		</div>
