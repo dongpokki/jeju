@@ -14,7 +14,6 @@ import kr.util.DurationFromNow;
 import kr.util.StringUtil;
 
 public class SpotDAO {
-	// 싱글턴 패턴
 	private static SpotDAO instance = new SpotDAO();
 
 	public static SpotDAO getInstance() {
@@ -30,13 +29,11 @@ public class SpotDAO {
 		PreparedStatement pstmt = null;
 		String sql = null;
 		try {
-			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
 			sql = "INSERT INTO jboard_spot (spot_num, title, content, filename, category, user_num)"
 					+ "VALUES (jboard_spot_seq.nextval, ?,?,?,?,?)";
 
-			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, Spot.getTitle());
@@ -49,7 +46,6 @@ public class SpotDAO {
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
@@ -62,7 +58,6 @@ public class SpotDAO {
 		String sub_sql = "";
 		int cnt = 0;
 		try {
-			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
 			if (spot.getFilename() != null) {
@@ -72,7 +67,6 @@ public class SpotDAO {
 			sql = "UPDATE jboard_spot SET title=?, content=?, modify_date=SYSDATE" + sub_sql
 					+ ", category=? WHERE spot_num=?";
 
-			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(++cnt, spot.getTitle());
@@ -86,7 +80,6 @@ public class SpotDAO {
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
@@ -97,19 +90,16 @@ public class SpotDAO {
 		PreparedStatement pstmt = null;
 		String sql = null;
 		try {
-			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
 			sql = "DELETE FROM jboard_spot WHERE spot_num=?";
 
-			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, spot_num);
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
@@ -121,21 +111,18 @@ public class SpotDAO {
 		String sql = null;
 
 		try {
-			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-			// SQL문 작성
+
 			sql = "UPDATE jboard_spot SET filename='' WHERE spot_num=?";
-			// PreparedStatement 객체 생성
+
 			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터 바인딩
+
 			pstmt.setInt(1, spot_num);
 
-			// SQL문 실행
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
@@ -151,23 +138,23 @@ public class SpotDAO {
 		int count = 0;
 
 		try {
-			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
+
 			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
 				sub_sql = "WHERE content LIKE ?";
-				if (category != 0) {
+				if (category != 0) {// 검색어도 있고 카테고리도 설정한 경우 ( 조건문 : WHERE content LIKE ? AND category = ? )
 					sub_sql += " AND category=? ";
 				}
 			} else {// 검색어가 없는 경우
-				if (category != 0) {
+				if (category != 0) {// 검색어는 없지만 카테고리는 설정한 경우
 					sub_sql = "WHERE category=? ";
 				}
 			}
 
-			// 전체 또는 검색 레코드 수
 			sql = "SELECT COUNT(*) FROM jboard_spot " + sub_sql;
-			// PreparedStatement 객체 생성
+
 			pstmt = conn.prepareStatement(sql);
+
 			if (keyword != null && !"".equals(keyword)) {// 검색어가 있는 경우
 				pstmt.setString(++cnt, "%" + keyword + "%");
 				if (category != 0) {
@@ -187,7 +174,6 @@ public class SpotDAO {
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		return count;
@@ -207,25 +193,24 @@ public class SpotDAO {
 		int cnt = 0;
 
 		try {
-			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 
-			if (category == 0) { // category 없을 때
-				if (keyword != null) {// keyword 있을 때
+			if (category == 0) {// 따로 카테고리를 설정하지 않은 경우
+				if (keyword != null) {// 검색어가 있는 경우
 					sub_sql2 = "WHERE content LIKE ? ";
 				}
-			} else if (category != 0) {
+			} else if (category != 0) {// 따로 카테고리를 설정한 경우
 				sub_sql = "WHERE category=?";
-				if (keyword != null) {// keyword 있을 때
+				if (keyword != null) {// 카테고리도 설정하고 검색어도 있는 경우 ( 조건문 : WHERE category = ? AND content LIKE ? )
 					sub_sql2 = "AND content LIKE ? ";
 				}
 			}
 			if (sort != null && sort.equals("hit")) {// 조회수 정렬
 				sub_sql3 = "ORDER BY hit DESC";
-			} else if (sort == null || sort.equals("spot_num")) {
+			} else if (sort == null || sort.equals("spot_num")) {// 게시글 번호로 정렬 (내림차순)
 				sub_sql3 = "ORDER BY spot_num DESC";
 			} else {
-				sub_sql3 = "ORDER BY good DESC NULLS LAST, hit DESC";
+				sub_sql3 = "ORDER BY good DESC NULLS LAST, hit DESC"; // 좋아요 정렬, 좋아요가 0일 경우 조회수로 정렬
 			}
 
 			sql = "SELECT * FROM ( SELECT aa.*, rownum rnum FROM "
@@ -235,7 +220,6 @@ public class SpotDAO {
 					+ "USING (spot_num) " + sub_sql + sub_sql2 + sub_sql3 + " ) aa ) WHERE rnum>=? AND rnum <=? ";
 			pstmt = conn.prepareStatement(sql);
 
-			System.out.println(sql);
 			if (category != 0) {
 				pstmt.setInt(++cnt, category);
 			}
@@ -245,9 +229,10 @@ public class SpotDAO {
 
 			pstmt.setInt(++cnt, startRow);
 			pstmt.setInt(++cnt, endRow);
-			// SQL문을 테이블에 반영하고 결과행들을 ResultSet 담음
+
 			rs = pstmt.executeQuery();
 			list = new ArrayList<SpotVO>();
+
 			while (rs.next()) {
 				SpotVO spot = new SpotVO();
 
@@ -258,14 +243,12 @@ public class SpotDAO {
 				spot.setHit(rs.getInt("hit"));
 				spot.setCategory(rs.getInt("category"));
 
-				// 자바빈(VO)을 ArrayList에 저장
 				list.add(spot);
 			}
 
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		return list;
@@ -280,15 +263,14 @@ public class SpotDAO {
 		String sql = null;
 
 		try {
-			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
-			// SQL문 작성
+
 			sql = "SELECT * FROM jboard_spot WHERE spot_num = ?";
-			// PreparedStatement 객체 생성
+
 			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터 바인딩
+
 			pstmt.setInt(1, spot_num);
-			// SQL문 테이블에 반영하고 결과행을 ResultSet에 담음
+
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				spot = new SpotVO();
@@ -303,7 +285,6 @@ public class SpotDAO {
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		return spot;
@@ -316,21 +297,18 @@ public class SpotDAO {
 		String sql = null;
 
 		try {
-			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 
-			// SQL문 작성
 			sql = "UPDATE jboard_spot SET hit=hit+1 WHERE spot_num=?";
-			// PreparedStatement 객체 생성
+
 			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터를 바인딩
+
 			pstmt.setInt(1, spot_num);
-			// SQL문 실행
+
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
@@ -344,12 +322,10 @@ public class SpotDAO {
 		int count = 0;
 
 		try {
-			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 
-			// 전체 또는 검색 레코드 수
 			sql = "SELECT COUNT(*) FROM jgood_spot WHERE user_num = ? AND spot_num = ?";
-			// PreparedStatement 객체 생성
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, user_num);
 			pstmt.setInt(2, spot_num);
@@ -361,7 +337,6 @@ public class SpotDAO {
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 		return count;
@@ -373,11 +348,10 @@ public class SpotDAO {
 		PreparedStatement pstmt = null;
 		String sql = null;
 		try {
-			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
+
 			sql = "INSERT INTO jgood_spot VALUES (?,?,?)";
 
-			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, good.getSpot_num());
 			pstmt.setInt(2, good.getUser_num());
@@ -386,7 +360,6 @@ public class SpotDAO {
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
@@ -397,11 +370,10 @@ public class SpotDAO {
 		PreparedStatement pstmt = null;
 		String sql = null;
 		try {
-			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
+
 			sql = "DELETE FROM jgood_spot WHERE spot_num = ? AND user_num = ? ";
 
-			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, spot_num);
 			pstmt.setInt(2, user_num);
@@ -409,7 +381,6 @@ public class SpotDAO {
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
@@ -423,12 +394,10 @@ public class SpotDAO {
 		int count = 0;
 
 		try {
-			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 
-			// 전체 또는 검색 레코드 수
 			sql = "SELECT COUNT(*) FROM jGood_spot WHERE spot_num = ?";
-			// PreparedStatement 객체 생성
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, spot_num);
 			rs = pstmt.executeQuery();
@@ -439,7 +408,6 @@ public class SpotDAO {
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		return count;
@@ -452,23 +420,21 @@ public class SpotDAO {
 		String sql = null;
 
 		try {
-			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
-			// SQL문 작성
+
 			sql = "INSERT INTO jcmt_spot (spotcmt_num,cmt_content,user_num,spot_num) VALUES (jcmt_spot_seq.nextval,?,?,?)";
-			// PreparedStatement 객체 생성
+
 			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터 바인딩
+
 			pstmt.setString(1, spotCmt.getCmt_content());
 			pstmt.setInt(2, spotCmt.getUser_num());
 			pstmt.setInt(3, spotCmt.getSpot_num());
-			// SQL문 실행
+
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
@@ -482,17 +448,14 @@ public class SpotDAO {
 		int count = 0;
 
 		try {
-			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-			// SQL문 작성
-			sql = "SELECT COUNT(*) FROM jcmt_spot s JOIN juser u USING(user_num) JOIN juser_detail d USING(user_num) WHERE s.spot_num=?";
 
-			// PreparedStatement 객체 생성
+			sql = "SELECT COUNT(*) FROM jcmt_spot WHERE spot_num=?";
+
 			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터 바인딩
+
 			pstmt.setInt(1, spot_num);
 
-			// SQL문을 실행해서 결과행을 ResultSet에 담음
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				count = rs.getInt(1);
@@ -500,7 +463,6 @@ public class SpotDAO {
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 
@@ -516,9 +478,8 @@ public class SpotDAO {
 		String sql = null;
 
 		try {
-			// 커넥션풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-			// SQL문 작성
+
 			sql = "SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT s.spotcmt_num, TO_CHAR(s.reg_date,'YYYY-MM-DD HH24:MI:SS') reg_date,"
 					+ "TO_CHAR(s.modify_date,'YYYY-MM-DD HH24:MI:SS') modify_date,"
 					+ "s.cmt_content,s.spot_num,user_num,u.id,d.name,d.photo "
@@ -526,14 +487,12 @@ public class SpotDAO {
 					+ "JOIN juser_detail d USING(user_num) WHERE s.spot_num=? "
 					+ "ORDER BY s.spotcmt_num ASC)a) WHERE rnum>=? AND rnum<=?";
 
-			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터 바인딩
+
 			pstmt.setInt(1, spot_num);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 
-			// SQL문을 실행해서 결과행들을 ResultSet에 담음
 			rs = pstmt.executeQuery();
 			list = new ArrayList<SpotCmtVO>();
 			while (rs.next()) {
@@ -547,20 +506,19 @@ public class SpotDAO {
 				cmt.setSpot_num(rs.getInt("spot_num"));
 				cmt.setUser_num(rs.getInt("user_num"));
 				cmt.setId(rs.getString("id"));
-				cmt.setUser_photo(rs.getString("photo"));
+				cmt.setUser_photo(rs.getString("photo")); // 댓글 창에 프로필 사진도 같이 뜨게끔
 
 				list.add(cmt);
 			}
-
 		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
-			// 자원정리
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		return list;
-	}// 댓글 상세
+	}
 
+	// 댓글 상세
 	public SpotCmtVO getCmtspot(int spotcmt_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -613,8 +571,9 @@ public class SpotDAO {
 		} finally {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
-	}// 댓글 삭제
-
+	}
+	
+	// 댓글 삭제
 	public void deleteCmtSpot(int spotcmt_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

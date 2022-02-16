@@ -32,7 +32,6 @@ public class SpotWriteCmtAction implements Action {
 			cmt.setCmt_content(request.getParameter("cmt_content"));
 			cmt.setUser_num(user_num);
 			cmt.setSpot_num(Integer.parseInt(request.getParameter("spot_num")));
-			System.out.println(request.getParameter("spot_num"));
 			SpotDAO dao = SpotDAO.getInstance();
 			dao.insertCmtSpot(cmt);
 

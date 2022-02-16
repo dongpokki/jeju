@@ -47,6 +47,7 @@ $(function(){
 });
 </script>
 <script type="text/javascript" charset="utf-8">
+/* 댓글에 띄울 프로필 사진의 상대경로 값을 js로 넘기기 위한 작업 */
 sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 </script>
 <body>
