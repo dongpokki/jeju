@@ -26,9 +26,9 @@
 	src="${pageContext.request.contextPath }/js/qna-cmt.js"></script>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<div class="page-section">
 		<div class="container">
-			<jsp:include page="/WEB-INF/views/common/header.jsp" />
 			<div class="WritingEditor">
 				<div class="WritingHeader">
 					<h2 class="title">${qna.qna_num }번.QnA상세 페이지</h2>
@@ -40,7 +40,7 @@
 					</h4>
 					<hr size="1" width="100%"
 						style="border-top: 2px dashed rgba(0, 0, 0, 0.1)">
-					<div class="post-meta">
+					<div class="post-meta"style="text-align:right">
 						<div class="post-name">
 							작성자 ${qna.id }
 							<%-- <c:if test="${qna.id ne 'admin'}">
@@ -78,12 +78,12 @@
 				<hr size="1" width="100%">
 				<div style="text-align: right">
 					<c:if test="${session_user_num==qna.user_num}">
-						<input type="button" class="btn btn-primary" value="수정"
+						<input type="button" class="btn btn-primary qna" value="수정"
 							onclick="location.href='qnaUpdateForm.do?qna_num=${qna.qna_num}'">
 					</c:if>
 					<c:if
 						test="${session_user_num==qna.user_num || session_user_auth==3 }">
-						<input type="button" class="btn btn-tertiary" value="삭제"
+						<input type="button" class="btn btn-tertiary qna" value="삭제"
 							id="delete_btn_qna">
 						<script type="text/javascript">
 							let delete_btn = document.getElementById('delete_btn_qna');
@@ -96,35 +96,37 @@
 							};
 						</script>
 					</c:if>
-					<input type="button" class="btn btn-secondary" value="목록" onclick="location.href='qnaList.do'">
+					<input type="button" class="btn btn-secondary qna" value="목록" onclick="location.href='qnaList.do'">
 				</div>
 				<!-- 댓글 시작 -->
 				<c:if test="${session_user_auth!=3}">
-					<form id="cmt_form" class="comment-form" style="">
+					<form style="">
 						<input type="hidden" name="qna_num" value="${qna.qna_num }"
 							id="qna_num">
 					</form>
 				</c:if>
+				<div>
 				<c:if test="${session_user_auth==3}">
-					<div id="cmt_div" class="comment-form-wrap">
-						<h5>
-							<span class="cmt-title">답변 작성</span>
-						</h5>
-						<form id="cmt_form" class="comment-form">
-							<input type="hidden" name="qna_num" value="${qna.qna_num }"
-								id="qna_num">
-							<textarea rows="3" cols="50" name="cmt_content" id="cmt_content"
-								class="cmtp-content"></textarea>
-							<div id="cmt_first">
-								<span class="letter-count">100/100</span>
+					<div id="cmt_div" class="blog-single-wrap" style="padding-top:10px">
+						
+						<form id="cmt_form">
+							<div class="post-meta" style="padding: 12px;">
+								<span class="post-cmt" style="float:left"><img alt="답변이미지" src="${pageContext.request.contextPath }/images/cmt-speech.png"> <b>답변</b></span>
+								<div id="cmt_first" style="float:right">
+									<span class="letter-count qna">100/100</span>
+								</div>
 							</div>
-							<div id="cmt_second">
-								<input type="submit" value="답변" class="btn btn-secondary"
-									onclick="location.href='qnaDqnaDetail.do?qna_num='${qna.qna_num}">
+							
+							<input type="hidden" name="qna_num" value="${qna.qna_num }" id="qna_num">
+							<textarea name="cmt_content" id="cmt_content" class="cmtp-content"></textarea>
+							<p>
+							<div id="cmt_second" style="text-align:right;">
+								<input type="submit" value="답변" class="btn btn-secondary qna" onclick="location.href='qnaDqnaDetail.do?qna_num='${qna.qna_num}">
 							</div>
 						</form>
 					</div>
 				</c:if>
+				</div>
 				<!-- 댓글 목록 출력 -->
 				<div id="output"></div>
 				<div class="paging-button" style="display: none; text-align: right">

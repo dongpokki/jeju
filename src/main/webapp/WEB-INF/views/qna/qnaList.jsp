@@ -14,7 +14,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<div class="container mt-5">
 		<div class="page-banner">
-			<div class="row justify-content-center align-items-center h-100" style="border-radius: 30px;background-size: cover;background-image: URL(${pageContext.request.contextPath}/images/qnaimage.jpg);background-position:center;">
+			<div class="row justify-content-center align-items-center h-100" style="border-radius: 30px;cursor:pointer;background-size: cover;background-image: URL(${pageContext.request.contextPath}/images/qnaimage.jpg);background-position:center;" onclick="location.href='qnaList.do'">
 				<div style="position: absolute;">
 					<h1 class="text-center">Q&amp;A</h1>
 				</div>
