@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>추천 장소 상세 페이지</title>
+<title>자유게시판 작성 페이지</title>
 
 <!-- css  -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
@@ -25,7 +25,7 @@
 	<div class="container">
 		<div class="WritingWrap">
 			<div class="WritingHeader">
-				<h2 class="title">추천 장소 작성하기</h2>
+				<h2 class="title">자유게시판 작성하기</h2>
 			</div>
 			<div class="WritingContent">
 				<div class="column_title">
@@ -39,7 +39,7 @@
 				</div>
 				<label for="filename">파일</label> <input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg">
 				<div class="form-group" align="center">
-					<input type="submit" value="등록" class="btn btn-primary"> <input type="button" value="취소" class="btn btn-primary" onclick="location.href='boardList.do'">
+					<input type="submit" value="등록" class="btn btn-primary"> <input type="button" value="취소" class="btn btn-secondary" onclick="location.href='boardList.do'">
 				</div>
 				</form>
 			</div>
