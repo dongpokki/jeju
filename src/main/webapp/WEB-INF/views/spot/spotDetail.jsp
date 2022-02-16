@@ -20,12 +20,12 @@
 $(function(){
 	let user_num = ${user_num };
 	$('#good').click(function() {
-		if (${user_num == 0}) {
+		if (user_num == 0) {
 			alert('좋아요는 로그인 한 사용자만 가능합니다.');
 			$('#login').focus();
 			return;
 		}
-		if (${user_num != 0}) {
+		if (user_num != 0) {
 			$.ajax({
 				url : 'spotGood.do',
 				type: 'post',
@@ -96,9 +96,6 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 							<h2 class="post-title">${spot.title }</h2>
 							<div class="post-meta">
 								<div class="post-date">${spot.reg_date }</div>
-								<div class="post-comment-count ml-2">
-									<a href="#target"><c:if test="${cmt_count == 1 }">${cmt_count } comment</c:if> <c:if test="${cmt_count > 1 }">${cmt_count } comments</c:if></a>
-								</div>
 							</div>
 							<div class="post-content">
 								<c:if test="${!empty spot.filename }">
@@ -113,10 +110,7 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 						</div>
 						<!-- 댓글 시작 -->
 						<div class="comments-area">
-							<a name="target"><h4>
-									<c:if test="${cmt_count == 1 }">${cmt_count } comment</c:if>
-									<c:if test="${cmt_count > 1 }">${cmt_count } comments</c:if>
-								</h4></a>
+							<h4>댓글</h4>
 							<!-- 댓글 목록 출력 시작 -->
 							<div class="comment-list" id="output"></div>
 							<!-- 댓글 목록 출력 끝 -->
