@@ -1005,8 +1005,8 @@ a:hover {
 }
 
 .blog-single-wrap .post-meta .post-date, .blog-single-wrap .post-meta .post-comment-count,
-	.blog-single-wrap .post-meta .post-name, .blog-single-wrap .post-meta .post-lookup, .blog-single-wrap .post-meta .post-cmt
-	{
+	.blog-single-wrap .post-meta .post-name, .blog-single-wrap .post-meta .post-lookup,
+	.blog-single-wrap .post-meta .post-cmt {
 	display: inline-block;
 }
 
@@ -1172,8 +1172,7 @@ a:hover {
 .comments-area .date {
 	font-size: 14px;
 	color: #999999;
-	margin-bottom: 0;
-	margin-left: 20px;
+	margin: 1px 0 0 20px;
 }
 
 .comment {
@@ -1419,74 +1418,86 @@ a:hover {
 	height: 50px;
 	background-color: #fff;
 } */
-.qna_hr{
+.qna_hr {
 	border: 0;
-    height: 1px;
-    background: #ccc;
+	height: 1px;
+	background: #ccc;
 }
 
-.qna-text-primary{
-	color:#FEA82F;
-	font-weight:bold;
+.qna-text-primary {
+	color: #FEA82F;
+	font-weight: bold;
 }
-.search-none{
-	height:150px;
-	clear:both;
+
+.search-none {
+	height: 150px;
+	clear: both;
 	text-align: center;
 }
+
 table.qnaTable {
-  border-collapse: separate;
-  border-spacing: 1px;
-  text-align: left;
-  line-height: 1.5;
-  border-top: 1px solid #ccc;
-  width:100%;
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: left;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	width: 100%;
 }
+
 table.qnaTable th {
-  width: 150px;
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
+	width: 150px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
 }
+
 table.qnaTable td {
-  width: 350px;
-  padding: 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
-  height:50px;
+	width: 350px;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	height: 50px;
 }
-table .qna_title{
-	font-weight:bold;
+
+table .qna_title {
+	font-weight: bold;
 }
-table .qna_title:hover{
-	color:#FEA82F;
+
+table .qna_title:hover {
+	color: #FEA82F;
 }
-table .qna_preanswer{
+
+table .qna_preanswer {
 	border-color: #8b8b8b;
 	color: #000;
 	font-size: 12px;
 }
-table .qna_answer{
+
+table .qna_answer {
 	background-color: #e2e5ec;
 	font-size: 12px;
 	cursor: initial;
 }
-textarea#cmt_content{
+
+textarea#cmt_content {
 	width: 100%;
 	height: 100px;
 	padding: 10px 10px;
 	font-size: 15px;
-	border:1px solid #8b8b8b;
+	border: 1px solid #8b8b8b;
 	border-radius: 10px;
 }
-.paging{
-	padding:15px;
+
+.paging {
+	padding: 15px;
 }
-.btn.qna{
-	width:69px;
-	height:33px;
-	font-size:14px;
+
+.btn.qna {
+	width: 69px;
+	height: 33px;
+	font-size: 14px;
 }
+
 label[for="title"] {
 	float: left;
 }
@@ -1494,12 +1505,14 @@ label[for="title"] {
 label[for="content"] {
 	float: left;
 }
-form#cmt_form{
-    background-color: #f7f7f7;
-    padding: 18px 30px 26px 30px;
-    border-radius: 10px;
-    margin: 20px 0 10px 0;
+
+form#cmt_form {
+	background-color: #f7f7f7;
+	padding: 18px 30px 26px 30px;
+	border-radius: 10px;
+	margin: 20px 0 10px 0;
 }
+
 .textarea_title {
 	display: block;
 	width: 100%;

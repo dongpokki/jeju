@@ -118,7 +118,7 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 							<div class="comment-list" id="output"></div>
 							<!-- 댓글 목록 출력 끝 -->
 							<div <c:if test="${cmt_count > 0 }">class="comment-form"</c:if>>
-								<form class="form-contact comment_form" id="cmt_form">
+								<form class="form-contact comment_form" id="cmt_form2" style="none;">
 									<input type="hidden" name="spot_num" value="${spot.spot_num}" id="spot_num">
 									<div class="row">
 										<div class="col-12">

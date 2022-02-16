@@ -34,9 +34,9 @@ $(function() {
 					output += '<div class="thumb">';
 
 					if (item.user_num && item.user_photo) {
-						output += '<img src="'+ctx+'/upload/' + item.user_photo + '" style="max-width: 100%;">';
+						output += '<img src="' + ctx + '/upload/' + item.user_photo + '" style="max-width: 100%;">';
 					} else {
-						output += '<img src="'+ctx+'/images/face.png" style="max-width: 100%;" >';
+						output += '<img src="' + ctx + '/images/face.png" style="max-width: 100%;" >';
 					}
 					output += '</div>';
 					output += '<div class="desc" >';
@@ -78,7 +78,7 @@ $(function() {
 		selectData(currentPage + 1);
 	})
 	//댓글등록
-	$('#cmt_form').submit(function(event) {
+	$('#cmt_form2').submit(function(event) {
 		if ($('#cmt_content').val().trim() == '') {
 			alert('내용을 입력하세요.');
 			$('#cmt_content').val('').focus();
@@ -148,7 +148,7 @@ $(function() {
 	//댓글 수정 버튼 클릭시 수정폼 노출
 	$(document).on('click', '#modify_btn', function() {
 		let spotcmt_num = $(this).attr('data-spotcmtnum');
-		let content = $(this).parent().find('#comment').html().replace(/<br>/gi, '\n');
+		let content = $(this).parents('#sub-item').find('#comment').html().replace(/<br>/gi, '\n');
 
 		let modifyUI = '<form id="mcmt_form" class="form-contact comment_form">';
 		modifyUI += '	<input type="hidden" name="spotcmt_num" id="spotcmt_num" value="' + spotcmt_num + '">';
