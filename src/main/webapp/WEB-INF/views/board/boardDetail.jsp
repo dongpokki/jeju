@@ -12,37 +12,36 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board-reply.js"></script>
 </head>
+<style>
+</style>
 <body>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="container">
-	<h2 class="text-primary">게시판 글상세</h2>
-	<ul>
-		<li>글번호 : ${board.board_num}</li>
-		<li>글제목 : ${board.title}</li>
-		<li>작성자 : ${board.id}</li>
-		<li>조회수 : ${board.hit}</li>
-	</ul>
+	<h2 class="text-primary" style="margin: 20px 0px 20px 0px; font-weight: bolder;">${board.board_num} | ${board.title}</h2>
+	<p><img src="${pageContext.request.contextPath }/images/people.png" style= "width: 25px; height: 25px;"> ${board.id} | <img src="${pageContext.request.contextPath }/images/eyes.png" style= "width: 25px; height: 25px;"> ${board.hit}</p>
+	<p>
+	<c:if test="${!empty board.modify_date}">
+	<img src="${pageContext.request.contextPath }/images/refresh.png" style= "width: 20px; height: 20px;"> ${board.modify_date}
+	</c:if>
+	<img src="${pageContext.request.contextPath }/images/writing.png" style= "width: 25px; height: 25px;"> ${board.reg_date}</p>
 	<hr size="1" noshade="noshade" width="100%">
 	<c:if test="${!empty board.filename}">
 	<div class="align-center">
 		<img src="${pageContext.request.contextPath}/upload/${board.filename}" class="detail-img">
 	</div>
 	</c:if>
-	<p>
+	<p style="width:300px; height:500px;">
 		${board.content}
 	</p>
 	<hr size="1" noshade="noshade" width="100%">
 	<div class="align-right">
-		<c:if test="${!empty board.modify_date}">
-		최근 수정일 : ${board.modify_date}
-		</c:if>
-		작성일 : ${board.reg_date}
+		
 		<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정,삭제 가능 --%>
 		<c:if test="${session_user_num == board.user_num}">
-		<input type="button" value="수정" 
+		<input class="btn btn-primary" type="button" value="수정" style="margin-bottom :20px"
 		    onclick="location.href='boardUpdateForm.do?board_num=${board.board_num}'">
-		<input type="button" value="삭제" id="delete_btn">
+		<input class="btn btn-secondary" type="button" value="삭제" style="margin-bottom :20px" id="delete_btn">
 		<script type="text/javascript">
 			let delete_btn = document.getElementById('delete_btn');
 			//이벤트 연결
@@ -54,7 +53,7 @@
 			};
 		</script>
 		</c:if>
-		<input type="button" value="목록" onclick="location.href='boardList.do'">
+		<input class="btn btn-secondary" type="button" value="목록" style="margin-bottom :20px"onclick="location.href='boardList.do'">
 	</div>
 	</div>
 </div>

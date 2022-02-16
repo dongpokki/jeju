@@ -40,7 +40,7 @@
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="container">
-	<h2 class="text-primary" style="margin: 20px 0px 30px 0px;">게시판 목록</h2>
+	<h2 class="text-primary" style="margin: 20px 0px 30px 0px; font-weight: bolder;"><img src="${pageContext.request.contextPath }/images/stone.png" style= "width: 50px; height: 50px;"> 자유 게시판 </h2>
 	<div id="search-form">
 	<form id="search_form" action="boardList.do" method="get">
 		<ul class="search">
