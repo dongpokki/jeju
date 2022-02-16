@@ -95,11 +95,8 @@
 					</div>
 					<p>
 					<div style="text-align: center">
-						<input class="btn btn-primary btn-login fw-bold" type="submit"
-							value="수정" id="update_submit"> <input
-							class="btn btn-secondary btn-login fw-bold" type="button"
-							value="취소"
-							onclick="location.href='qnaDetail.do?qna_num=${qna.qna_num}';">
+						<input class="btn btn-primary qna" type="submit"value="수정" id="update_submit"> 
+						<input class="btn btn-secondary qna" type="button" value="취소" onclick="location.href='qnaDetail.do?qna_num=${qna.qna_num}';">
 					</div>
 				</div>
 			</form>

@@ -71,11 +71,9 @@
 						<th>답변여부</th>
 					</tr> --%>
 					<colgroup>
-						<c:if test="${session_user_auth==3}"><col style="width:8%"></c:if>
-						<c:if test="${session_user_auth!=3}"><col style="width:8%"></c:if>
-						<c:if test="${session_user_auth==3}"><col style="width:3%"></c:if>
-						<col style="width:30%">
-						<col style="width:10%">
+						<col style="width:8%">
+						<col style="width:40%">
+						<col style="width:11%">
 						<col style="width:15%">
 						<col style="width:8%">
 						<col style="width:10%">
@@ -83,15 +81,15 @@
 					<c:if test="${count>0 }">
 					<c:forEach var="qna" items="${list }">
 					<tr>
-						<c:if test="${session_user_auth==3}"><td style="text-align:center">
+						<%-- <c:if test="${session_user_auth==3}"><td style="text-align:center">
 							<input type="checkbox" name="delete_check" >
-						</td></c:if>
+						</td></c:if> --%>
 						<td style="text-align:center">${qna.qna_num }</td>
 						<td onclick="location.href='qnaDetail.do?qna_num=${qna.qna_num}'" style="cursor:pointer">
 							<c:choose>
-								<c:when test="${fn:length(qna.title) gt 20}">
+								<c:when test="${fn:length(qna.title) gt 27}">
 								<div class="qna_title">
-								<c:out value="${fn:substring(qna.title, 0, 20)}"/>...
+								<c:out value="${fn:substring(qna.title, 0, 27)}"/>...
 								<c:if test="${qna.viewable_check==1 }">
 								<img src="${pageContext.request.contextPath }/images/lock1.png" width="20px">
 								</c:if>
@@ -144,7 +142,7 @@
 					${pagingHtml }
 				</div>	
 				<div style="text-align: right">
-					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary qna" type="button" value="삭제" onclick="location.href='qnaDelete.do'"></c:if>
+<%-- 					<c:if test="${session_user_auth==3}"><input class="btn btn-tertiary qna" type="button" value="삭제" onclick="location.href='qnaDelete.do'"></c:if> --%>
 					<input <c:if test="${empty session_user_num}">disabled="disabled"</c:if> class="btn btn-primary qna" type="button" value="작성" onclick="location.href='qnaWriteForm.do'" style="backgroun-color:#FEA82F"> 
 					<input class="btn btn-secondary qna" type="button" value="목록" onclick="location.href='qnaList.do'">
 				</div>
