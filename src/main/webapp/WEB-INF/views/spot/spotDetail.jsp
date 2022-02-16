@@ -12,18 +12,18 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 
 <!-- js -->
-<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/spot_cmt.js"></script>
+
 </head>
 <script>
 $(function(){
 	let user_num = ${user_num };
 	let checked = ${checked};
 	$('#good').click(function() {
-		 if (user_num == 0) {
+		 if (user_num == 0) { // 로그인 안 한 상태에서 좋아요 눌렀을 경우
 			alert('좋아요는 로그인 한 사용자만 가능합니다.');
-			$('#login').focus();
 			return;
 		} 
 		if (user_num != 0) {
@@ -33,10 +33,10 @@ $(function(){
 				dataType: 'json',
 				data : {spot_num: ${spot.spot_num}, checked :checked},
 				success:function(param){
-					if (param.result == 'success') {
+					if (param.result == 'success') { // 좋아요
 						$('#good').css('color','#FE9A2E');
 						$('#good_result').text(param.good_result);
-					}else if (param.result == 'cancel') {
+					}else if (param.result == 'cancel') { // 좋아요 취소
 						$('#good').css('color','#000000');
 						$('#good_result').text(param.good_result);
 					}
@@ -118,7 +118,7 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 							<div class="comment-list" id="output"></div>
 							<!-- 댓글 목록 출력 끝 -->
 							<div <c:if test="${cmt_count > 0 }">class="comment-form"</c:if>>
-								<form class="form-contact comment_form" id="cmt_form2" style="none;">
+								<form class="form-contact comment_form" id="cmt_form2" style="">
 									<input type="hidden" name="spot_num" value="${spot.spot_num}" id="spot_num">
 									<div class="row">
 										<div class="col-12">

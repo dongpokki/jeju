@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css">
 
 <!-- js -->
-<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/write_form.js"></script>
 <script src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
@@ -53,7 +53,6 @@
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-
 </body>
 </html>
 

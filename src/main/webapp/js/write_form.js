@@ -44,6 +44,3 @@ $(function() {
 						placeholder : '내용을 입력해주세요.' //placeholder 설정
 					});
 });
-
-
-

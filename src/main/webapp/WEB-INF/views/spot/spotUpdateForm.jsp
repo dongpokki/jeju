@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css">
 
 <!-- js -->
-<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/write_form.js"></script>
 <script src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
@@ -50,33 +50,33 @@
 					<span id="file_detail"> (${spot.filename})파일이 등록되어 있습니다. 다시 파일을 업로드하면 기존 파일은 삭제됩니다. <input type="button" value="파일삭제" id="file_del">
 					</span>
 					<script type="text/javascript">
-	$(function(){
-		$('#file_del').click(function(){
-			let choice = confirm('삭제하시겠습니까?');
-			if(choice){
-				$.ajax({
-					url:'deleteFile.do',
-					type:'post',
-					data:{spot_num:${spot.spot_num}},
-					dataType:'json',
-					cache:false,
-					timeout:30000,
-					success:function(param){
-						 if(param.result == 'success'){
-							alert('파일을 정상적으로 삭제했습니다.');
-							$('#file_detail').hide();
-						}else{
-							alert('파일 삭제 오류 발생');
-						}
-					},
-					error:function(){
-						alert('네트워크 오류 발생!');
-					}
-				});
-			}
-		});
-	});
-</script>
+						$(function(){
+							$('#file_del').click(function(){
+								let choice = confirm('삭제하시겠습니까?');
+								if(choice){
+									$.ajax({
+										url:'deleteFile.do',
+										type:'post',
+										data:{spot_num:${spot.spot_num}},
+										dataType:'json',
+										cache:false,
+										timeout:30000,
+										success:function(param){
+											 if(param.result == 'success'){
+												alert('파일을 정상적으로 삭제했습니다.');
+												$('#file_detail').hide();
+											}else{
+												alert('파일 삭제 오류 발생');
+											}
+										},
+										error:function(){
+											alert('네트워크 오류 발생!');
+										}
+									});
+								}
+							});
+						});
+					</script>
 				</c:if>
 				<div class="form-group" align="center">
 					<input type="submit" value="등록" class="btn btn-primary"> <input type="button" value="취소" class="btn btn-primary" onclick="location.href='spotList.do'">
@@ -86,7 +86,6 @@
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-
 </body>
 </html>
 

@@ -4,12 +4,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>추천 장소 페이지</title>
 
+<!-- css  -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
-<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+
+<!-- js -->
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -79,24 +84,23 @@
 					</form>
 				</nav>
 				<div class="row">
-
 					<!-- 등록된 내용이 없을 경우 -->
 					<c:if test="${count == 0}">
-						<p style="text-align: center">등록된 글이 없습니다.</p>
+						<div class="no_list">
+							<p>등록된 글이 없습니다.</p>
+						</div>
 					</c:if>
 					<!-- 게시글 목록 시작 -->
 					<c:if test="${count > 0}">
 						<c:forEach var="spot" items="${list}">
 							<div class="col-md-6 col-lg-4 py-3">
-
 								<div class="card-blog">
 									<div class="body">
 										<div class="post-title">
 											<a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.title }</a>
 											<p class="post-category">
 												<c:choose>
-													<c:when test="${spot.category ==1}">
-													&lt;동부&gt; 
+													<c:when test="${spot.category ==1}">&lt;동부&gt; 
 													</c:when>
 													<c:when test="${spot.category ==2}">&lt;서부&gt;
 													</c:when>
@@ -112,12 +116,16 @@
 													<div class="image-box">
 														<img class="image-thumbnail" src="${pageContext.request.contextPath }/upload/${spot.filename}">
 													</div>
-												</c:if></a>
+												</c:if>
+											</a>
 										</div>
-										<div class="post-excerpt"><a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.content }</a></div>
+										<div class="post-excerpt">
+											<a href="spotDetail.do?spot_num=${spot.spot_num}">${spot.content }</a>
+										</div>
 										<div class="footer">
 											<div style="color: #898798;">
-												<img src="${pageContext.request.contextPath }/images/eyes.png" style="padding: 0 5px 1px 0;">${spot.hit }</div>
+												<img src="${pageContext.request.contextPath }/images/eyes.png" style="padding: 0 5px 1px 0;">${spot.hit }
+											</div>
 										</div>
 									</div>
 								</div>
@@ -144,11 +152,7 @@
 			</div>
 		</div>
 	</main>
-
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
 
