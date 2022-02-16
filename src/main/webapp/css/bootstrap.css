@@ -8261,7 +8261,7 @@ a.bg-dark:hover, a.bg-dark:focus, button.bg-dark:hover, button.bg-dark:focus
 }
 
 .pt-4, .py-4 {
-	padding-top: 1.5rem !important;
+	padding-top: 1rem !important;
 }
 
 .pr-4, .px-4 {
@@ -8269,7 +8269,7 @@ a.bg-dark:hover, a.bg-dark:focus, button.bg-dark:hover, button.bg-dark:focus
 }
 
 .pb-4, .py-4 {
-	padding-bottom: 1.5rem !important;
+	padding-bottom: 1rem !important;
 }
 
 .pl-4, .px-4 {
@@ -8281,7 +8281,7 @@ a.bg-dark:hover, a.bg-dark:focus, button.bg-dark:hover, button.bg-dark:focus
 }
 
 .pt-5, .py-5 {
-	padding-top: 3rem !important;
+	padding-top: 1rem !important;
 }
 
 .pr-5, .px-5 {
@@ -8289,7 +8289,7 @@ a.bg-dark:hover, a.bg-dark:focus, button.bg-dark:hover, button.bg-dark:focus
 }
 
 .pb-5, .py-5 {
-	padding-bottom: 3rem !important;
+	padding-bottom: 1rem !important;
 }
 
 .pl-5, .px-5 {
