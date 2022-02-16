@@ -31,11 +31,9 @@ public class SpotGoodAction implements Action {
 		if (checked == 1) {
 			dao.cancelGood(spot_num, session_user_num);
 			mapAjax.put("result", "cancel");
-			mapAjax.put("status", "noFav");
 			int good_result = dao.getSpotGoodCount(spot_num);
 			mapAjax.put("good_result", String.valueOf(good_result));
 		} else if (checked == 0) {
-			mapAjax.put("status", "yesFav");
 			mapAjax.put("result", "success");
 			SpotGoodVO good = new SpotGoodVO();
 
