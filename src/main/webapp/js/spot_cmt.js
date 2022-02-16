@@ -154,16 +154,17 @@ $(function() {
 		modifyUI += '	<input type="hidden" name="spotcmt_num" id="spotcmt_num" value="' + spotcmt_num + '">';
 		modifyUI += '		<div class="row">';
 		modifyUI += '			<div class="col-12">';
-		modifyUI += '				<div class="form-group">';
+		modifyUI += '				<div class="form-group" style="margin : 0;">';
 		modifyUI += '	<textarea cols="10" rows="2" name="cmt_content" id="mcmt_content" class="form-control w-100">' + content + '</textarea>';
 		modifyUI += '				</div>';
 		modifyUI += '			</div>';
 		modifyUI += '		</div>';
+		modifyUI += '		<div style="display: flex; justify-content: space-between;">';
 		modifyUI += '	<div id="mcmt_first"><span class="letter-count">100/100</span></div>';
 		modifyUI += '	<div id="mcmt_second" style="text-align: right">';
-		modifyUI += '		<input type="submit" value="수정" class="btn btn-primary">';
-		modifyUI += '		<input type="button" value="취소" class="cmt-reset btn btn-secondary" >';
-		modifyUI += '	</div>';
+		modifyUI += '		<input type="submit" value="수정" class="btn-cmt">';
+		modifyUI += '		<input type="button" value="취소" class="btn-cmt" id="cmt-reset">';
+		modifyUI += '	</div></div>';
 		modifyUI += '</form>';
 
 		initModifyForm();
@@ -179,12 +180,12 @@ $(function() {
 
 	});
 	//수정폼에서 취소 버튼 클릭시 수정폼 초기화 
-	$(document).on('click', '.cmt-reset', function() {
+	$(document).on('click', '#cmt-reset', function() {
 		initModifyForm();
 	})
 	//댓글 수정 폼 초기화
 	function initModifyForm() {
-		$('#sub-item').show();
+		$('div').show();
 		$('#mcmt_form').remove();
 	}
 	//댓글 수정 
