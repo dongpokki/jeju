@@ -23,13 +23,11 @@ public class SpotWriteCmtAction implements Action {
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer) session.getAttribute("session_user_num");
 
-		if (user_num == null) {// 로그인 되지 않은 경우
+		if (user_num == null) {
 			mapAjax.put("result", "logout");
-		} else {// 로그인 된 경우
-				// 전송된 데이터 인코딩 처리
+		} else {
 			request.setCharacterEncoding("utf-8");
 
-			// 전송된 데이터를 자바빈(VO)에 저장
 			SpotCmtVO cmt = new SpotCmtVO();
 			cmt.setCmt_content(request.getParameter("cmt_content"));
 			cmt.setUser_num(user_num);
@@ -41,7 +39,6 @@ public class SpotWriteCmtAction implements Action {
 			mapAjax.put("result", "success");
 		}
 
-		// JSON 데이터 설정
 		ObjectMapper mapper = new ObjectMapper();
 		String ajaxData = mapper.writeValueAsString(mapAjax);
 

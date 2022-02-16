@@ -25,13 +25,12 @@ public class DeleteFileAction implements Action {
 		SpotDAO dao = SpotDAO.getInstance();
 		SpotVO db_spot = dao.getSpotBoard(spot_num);
 
-		dao.deleteFile(spot_num);
 		// 파일 삭제
+		dao.deleteFile(spot_num);
 		FileUtil.removeFile(request, db_spot.getFilename());
 
 		mapAjax.put("result", "success");
 
-		// JSON 데이터 생성
 		ObjectMapper mapper = new ObjectMapper();
 		String ajaxData = mapper.writeValueAsString(mapAjax);
 

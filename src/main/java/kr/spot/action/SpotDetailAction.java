@@ -13,33 +13,34 @@ public class SpotDetailAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// 글번호 반환
 		int spot_num = Integer.parseInt(request.getParameter("spot_num"));
 
 		SpotDAO dao = SpotDAO.getInstance();
 
 		// 조회수 증가
 		dao.updateReadcount(spot_num);
-		int cmt_count = dao.getCmtSpotCount(spot_num);
-
+		
 		SpotVO spot = dao.getSpotBoard(spot_num);
 
 		spot.setTitle(StringUtil.useBrNoHtml(spot.getTitle()));
 		request.setAttribute("spot", spot);
+		
+		// 좋아요 기능을 위한 user_num 호출
 		HttpSession session = request.getSession();
 		Integer session_user_num = (Integer) session.getAttribute("session_user_num");
-		if (session_user_num == null) {// 로그인이 되지 않은 경우
+		if (session_user_num == null) {
 			session_user_num = 0;
 		}
 		
+		// 좋아요 상태 확인
 		int checked = dao.checkGood(session_user_num, spot_num);
+		
+		// 좋아요 갯수 확인
 		int good = dao.getSpotGoodCount(spot_num);
+		
 		request.setAttribute("good", good);
-		request.setAttribute("user_num", session_user_num);
 		request.setAttribute("checked", checked);
-		request.setAttribute("cmt_count", cmt_count);
 
-		// JSP 경로 반환
 		return "/WEB-INF/views/spot/spotDetail.jsp";
 	}
 

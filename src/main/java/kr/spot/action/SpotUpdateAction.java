@@ -33,19 +33,22 @@ public class SpotUpdateAction implements Action {
 		spot.setCategory(Integer.parseInt(multi.getParameter("category")));
 		spot.setFilename(filename);
 
-		// 글수정
+		// 게시글 수정
 		dao.updateSpotBoard(spot);
 
 		// 전송된 파일이 있을 경우 이전 파일 삭제
 		if (filename != null) {
 			FileUtil.removeFile(request, db_spot.getFilename());
 		}
+		
+		// alert 창으로 안내
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter writer = response.getWriter();
 		writer.println("<script>alert('게시글을 성공적으로 수정했습니다.'); location.href='spotDetail.do?spot_num=" + spot_num
 				+ "';</script>");
 		writer.close();
 
+		// 해당 게시글로 리다이렉트
 		return "redirect:/spot/spotDetail.do?spot_num=" + spot_num;
 	}
 

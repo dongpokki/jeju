@@ -473,7 +473,7 @@ public class SpotDAO {
 		}
 	}
 
-	// 댓글 갯수 < 필요한가?
+	// 댓글 갯수
 	public int getCmtSpotCount(int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

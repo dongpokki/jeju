@@ -13,7 +13,6 @@ public class SpotUpdateFormAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 		int spot_num = Integer.parseInt(request.getParameter("spot_num"));
 
 		SpotDAO dao = SpotDAO.getInstance();
@@ -22,7 +21,7 @@ public class SpotUpdateFormAction implements Action {
 
 		spot.setTitle(StringUtil.useBrNoHtml(spot.getTitle()));
 		request.setAttribute("spot", spot);
-		// 로그인 된 경우
+		
 		return "/WEB-INF/views/spot/spotUpdateForm.jsp";
 	}
 

@@ -17,7 +17,6 @@ public class SpotUpdateCmtAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 		request.setCharacterEncoding("utf-8");
 
 		int spotcmt_num = Integer.parseInt(request.getParameter("spotcmt_num"));
