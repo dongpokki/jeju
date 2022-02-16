@@ -19,29 +19,53 @@
 <script>
 $(function(){
 	let user_num = ${user_num };
+	let checked = ${checked};
 	$('#good').click(function() {
-		if (user_num == 0) {
+		 if (user_num == 0) {
 			alert('좋아요는 로그인 한 사용자만 가능합니다.');
 			$('#login').focus();
 			return;
-		}
-		if (user_num != 0) {
+		} 
+		if (user_num != 0 && checked < 1 ) {
 			$.ajax({
 				url : 'spotGood.do',
 				type: 'post',
 				dataType: 'json',
 				data : {spot_num: ${spot.spot_num}},
 				success:function(param){
-					if (param.result == 'checked') {
-						alert('좋아요는 한번만 가능합니다.');
-					}else{
+					if (param.result == 'success') {
+						/* alert('좋아요는 한번만 가능합니다.');
+					}else {*/
 						$('#good').css('color','#FE9A2E');
-						$("#good_result").html(param.good_result); 
 					}
+					displayFav(param);
 				}
 			});
 		}
-	});	});
+		if (checked == 1) {
+				$.ajax({
+					url : 'spotGood.do',
+					type: 'post',
+					dataType: 'json',
+					data : {spot_num: ${spot.spot_num}},
+					success:function(param){
+						if (param.result == 'cancel') {
+							$('#good').css('color','black');
+						}
+						displayFav(param);
+					}
+				});
+			} 
+	});	
+	function displayFav(param){
+		if(param.status == 'noFav'){
+			$('#good').css('color','#000000');
+		}else if(param.status == 'yesFav'){
+			$('#good').css('color','#FE9A2E');
+		}
+		$('#good_result').text(param.good_result);
+	}
+});
 </script>
 <script type="text/javascript" charset="utf-8">
 sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");

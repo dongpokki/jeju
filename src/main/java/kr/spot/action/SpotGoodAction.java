@@ -29,16 +29,21 @@ public class SpotGoodAction implements Action {
 
 		Map<String, String> mapAjax = new HashMap<String, String>();
 		if (checked == 1) {
-			mapAjax.put("result", "checked");
-		} else {
+			dao.cancelGood(spot_num, session_user_num);
+			mapAjax.put("result", "cancel");
+			mapAjax.put("status", "noFav");
+			int good_result = dao.getSpotGoodCount(spot_num);
+			mapAjax.put("good_result", String.valueOf(good_result));
+		} else if (checked == 0) {
+			mapAjax.put("status", "yesFav");
 			mapAjax.put("result", "success");
 			SpotGoodVO good = new SpotGoodVO();
 
 			good.setSpot_num(spot_num);
 			good.setUser_num(session_user_num);
 			dao.jGood(good);
-			String good_result = String.valueOf(dao.getSpotGoodCount(spot_num));
-			mapAjax.put("good_result", good_result);
+			int good_result = dao.getSpotGoodCount(spot_num);
+			mapAjax.put("good_result", String.valueOf(good_result));
 		}
 
 		ObjectMapper mapper = new ObjectMapper();

@@ -225,9 +225,8 @@ public class SpotDAO {
 					+ "(SELECT * FROM (SELECT content, spot_num FROM jboard_spot) JOIN "
 					+ "(SELECT DISTINCT spot_num, title, filename, hit, good, category FROM jboard_spot b LEFT OUTER JOIN "
 					+ "(SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num ) g USING (spot_num) "
-					+ sub_sql + " )a " + "USING (spot_num) " + sub_sql3
-					+ ") aa ) WHERE rnum>=? AND rnum <=? ORDER BY " + sub_sql2 + " DESC NULLS LAST";
-			System.out.println(sql);
+					+ sub_sql + " )a " + "USING (spot_num) " + sub_sql3 + ") aa ) WHERE rnum>=? AND rnum <=? ORDER BY "
+					+ sub_sql2 + " DESC NULLS LAST";
 			pstmt = conn.prepareStatement(sql);
 
 			if (category != 0) {
@@ -378,8 +377,29 @@ public class SpotDAO {
 			pstmt.setInt(3, 1);
 			pstmt.executeUpdate();
 		} catch (Exception e) {
-			// SQL문이 하나라도 실패하면
-			conn.rollback();
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+
+	// 좋아요 취소 기능
+	public void cancelGood(int spot_num, int user_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			sql = "DELETE FROM jgood_spot WHERE spot_num = ? AND user_num = ? ";
+
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spot_num);
+			pstmt.setInt(2, user_num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
 			throw new Exception(e);
 		} finally {
 			// 자원정리
@@ -446,7 +466,7 @@ public class SpotDAO {
 		}
 	}
 
-	// 댓글 갯수
+	// 댓글 갯수 < 필요한가?
 	public int getCmtSpotCount(int spot_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
