@@ -94,17 +94,17 @@
 		<!-- 내가 추천한 코스 끝 -->
 
 		<hr class="featurette-divider">
-
-		<!-- 내가 추천한 코스 시작 -->
-		<h1 class="text-primary" >내가 작성한 코스</h1>
-		<div class="row" id="mywritecourse_output"></div>
-		<div class="mywritecourse_paging-button" style="display: none">
+		
+		<!-- 내가 작성한 게시판 시작 -->
+		<h1 class="text-primary" >내가 작성한 게시글</h1>
+		<div class="row" id="mywriteboard_output"></div>
+		<div class="mywriteboard_paging-button" style="display: none">
 			<input type="button" value="더보기" class="btn btn-outline-dark" style="width:100%;">
 		</div>
-		<div id="mywritecourse_loading" style="display: none">
+		<div id="mywriteboard_loading" style="display: none">
 			<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
 		</div>
-		<!-- 내가 추천한 코스 끝 -->
+		<!-- 내가 작성한 게시판 끝 -->
 
 	<hr class="featurette-divider">
 
