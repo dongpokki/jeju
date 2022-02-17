@@ -23,11 +23,6 @@ public class BoardDetailAction implements Action{
 		
 		BoardVO board = dao.getBoard(board_num);
 		
-		//HTML태그를 허용하지 않음
-		board.setTitle(StringUtil.useNoHtml(board.getTitle()));
-		//HTML태그를 허용하지 않으면서 줄바꿈 처리
-		board.setContent(StringUtil.useBrNoHtml(board.getContent()));
-		
 		request.setAttribute("board", board);
 		
 		return "/WEB-INF/views/board/boardDetail.jsp";

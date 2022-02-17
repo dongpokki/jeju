@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.board.vo.BoardCmtVO;
 import kr.board.vo.BoardVO;
 import kr.util.DBUtil;
+import kr.util.DurationFromNow;
 import kr.util.StringUtil;
 
 public class BoardDAO {
@@ -287,7 +289,7 @@ public class BoardDAO {
 			 conn.setAutoCommit(false);
 			 
 			 //댓글 삭제
-			 sql = "DELETE FROM jboard_reply WHERE board_num=?";
+			 sql = "DELETE FROM jcmt_board WHERE board_num=?";
 			 //PreparedStatement 객체 생성
 			 pstmt = conn.prepareStatement(sql);
 			 //?에 데이터 바인딩
@@ -316,13 +318,186 @@ public class BoardDAO {
 		 }
 	 }
 	 
+	// 댓글 등록
+		public void insertCmtBoard(BoardCmtVO boardCmt) throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+
+			try {
+				conn = DBUtil.getConnection();
+
+				sql = "INSERT INTO jcmt_board (boardcmt_num,cmt_content,user_num,board_num) VALUES (jcmt_board_seq.nextval,?,?,?)";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, boardCmt.getCmt_content());
+				pstmt.setInt(2, boardCmt.getUser_num());
+				pstmt.setInt(3, boardCmt.getBoard_num());
+
+				pstmt.executeUpdate();
+
+			} catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+		}
+
+		// 댓글 갯수
+		public int getCmtBoardCount(int board_num) throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			int count = 0;
+
+			try {
+				conn = DBUtil.getConnection();
+
+				sql = "SELECT COUNT(*) FROM jcmt_board WHERE board_num=?";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setInt(1, board_num);
+
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					count = rs.getInt(1);
+				}
+			} catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+
+			return count;
+		}
+
+		// 댓글 목록
+		public List<BoardCmtVO> getListCmtBoard(int startRow, int endRow, int board_num) throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<BoardCmtVO> list = null;
+			String sql = null;
+
+			try {
+				conn = DBUtil.getConnection();
+
+				sql = "SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT b.boardcmt_num, TO_CHAR(b.reg_date,'YYYY-MM-DD HH24:MI:SS') reg_date,"
+						+ "TO_CHAR(b.modify_date,'YYYY-MM-DD HH24:MI:SS') modify_date,"
+						+ "b.cmt_content,b.board_num,user_num,u.id,d.name,d.photo "
+						+ "FROM jcmt_board b JOIN juser u USING(user_num) "
+						+ "JOIN juser_detail d USING(user_num) WHERE b.board_num=? "
+						+ "ORDER BY b.boardcmt_num ASC)a) WHERE rnum>=? AND rnum<=?";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setInt(1, board_num);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+
+				rs = pstmt.executeQuery();
+				list = new ArrayList<BoardCmtVO>();
+				while (rs.next()) {
+					BoardCmtVO cmt = new BoardCmtVO();
+					cmt.setBoardcmt_num(rs.getInt("boardcmt_num"));
+					cmt.setReg_date(DurationFromNow.getTimeDiffLabel(rs.getString("reg_date")));
+					if (rs.getString("modify_date") != null) {
+						cmt.setModify_date(DurationFromNow.getTimeDiffLabel(rs.getString("modify_date")));
+					}
+					cmt.setCmt_content(StringUtil.useBrHtml(rs.getString("cmt_content")));
+					cmt.setBoard_num(rs.getInt("board_num"));
+					cmt.setUser_num(rs.getInt("user_num"));
+					cmt.setId(rs.getString("id"));
+					cmt.setUser_photo(rs.getString("photo"));
+
+					list.add(cmt);
+				}
+			} catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return list;
+		}
+
+		// 댓글 상세
+		public BoardCmtVO getCmtBoard(int boardcmt_num) throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			BoardCmtVO cmt = null;
+			try {
+				conn = DBUtil.getConnection();
+
+				sql = "SELECT * FROM jcmt_board b JOIN juser_detail u USING(user_num) JOIN juser u USING(user_num) WHERE boardcmt_num=?";
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, boardcmt_num);
+
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					cmt = new BoardCmtVO();
+					cmt.setBoardcmt_num(rs.getInt("boardcmt_num"));
+					cmt.setBoard_num(rs.getInt("board_num"));
+					cmt.setUser_num(rs.getInt("user_num"));
+					cmt.setId(rs.getString("id"));
+				}
+
+			} catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return cmt;
+		}
+
+		// 댓글 수정
+		public void updateCmtBoard(BoardCmtVO cmt) throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			try {
+				conn = DBUtil.getConnection();
+
+				sql = "UPDATE jcmt_board SET cmt_content=?,modify_date=SYSDATE WHERE boardcmt_num=? ";
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, cmt.getCmt_content());
+				pstmt.setInt(2, cmt.getBoardcmt_num());
+
+				pstmt.executeUpdate();
+
+			} catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+		}
+		
+		// 댓글 삭제
+		public void deleteCmtBoard(int boardcmt_num) throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			try {
+				conn = DBUtil.getConnection();
+
+				sql = "DELETE FROM jcmt_board WHERE boardcmt_num=?";
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, boardcmt_num);
+
+				pstmt.executeUpdate();
+
+			} catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+		}
 }
-
-
-
-
-
-
-
-
-
+	
