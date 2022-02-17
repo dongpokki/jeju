@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:choose>
 	<c:when
-		test="${session_user_auth!=3 && qna.viewable_check==1 && session_user_num!=qna.user_num }">
+		test="${session_user_auth!=3 && qna.viewable_check==1 && session_user_num!=qna.user_num}">
 		<script type="text/javascript">
 			alert('비공개 글입니다.');
 			location.href = 'qnaList.do';

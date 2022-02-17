@@ -22,7 +22,7 @@ public class QnaDetailAction implements Action{
 		HttpSession session = request.getSession();
 		Integer user_num = (Integer)session.getAttribute("session_user_num");
 		Integer user_auth = (Integer)session.getAttribute("session_user_auth");
-		if(qna.getViewable_check()==1) {
+		if(qna.getViewable_check()==1 &&user_num!=null) {
 			if(user_num==qna.getUser_num() || user_auth==3) {
 				//조회수증가
 				dao.updateReadCount(qna_num);
