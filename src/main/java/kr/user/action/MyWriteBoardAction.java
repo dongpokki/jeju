@@ -23,7 +23,7 @@ public class MyWriteBoardAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+	 
 		//전송된 데이터 인코딩
 		request.setCharacterEncoding("utf-8");
 

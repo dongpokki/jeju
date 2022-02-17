@@ -9,7 +9,7 @@ import java.util.List;
 import kr.board.vo.BoardVO;
 import kr.util.DBUtil;
 import kr.util.StringUtil;
-
+ 
 public class BoardDAO {
 	//싱글턴 패턴
 	 private static BoardDAO instance = new BoardDAO();

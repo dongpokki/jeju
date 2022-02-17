@@ -10,7 +10,7 @@ $(function(){
 		
 		$('#delete_btn').click(function(){
 			let delete_check = confirm('프로필 사진을 삭제하시겠습니까?');
-			
+			 
 			if(delete_check){
 				
 				$.ajax({

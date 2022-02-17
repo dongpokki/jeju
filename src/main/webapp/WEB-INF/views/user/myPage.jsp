@@ -13,7 +13,7 @@
 <script type="text/javascript">
 </script>
 </head>
-<body>
+<body> 
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	
 	<!-- 중앙 컨텐츠 시작 -->	
