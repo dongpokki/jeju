@@ -14,21 +14,19 @@ create table jboard(
 
 create sequence jboard_seq;
 
-create table jboard_reply(
-  re_num number not null,
-  re_content varchar2(900) not null,
-  re_date date default sysdate not null,
-  re_modifydate date,
-  re_ip varchar2(40) not null,
+create table jcmt_board(
+  boardcmt_num number not null,
   board_num number not null,
+  cmt_content varchar2(300) not null,
+  reg_date date default sysdate not null,
+  modify_date date,
   user_num number not null,
-  constraint jreply_pk primary key (re_num),
-  constraint jreply_fk1 foreign key (board_num) references jboard (board_num),
-  constraint jreply_fk2 foreign key (user_num) references juser (user_num)
+  constraint boardcmt_num_pk primary key (boardcmt_num),
+  constraint board_num_fk foreign key (board_num) references jboard (board_num),
+  constraint jcmt_board_fk foreign key (user_num) references juser (user_num)
 );
 
-create sequence jreply_seq;
-
+create sequence jcmt_board_seq;
 
 
 
