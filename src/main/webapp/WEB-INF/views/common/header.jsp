@@ -22,7 +22,7 @@
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do?category=4">북부</a>
 						</div></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/board/boardList.do" class="nav-link">Board</a></li>
-					<li class="nav-item"><a href="${pageContext.request.contextPath }/qna/qnaList.do" class="nav-link">Contact</a></li>
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/qna/qnaList.do" class="nav-link">Q&amp;A</a></li>
 				</ul>
 
 				<div class="ml-auto">
