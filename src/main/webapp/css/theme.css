@@ -120,6 +120,14 @@ a:hover {
 	font-size: 12px;
 }
 
+.btn-course {
+	border-color: #D7D5E9;
+	color: #645F88;
+	font-size: 14px;
+    margin: 0 5px;
+    padding: 5px 8px;
+}
+
 .btn-link:focus, .btn-link.focus {
 	text-decoration: underline;
 }
@@ -1260,6 +1268,44 @@ a:hover {
 	white-space: nowrap;
 	width: auto;
 	-webkit-tap-highlight-color: transparent;
+}
+
+.course-select {
+	-webkit-tap-highlight-color: transparent;
+	background-color: #fff;
+	margin-bottom: 20px;
+	border: solid 1px #e8e8e8;
+	box-sizing: border-box;
+	clear: both;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 15px;
+	font-weight: normal;
+	color: #808080;
+	height: 42px;
+	line-height: 40px;
+	outline: none;
+	padding-left: 12px;
+	padding-right: 30px;
+	position: relative;
+	text-align: left !important;
+	-webkit-transition: all 0.2s ease-in-out;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	white-space: nowrap;
+	width: auto;
+	-webkit-tap-highlight-color: transparent;
+}
+
+input[type="text"].course_title, .course_content {
+	height: 42px;
+	line-height: 40px;
+	padding-left: 12px;
+	padding-right: 30px;
+	border: 1px solid #ebecef;
+	outline:none;
 }
 
 .nice-select:hover {
