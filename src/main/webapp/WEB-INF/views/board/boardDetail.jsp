@@ -8,9 +8,10 @@
 <title>글상세</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/board-reply.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/board_cmt.js"></script>
 </head>
 <style>
 </style>
@@ -35,7 +36,7 @@
 		${board.content}
 	</p>
 	<hr size="1" noshade="noshade" width="100%">
-	<div class="align-right">
+	<div class="detail-button" style="float:right;">
 		
 		<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정,삭제 가능 --%>
 		<c:if test="${session_user_num == board.user_num}">
@@ -55,7 +56,33 @@
 		</c:if>
 		<input class="btn btn-secondary" type="button" value="목록" style="margin-bottom :20px"onclick="location.href='boardList.do'">
 	</div>
-	</div>
+<!-- 댓글 시작 -->
+						<div class="comments-area">
+							<h4>댓글</h4>
+							<!-- 댓글 목록 출력 시작 -->
+							<div class="comment-list" id="output"></div>
+							<!-- 댓글 목록 출력 끝 -->
+							<div <c:if test="${cmt_count > 0 }">class="comment-form"</c:if>>
+								<form class="form-contact comment_form" id="cmt_form2" style="">
+									<input type="hidden" name="board_num" value="${board.board_num}" id="board_num">
+									<div class="row">
+										<div class="col-12">
+											<textarea class="form-control w-100" name="cmt_content" id="cmt_content" cols="10" rows="2" placeholder="내용을 입력해주세요." <c:if test="${empty session_user_num}">disabled="disabled"</c:if>><c:if test="${empty session_user_num}">로그인해야 작성할 수 있습니다.</c:if></textarea>
+										</div>
+									</div>
+									<c:if test="${!empty session_user_num}">
+										<div id="cmt_first" style="display: flex; justify-content: space-between;">
+											<div class="form-group">
+												<input type="submit" value="덧글 등록" class="btn btn-primary" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+											</div>
+											<span class="letter-count">100/100</span>
+										</div>
+									</c:if>
+								</form>
+							</div>
+						</div>
+						<!-- 댓글 끝 -->
+</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
