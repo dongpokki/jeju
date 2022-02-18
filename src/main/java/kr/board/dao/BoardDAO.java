@@ -614,4 +614,85 @@ public class BoardDAO {
 				}
 				return count;
 			}
+			
+			
+			
+			
+			// ============================================================================================================================================
+			// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 게시글 내역
+			// 내가 작성한 게시글 리스트 카운트 구하기
+			public int getmyBoardCount(int session_user_num) throws Exception{
+				Connection conn =null;
+				PreparedStatement pstmt =null;
+				ResultSet rs =null;
+				String sql=null;
+				int count=0;
+
+				try {
+					//커넥션풀로부터 커넥션을 할당
+					conn = DBUtil.getConnection();
+
+					//sQL문 작성
+					sql="select count(*) from jboard where user_num = ?";
+
+					pstmt = conn.prepareStatement(sql);
+
+					pstmt.setInt(1, session_user_num);
+
+					rs = pstmt.executeQuery();
+
+					if(rs.next()) {
+						count=rs.getInt(1);
+					}
+
+				}catch(Exception e) {
+					throw new Exception(e);
+				}finally {
+					DBUtil.executeClose(rs, pstmt, conn);
+				}
+				return count;
+			}
+
+
+			// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 게시글 내역
+			// 내가 작성한 게시글 리스트 조회
+			public List<BoardVO> getmyBoardList(int session_user_num,int startRow,int endRow) throws Exception{
+				Connection conn =null;
+				PreparedStatement pstmt =null;
+				ResultSet rs=null;
+				List<BoardVO> list =null;
+				String sql =null;
+				try {
+					//커넥션풀로부터 커넥션 할당
+					conn = DBUtil.getConnection();
+
+					//sql문 작성
+					sql="select * from (select a.*,rownum rnum from (select board_num,title,user_num from jboard where user_num = ?)a) where rnum>=? AND rnum<=?";
+
+					pstmt = conn.prepareStatement(sql);
+
+					pstmt.setInt(1, session_user_num);
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+
+					rs = pstmt.executeQuery();
+
+					list = new ArrayList<BoardVO>();
+
+					while(rs.next()) {
+						BoardVO board = new BoardVO();
+						board.setTitle(rs.getString("title"));
+						board.setBoard_num(rs.getInt("board_num"));
+
+						//BoardVO를 ArrayList에 저장
+						list.add(board);
+					}
+				}catch(Exception e) {
+					throw new Exception(e);
+				}finally {
+					DBUtil.executeClose(rs, pstmt, conn);
+				}
+				return list;
+			}
+
 }
