@@ -24,6 +24,7 @@ create table jgood_spot(
     constraint jboard_spot_like_fk2 foreign key(user_num) references juser(user_num)
 );
 
+/*추천 장소 댓글*/
 create table jcmt_spot(
   spotcmt_num number not null,
   spot_num number not null,
@@ -37,12 +38,3 @@ create table jcmt_spot(
 );
 
 create sequence jcmt_spot_seq;
-
-/*추천 장소 코멘트 좋아요*/
-create table jcmtgood_spot(
-    spotcmt_num number(10) not null,
-    user_num number(10) not null,
-    good number(1) not null,
-    constraint jcmt_spot_like_fk foreign key(spotcmt_num) references jcmt_spot(spotcmt_num),
-    constraint jcmt_spot_like_fk2 foreign key(user_num) references juser(user_num)
-);
