@@ -1,4 +1,4 @@
-package kr.spot.action;
+package kr.board.action;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import kr.controller.Action;
 
-public class test implements Action {
+public class BoardCourseAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

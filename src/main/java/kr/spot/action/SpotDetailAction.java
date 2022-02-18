@@ -20,7 +20,7 @@ public class SpotDetailAction implements Action {
 		// 조회수 증가
 		dao.updateReadcount(spot_num);
 		
-		SpotVO spot = dao.getSpotBoard2(spot_num);
+		SpotVO spot = dao.getSpotBoard(spot_num);
 
 		spot.setTitle(StringUtil.useBrNoHtml(spot.getTitle()));
 		request.setAttribute("spot", spot);

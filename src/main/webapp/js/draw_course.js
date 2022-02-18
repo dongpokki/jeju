@@ -315,94 +315,6 @@ function addTitle() {
 	}
 }
 
-/*//canvas 파일 이미지변환후 서버 업로드
-function uploadCanvasData(contextPath) {
-	var canvas = document.getElementById('canvas');
-	var imageBase64 = canvas.toDataURL('image/png');
-
-	$.ajax({
-		type: 'POST',
-		url: 'spotWrite.do',
-		data: formData,
-		processData: false,	// data 파라미터 강제 string 변환 방지
-		contentType: false,	// application/x-www-form-urlencoded; 방지
-		cache: false,
-		success: function(data) {
-			alert("게시글이 등록 되었습니다.");
-		},
-		error: function(request, status, error) {
-			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-		}
-	});
-
-}*/
-
-
-/*
-function sendBase64Img() {
-	var canvas = document.getElementById('canvas');
-	var dataURL = canvas.toDataURL();//이미지 데이터가 base64 문자열로 인코딩된 데이터
-	// base64문자열의 첫 부분에 위치한 'https://t1.daumcdn.net/cfile/tistory/24343B4956E6601629"");
-	$
-		.ajax({
-			type: 'POST',
-			url: 'spotWrite.do',
-			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			data: {
-				imgBase64: dataURL
-			},
-			success: function(data) {
-				alert("게시글이 등록 되었습니다.");
-			}
-		});
-}
-*/
-
-	/*$('#makeImgBtn').click(function() {
-		var canvas = document.getElementById('canvas');
-		var imgUrl = canvas.toDataURL();
-		$.ajax({
-			type: 'POST',
-			url: 'test.do',
-			dataType: 'json',
-			data: { imgUrl: imgUrl },
-			success: function(param) {
-				if (param.result == 'success') {
-					alert('성공');
-					var img = param.img
-					$('#test').val(img);
-				}
-			},
-			error: function() {
-				alert('네트워크 오류 발생!');
-			}
-		});
-
-	});*/
-
-/*function test(){
-			var canvas = document.getElementById('canvas');
-			var imgUrl = canvas.toDataURL();
-			$.ajax({
-				type : 'POST',
-				url : 'test.do',
-				dataType : 'json',
-				data : {
-					imgUrl : imgUrl
-				},
-				success : function(param) {
-					if (param.result == 'success') {
-						alert('성공');
-						var img = param.img
-						$('#test').val(img);
-					}
-				},
-				error : function() {
-					alert('네트워크 오류 발생!');
-				}
-			});
-		}
-*/
 function imgtest() {
 	var canvas = document.getElementById('canvas');
 	var imgUrl = canvas.toDataURL();//이미지 데이터가 base64 문자열로 인코딩된 데이터
@@ -410,16 +322,16 @@ function imgtest() {
 	$
 		.ajax({
 			type: 'POST',
-			url: 'test.do',
+			url: 'boardCourse.do',
 			dataType : 'json',
 			data: {
 				imgUrl: imgUrl
 			},
 			success : function(param) {
 					if (param.result == 'success') {
-						alert('성공');
+						alert('코스를 성공적으로 저장했습니다.');
 						var img = param.img
-						$('#test').val(img);
+						$('#course').val(img);
 					}
 				},
 				error : function() {

@@ -35,6 +35,11 @@
 	<p style="width:300px; height:500px;">
 		${board.content}
 	</p>
+	<c:if test="${!empty board.filename}">
+	<div class="align-center">
+		<img src="${board.course}" class="detail-img"><!-- 소진님 -->
+	</div>
+	</c:if>
 	<hr size="1" noshade="noshade" width="100%">
 	<div class="detail-button" style="float:right;">
 		
