@@ -62,7 +62,7 @@ $(function(){
 	<p style="width:300px; height:500px;">
 		${board.content}
 	</p>
-	<c:if test="${!empty board.filename}">
+	<c:if test="${!empty board.course}">
 	<div class="align-center">
 		<img src="${board.course}" class="detail-img"><!-- 소진님 -->
 	</div>
