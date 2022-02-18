@@ -621,14 +621,13 @@ public class BoardDAO {
 			
 			// ============================================================================================================================================
 			// [정동윤 작성] 마이페이지에 노출할 내가 추천한 spot 구하기
-			public List<BoardVO> MyGoodBoard(int startRow, int endRow, int user_num) throws Exception {
+			public List<BoardVO> MyGoodBoard(int user_num, int startRow, int endRow) throws Exception {
 				Connection conn = null;
 				PreparedStatement pstmt = null;
 				ResultSet rs = null;
 				List<BoardVO> list = null;
 				String sql = null;
-				System.out.println("list 메서드 실행");
-				System.out.println(startRow + "/" + endRow + "/" + user_num);
+	
 				try {
 					// 커넥션풀로부터 커넥션 할당
 					conn = DBUtil.getConnection();
@@ -638,7 +637,7 @@ public class BoardDAO {
 
 					// PreparedStatement 객체 생성
 					pstmt = conn.prepareStatement(sql);
-
+					
 					// ?에 데이터 바인딩
 					pstmt.setInt(1, user_num);
 					pstmt.setInt(2, startRow);
@@ -650,7 +649,6 @@ public class BoardDAO {
 					list = new ArrayList<BoardVO>();
 
 					while(rs.next()) {
-						System.out.println("와일문 실행");
 						BoardVO board = new BoardVO();
 
 						board.setBoard_num(rs.getInt("board_num"));
