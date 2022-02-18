@@ -15,7 +15,7 @@
 </head>
 <script>
 $(function(){
-	let user_num = ${session_user_num };
+	let user_num = ${user_num };
 	let checked = ${checked};
 	$('#good').click(function() {
 		 if (user_num == 0) { // 로그인 안 한 상태에서 좋아요 눌렀을 경우
