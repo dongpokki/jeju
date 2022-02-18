@@ -12,7 +12,6 @@ var toggle = true;
 var x = 180;
 var y = 100;
 
-
 //좌표(x,y)에 반지름 10짜리 원 만들고 좌표 이동 -> 이동한 좌표 반환
 //여행지 텍스트 추가
 function drawNode(x, y) {
@@ -318,52 +317,113 @@ function addTitle() {
 
 /*//canvas 파일 이미지변환후 서버 업로드
 function uploadCanvasData(contextPath) {
-
-	//폼 데이터 생성
-	var form = $('#reviewIU-form')[0];
-	var formData = new FormData(form);
-
-	var canvas = document.getElementById("canvas");
-	if (canvas != null) {
-		var imageBase64 = canvas.toDataURL('image/png');
-
-		//base64 to blob
-		var decodedImg = atob(imageBase64.split(',')[1]);
-		var array = [];
-		for (var i = 0; i < decodedImg.length; i++) {
-			array.push(decodedImg.charCodeAt(i));
-		}
-		var file = new Blob([new Uint8Array(array)], { type: 'image/png' });
-		formData.append("courseImgFile", file, "course.png");
-	}
+	var canvas = document.getElementById('canvas');
+	var imageBase64 = canvas.toDataURL('image/png');
 
 	$.ajax({
 		type: 'POST',
-		url: contextPath + '/review',
+		url: 'spotWrite.do',
 		data: formData,
 		processData: false,	// data 파라미터 강제 string 변환 방지
 		contentType: false,	// application/x-www-form-urlencoded; 방지
 		cache: false,
 		success: function(data) {
 			alert("게시글이 등록 되었습니다.");
-			location.replace(contextPath + '/review');
 		},
 		error: function(request, status, error) {
 			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 		}
 	});
+
 }*/
 
-function uploadCanvasData() {
-	var canvas = document.getElementById("canvas");
+
+/*
+function sendBase64Img() {
+	var canvas = document.getElementById('canvas');
 	var dataURL = canvas.toDataURL();//이미지 데이터가 base64 문자열로 인코딩된 데이터
-	// base64문자열의 첫 부분에 위치한 'https://t1.daumcdn.net/cfile/tistory/24343B4956E6601629"");*/
-	$.ajax({
-		type: "POST",
-		url: "drawCourse.do",
-		contentType: "application/x-www-form-urlencoded; charset=utf-8",
-		data: { "imgBase64": dataURL }
-	}).success(function() {
-		alert('선택영역을 서버의 이미지 파일에 저장했습니다');
-	});
+	// base64문자열의 첫 부분에 위치한 'https://t1.daumcdn.net/cfile/tistory/24343B4956E6601629"");
+	$
+		.ajax({
+			type: 'POST',
+			url: 'spotWrite.do',
+			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+			data: {
+				imgBase64: dataURL
+			},
+			success: function(data) {
+				alert("게시글이 등록 되었습니다.");
+			}
+		});
+}
+*/
+
+	/*$('#makeImgBtn').click(function() {
+		var canvas = document.getElementById('canvas');
+		var imgUrl = canvas.toDataURL();
+		$.ajax({
+			type: 'POST',
+			url: 'test.do',
+			dataType: 'json',
+			data: { imgUrl: imgUrl },
+			success: function(param) {
+				if (param.result == 'success') {
+					alert('성공');
+					var img = param.img
+					$('#test').val(img);
+				}
+			},
+			error: function() {
+				alert('네트워크 오류 발생!');
+			}
+		});
+
+	});*/
+
+/*function test(){
+			var canvas = document.getElementById('canvas');
+			var imgUrl = canvas.toDataURL();
+			$.ajax({
+				type : 'POST',
+				url : 'test.do',
+				dataType : 'json',
+				data : {
+					imgUrl : imgUrl
+				},
+				success : function(param) {
+					if (param.result == 'success') {
+						alert('성공');
+						var img = param.img
+						$('#test').val(img);
+					}
+				},
+				error : function() {
+					alert('네트워크 오류 발생!');
+				}
+			});
+		}
+*/
+function imgtest() {
+	var canvas = document.getElementById('canvas');
+	var imgUrl = canvas.toDataURL();//이미지 데이터가 base64 문자열로 인코딩된 데이터
+	// base64문자열의 첫 부분에 위치한 'https://t1.daumcdn.net/cfile/tistory/24343B4956E6601629"");
+	$
+		.ajax({
+			type: 'POST',
+			url: 'test.do',
+			dataType : 'json',
+			data: {
+				imgUrl: imgUrl
+			},
+			success : function(param) {
+					if (param.result == 'success') {
+						alert('성공');
+						var img = param.img
+						$('#test').val(img);
+					}
+				},
+				error : function() {
+					alert('네트워크 오류 발생!');
+				}
+		});
 }

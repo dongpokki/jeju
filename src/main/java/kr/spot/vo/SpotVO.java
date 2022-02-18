@@ -12,6 +12,7 @@ public class SpotVO {
 	private Date modify_date; // 수정일
 	private String filename; // 파일명
 	private int category;
+	private String course;
 
 	private int user_num; // 회원번호(작성자)
 
@@ -85,6 +86,14 @@ public class SpotVO {
 
 	public void setCategory(int category) {
 		this.category = category;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+
+	public void setCourse(String course) {
+		this.course = course;
 	}
 
 }

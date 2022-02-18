@@ -31,16 +31,16 @@ public class SpotWriteAction implements Action {
 		spot.setCategory(Integer.parseInt(multi.getParameter("category")));
 		spot.setFilename(multi.getFilesystemName("filename"));
 		spot.setUser_num(session_user_num);
-
+		spot.setCourse(multi.getParameter("test"));
 		SpotDAO dao = SpotDAO.getInstance();
-		dao.insertSpot(spot);
-		
+		dao.insertSpot2(spot);
+
 		// alert 창으로 안내
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter writer = response.getWriter();
 		writer.println("<script>alert('게시글을 성공적으로 등록했습니다.'); location.href='spotList.do';</script>");
 		writer.close();
-		
+
 		// 목록 페이지로 리다이렉트
 		return "redirect:/spot/spotList.do";
 	}

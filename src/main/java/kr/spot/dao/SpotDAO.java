@@ -50,6 +50,34 @@ public class SpotDAO {
 		}
 	}
 
+	// 추천 장소 등록
+	public void insertSpot2(SpotVO Spot) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		try {
+			conn = DBUtil.getConnection();
+
+			sql = "INSERT INTO jboard_spot2 (spot_num, title, content, filename, category, course, user_num)"
+					+ "VALUES (jboard_spot_seq2.nextval, ?,?,?,?,?,?)";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, Spot.getTitle());
+			pstmt.setString(2, Spot.getContent());
+			pstmt.setString(3, Spot.getFilename());
+			pstmt.setInt(4, Spot.getCategory());
+			pstmt.setString(5, Spot.getCourse());
+			pstmt.setInt(6, Spot.getUser_num());
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+
 	// 추천 장소 수정
 	public void updateSpotBoard(SpotVO spot) throws Exception {
 		Connection conn = null;
@@ -215,7 +243,7 @@ public class SpotDAO {
 
 			sql = "SELECT * FROM ( SELECT aa.*, rownum rnum FROM "
 					+ "(SELECT * FROM (SELECT content, spot_num FROM jboard_spot) JOIN "
-					+ "(SELECT DISTINCT spot_num, title, filename, hit, good, category FROM jboard_spot b LEFT OUTER JOIN "
+					+ "(SELECT DISTINCT spot_num, title, filename, hit, good, category FROM jboard_spot2 b LEFT OUTER JOIN "
 					+ "(SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num ) g USING (spot_num) )a "
 					+ "USING (spot_num) " + sub_sql + sub_sql2 + sub_sql3 + " ) aa ) WHERE rnum>=? AND rnum <=? ";
 			pstmt = conn.prepareStatement(sql);
@@ -289,6 +317,42 @@ public class SpotDAO {
 		}
 		return spot;
 	}
+	// 추천 장소 글 상세
+		public SpotVO getSpotBoard2(int spot_num) throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			SpotVO spot = null;
+			String sql = null;
+
+			try {
+				conn = DBUtil.getConnection();
+
+				sql = "SELECT * FROM jboard_spot2 WHERE spot_num = ?";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setInt(1, spot_num);
+
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					spot = new SpotVO();
+					spot.setSpot_num(rs.getInt("spot_num"));
+					spot.setTitle(rs.getString("title"));
+					spot.setContent(rs.getString("content"));
+					spot.setReg_date(rs.getDate("reg_date"));
+					spot.setModify_date(rs.getDate("modify_date"));
+					spot.setFilename(rs.getString("filename"));
+					spot.setCategory(rs.getInt("category"));
+					spot.setCourse(rs.getString("course"));
+				}
+			} catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return spot;
+		}
 
 	// 조회수 증가
 	public void updateReadcount(int spot_num) throws Exception {
@@ -572,7 +636,7 @@ public class SpotDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
-	
+
 	// 댓글 삭제
 	public void deleteCmtSpot(int spotcmt_num) throws Exception {
 		Connection conn = null;
