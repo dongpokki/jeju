@@ -19,7 +19,7 @@
 </head>
 <script>
 $(function(){
-	let user_num = ${session_user_num };
+	let user_num = ${user_num };
 	let checked = ${checked};
 	$('#good').click(function() {
 		 if (user_num == 0) { // 로그인 안 한 상태에서 좋아요 눌렀을 경우
@@ -107,7 +107,7 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 								</c:if>
 								<div style="padding: 20px 10px 0 10px;">${spot.content }</div>
 								<c:if test="${!empty spot.course }">
-									<img src="${spot.course }" style="display: block; margin: auto; ">
+									<img src="${spot.course }" style="display: block; margin: auto;">
 								</c:if>
 							</div>
 						</div>
