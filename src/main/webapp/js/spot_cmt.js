@@ -34,16 +34,16 @@ $(function() {
 					output += '<div class="thumb">';
 
 					if (item.user_num && item.user_photo) {
-						output += '<img src="' + ctx + '/upload/' + item.user_photo + '" style="max-width: 100%;">';
+						output += '<img src="' + ctx + '/upload/' + item.user_photo + '" style="max-width: 100%; height: 100%; object-fit: cover;">';
 					} else {
 						output += '<img src="' + ctx + '/images/face.png" style="max-width: 100%; height: 100%; object-fit: cover;" >';
 					}
 					output += '</div>';
 					output += '<div class="desc" >';
-					output += '<p class="comment" id="comment">' + item.cmt_content + '</p>';
+					output += '<h6 >' + item.cmt_content + '</h6>';
 					output += '<div class="d-flex justify-content-between" >';
 					output += '<div class="d-flex align-items-center">';
-					output += '<h6>' + item.id + '</h6>';
+					output += '<p class="comment" id="comment" style="margin: 4px 0 0;">' + item.id + '</hp>';
 					if (item.modify_date) {
 						output += '<p class="date" id="modify_date">' + item.modify_date + '</p>';
 					} else {
