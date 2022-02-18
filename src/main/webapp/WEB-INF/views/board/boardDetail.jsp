@@ -46,20 +46,19 @@ $(function(){
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="container">
-	<h2 class="text-primary" style="margin: 20px 0px 20px 0px; font-weight: bolder;">${board.board_num} | ${board.title}</h2>
+	<h2 class="text-primary" style="margin: 20px 0px 20px 0px; font-weight: bolder;">${board.title}</h2>
 	<p><img src="${pageContext.request.contextPath }/images/people.png" style= "width: 25px; height: 25px;"> ${board.id} | <img src="${pageContext.request.contextPath }/images/eyes.png" style= "width: 25px; height: 25px;"> ${board.hit}</p>
-	<p>
 	<c:if test="${!empty board.modify_date}">
 	<img src="${pageContext.request.contextPath }/images/refresh.png" style= "width: 20px; height: 20px;"> ${board.modify_date}
 	</c:if>
-	<img src="${pageContext.request.contextPath }/images/writing.png" style= "width: 25px; height: 25px;"> ${board.reg_date}</p>
+	<img src="${pageContext.request.contextPath }/images/writing.png" style= "width: 25px; height: 25px;"> ${board.reg_date}
 	<hr size="1" noshade="noshade" width="100%">
 	<c:if test="${!empty board.filename}">
 	<div class="align-center">
 		<img src="${pageContext.request.contextPath}/upload/${board.filename}" class="detail-img">
 	</div>
 	</c:if>
-	<p style="width:300px; height:500px;">
+	<p>
 		${board.content}
 	</p>
 	<c:if test="${!empty board.course}">
@@ -69,9 +68,10 @@ $(function(){
 	</c:if>
 	<hr size="1" noshade="noshade" width="100%">
 	
-	<div class="detail-button" style="float:right;">
+	<div class="detail-button" style="float:left;">
 		<input type="button" value="♡" id="good" <c:if test="${checked==1}">style="color:#FE9A2E;"</c:if>>
-							<div id="good_result" style="display: inline;">${good }</div>
+							<div id="good_result" style="display: inline;">${good }</div></div>
+	<div class="any-button" style="float:right;">
 		<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정,삭제 가능 --%>
 		<c:if test="${session_user_num == board.user_num}">
 		<input class="btn btn-primary" type="button" value="수정" style="margin-bottom :20px"
@@ -90,7 +90,7 @@ $(function(){
 		</c:if>
 		
 		<input class="btn btn-secondary" type="button" value="목록" style="margin-bottom :20px"onclick="location.href='boardList.do'">
-	</div>
+		</div>
 <!-- 댓글 시작 -->
 						<div class="board-cmt" style="background: transparent; padding: 5px 0; margin-top: 20px;">
 						<div class="comments-area">

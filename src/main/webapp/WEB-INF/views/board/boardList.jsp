@@ -58,6 +58,7 @@
 	</p>
 	</div>
 	</div>
+			<hr>
 	<div id="search-form">
 	<div style="float: left;font-size:20px;margin-top: 10px">
 				전체 <span class="text-primary">${count }</span>건</div>
@@ -77,8 +78,8 @@
 	</form>
 	</div>
 	<c:if test="${count == 0}">
-	<div class="result-display" align="center">
-		검색 결과가 없습니다.
+	<div class="result-display" align="center" style="border:1px solid #6b6c67; margin: 40px 0px 40px 0px; padding: 100px 100px 100px 100px;">
+		게시글이 존재하지 않습니다.
 	</div>	
 	</c:if>
 	<c:if test="${count > 0}">
