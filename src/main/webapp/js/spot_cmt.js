@@ -36,7 +36,7 @@ $(function() {
 					if (item.user_num && item.user_photo) {
 						output += '<img src="' + ctx + '/upload/' + item.user_photo + '" style="max-width: 100%;">';
 					} else {
-						output += '<img src="' + ctx + '/images/face.png" style="max-width: 100%;" >';
+						output += '<img src="' + ctx + '/images/face.png" style="max-width: 100%; height: 100%; object-fit: cover;" >';
 					}
 					output += '</div>';
 					output += '<div class="desc" >';
