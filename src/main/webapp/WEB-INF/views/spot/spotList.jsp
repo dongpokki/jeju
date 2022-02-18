@@ -28,19 +28,18 @@
 		} else {
 			var chk = confirm("정말 삭제하시겠습니까?");
 			$.ajax({
-				url : 'spotDelete.do', // 전송 URL
-				type : 'POST', // POST 방식
+				url : 'spotDelete.do',
+				type : 'POST',
 				traditional : true,
 				data : {
 					valueArr : valueArr
-				// 보내고자 하는 data 변수 설정
 				},
 				success : function(jdata) {
 					if (jdata = 1) {
-						alert("삭제 성공");
-						location.replace("spotList.do") //list 로 페이지 새로고침
+						alert("게시글을 성공적으로 삭제했습니다.");
+						location.replace("spotList.do") // 목록 페이지로 리다이렉트
 					} else {
-						alert("삭제 실패");
+						alert("네트워크 오류 발생");
 					}
 				}
 			});
