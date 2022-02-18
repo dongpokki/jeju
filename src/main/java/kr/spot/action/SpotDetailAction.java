@@ -19,27 +19,28 @@ public class SpotDetailAction implements Action {
 
 		// 조회수 증가
 		dao.updateReadcount(spot_num);
-		
+
 		SpotVO spot = dao.getSpotBoard(spot_num);
 
 		spot.setTitle(StringUtil.useBrNoHtml(spot.getTitle()));
 		request.setAttribute("spot", spot);
-		
+
 		// 좋아요 기능을 위한 user_num 호출
 		HttpSession session = request.getSession();
 		Integer session_user_num = (Integer) session.getAttribute("session_user_num");
 		if (session_user_num == null) {
 			session_user_num = 0;
 		}
-		
+
 		// 좋아요 상태 확인
 		int checked = dao.checkGood(session_user_num, spot_num);
-		
+
 		// 좋아요 갯수 확인
 		int good = dao.getSpotGoodCount(spot_num);
-		
+
 		request.setAttribute("good", good);
 		request.setAttribute("checked", checked);
+		request.setAttribute("user_num", session_user_num);
 
 		return "/WEB-INF/views/spot/spotDetail.jsp";
 	}

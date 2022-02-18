@@ -21,4 +21,4 @@ public class BoardGoodVO {
 	public void setBoard_good(int board_good) {
 		this.board_good = board_good;
 	}
-}
+} 
