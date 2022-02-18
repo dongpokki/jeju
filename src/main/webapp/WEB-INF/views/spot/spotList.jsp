@@ -27,22 +27,26 @@
 			alert("선택된 글이 없습니다.");
 		} else {
 			var chk = confirm("정말 삭제하시겠습니까?");
-			$.ajax({
-				url : 'spotDelete.do',
-				type : 'POST',
-				traditional : true,
-				data : {
-					valueArr : valueArr
-				},
-				success : function(jdata) {
-					if (jdata = 1) {
-						alert("게시글을 성공적으로 삭제했습니다.");
-						location.replace("spotList.do") // 목록 페이지로 리다이렉트
-					} else {
-						alert("네트워크 오류 발생");
+			if (chk == true) {// 확인
+				$.ajax({
+					url : 'spotDelete.do',
+					type : 'POST',
+					traditional : true,
+					data : {
+						valueArr : valueArr
+					},
+					success : function(jdata) {
+						if (jdata = 1) {
+							alert("게시글을 성공적으로 삭제했습니다.");
+							location.replace("spotList.do") // 목록 페이지로 리다이렉트
+						} else {
+							alert("네트워크 오류 발생");
+						}
 					}
-				}
-			});
+				});
+			} else {// 취소
+				return false;
+			}
 		}
 	}﻿
 </script>
