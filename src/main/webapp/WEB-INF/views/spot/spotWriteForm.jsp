@@ -46,7 +46,7 @@
 				</div>
 				<label for="filename">파일</label> <input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg">
 				<div class="form-group" align="center">
-					<input type="submit" value="등록" class="btn btn-primary"> <input type="button" value="취소" class="btn btn-primary" onclick="location.href='spotList.do'">
+					<input type="submit" value="등록" class="btn btn-primary"> <input type="button" value="취소" class="btn btn-secondary" onclick="location.href='spotList.do'">
 				</div>
 				</form>
 			</div>
