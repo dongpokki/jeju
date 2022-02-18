@@ -187,62 +187,62 @@ $(function(){
 
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-		//내가 좋아하는 코스 목록
-		let mygoodcourse_currentPage;
-		let mygoodcourse_count;
-		let mygoodcourse_rowCount;
+		//내가 좋아하는 게시글 목록
+		let mygoodboard_currentPage;
+		let mygoodboard_count;
+		let mygoodboard_rowCount;
 
-		function mygoodcourse_selectData(mygoodcourse_pageNum){
-			mygoodcourse_currentPage = mygoodcourse_pageNum;
+		function mygoodboard_selectData(mygoodboard_pageNum){
+			mygoodboard_currentPage = mygoodboard_pageNum;
 
 			//로딩 이미지 노출
-			$('#mygoodcourse_loading').show();
+			$('#mygoodboard_loading').show();
 			
 				$.ajax({
 				type:'post',
-				data:{mygoodcourse_pageNum:mygoodcourse_pageNum},
-				url:'mygoodcourse.do',
+				data:{mygoodboard_pageNum:mygoodboard_pageNum},
+				url:'mygoodboard.do',
 				dataType:'json',
 				cache:false,
 				timeout:30000,
 				success:function(param){
 					//로딩 이미지 감추기
-					$('#mygoodcourse_loading').hide();
+					$('#mygoodboard_loading').hide();
 
-					mygoodcourse_count = param.mygoodcourse_count;
-					mygoodcourse_rowCount = param.mygoodcourse_rowCount;
+					mygoodboard_count = param.mygoodboard_count;
+					mygoodboard_rowCount = param.mygoodboard_rowCount;
 					
-					if(mygoodcourse_pageNum == 1){
+					if(mygoodboard_pageNum == 1){
 						// 처음 호출시는 해당 영역의 div의 내부 내용물을 제거
-						$('#mygoodcourse_output').empty();
+						$('#mygoodboard_output').empty();
 					}
 
-					if($(param.mygoodcourse_list).length == 0){ // 내가 작성한 문의사항이 없다면
-						let output = '<div class="alert alert-warning" style="width:100%;">등록된 문의사항이 없습니다.</div>';
+					if($(param.mygoodboard_list).length == 0){ // 내가 추천한 게시글이 없다면
+						let output = '<div class="alert alert-warning" style="width:100%;">내가 추천한 게시글이 없습니다.</div>';
 						
 						//문서 객체에 추가
-						$('#mygoodcourse_output').append(output);
+						$('#mygoodboard_output').append(output);
 					}					
 					
 					
-					$(param.mygoodcourse_list).each(function(index,mygoodcourse){
+					$(param.mygoodboard_list).each(function(index,mygoodboard){
 					
 							let output = '<div class="col-sm-12 col-lg-12">';
-							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/course/courseDetail.do?course_num=' + mygoodcourse.course_num + '">' + mygoodcourse.title + '</a></h5>';
+							output += '<h5 class="my-best-title alert alert-warning"><a href="/jeju/board/boardDetail.do?board_num=' + mygoodboard.board_num + '">' + mygoodboard.title + '</a></h5>';
 							output += '</div>';
 						
 						//문서 객체에 추가
-						$('#mygoodcourse_output').append(output);	
+						$('#mygoodboard_output').append(output);	
 					});
 					
 					
 					//page button 처리
-					if(mygoodcourse_currentPage>=Math.ceil(mygoodcourse_count/mygoodcourse_rowCount)){
+					if(mygoodboard_currentPage>=Math.ceil(mygoodboard_count/mygoodboard_rowCount)){
 						//다음 페이지가 없음
-						$('.mygoodcourse_paging-button').hide();		
+						$('.mygoodboard_paging-button').hide();		
 					}else{
 						//다음 페이지가 존재
-						$('.mygoodcourse_paging-button').show();
+						$('.mygoodboard_paging-button').show();
 					}
 				},
 				
@@ -252,8 +252,8 @@ $(function(){
 			});	
 		}
 		
-		$('.mygoodcourse_paging-button input').click(function(){
-			mygoodcourse_selectData(mygoodcourse_currentPage + 1);		
+		$('.mygoodboard_paging-button input').click(function(){
+			mygoodboard_selectData(mygoodboard_currentPage + 1);		
 		});
 		
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -367,13 +367,14 @@ $(function(){
 						$('#myqna_output').append(output);
 					}					
 					
-					// 답변여부 확인을 위한 변수
-					let answer_check = '<b style="color:red;">(미답변) </b>';
-					
 					$(param.myqna_list).each(function(index,myqna){
 					
+							let answer_check;							
+						
 							if(myqna.cmt_count == "1"){
 								answer_check = '<b style="color:blue;">(답변완료) </b>';
+							}else if(myqna.cmt_count == "0"){
+								answer_check = '<b style="color:red;">(미답변) </b>';								
 							}
 							
 							let output = '<div class="col-sm-12 col-lg-12">';
@@ -409,7 +410,7 @@ $(function(){
 
 		// 마이페이지 최초 진입 시 내가 좋아하는 장소 / 내가 좋아하는 게시글 / 내가 작성한 게시글 / 내가 작성한 문의사항 목록 호출
 		spot_selectData(1);
-		mygoodcourse_selectData(1);
+		mygoodboard_selectData(1);
 		mywriteboard_selectData(1);
 		myqna_selectData(1);
 		

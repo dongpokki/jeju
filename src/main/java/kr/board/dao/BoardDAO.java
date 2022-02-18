@@ -9,6 +9,7 @@ import java.util.List;
 import kr.board.vo.BoardCmtVO;
 import kr.board.vo.BoardGoodVO;
 import kr.board.vo.BoardVO;
+import kr.spot.vo.SpotVO;
 import kr.util.DBUtil;
 import kr.util.DurationFromNow;
 import kr.util.StringUtil;
@@ -619,6 +620,93 @@ public class BoardDAO {
 			
 			
 			// ============================================================================================================================================
+			// [정동윤 작성] 마이페이지에 노출할 내가 추천한 spot 구하기
+			public List<BoardVO> MyGoodBoard(int startRow, int endRow, int user_num) throws Exception {
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				List<BoardVO> list = null;
+				String sql = null;
+				System.out.println("list 메서드 실행");
+				System.out.println(startRow + "/" + endRow + "/" + user_num);
+				try {
+					// 커넥션풀로부터 커넥션 할당
+					conn = DBUtil.getConnection();
+
+					// sql문 작성
+					sql = "select * from (select a.*, rownum rnum from (select b.board_num,b.title,g.good from jboard b join jgood_board g on b.board_num = g.board_num where g.user_num=? and good=1 order by b.board_num)a) where rnum>=? and rnum<=?";
+
+					// PreparedStatement 객체 생성
+					pstmt = conn.prepareStatement(sql);
+
+					// ?에 데이터 바인딩
+					pstmt.setInt(1, user_num);
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+
+					// sql문 수행하여 결과 집합을 rs에 담음
+					rs = pstmt.executeQuery();
+
+					list = new ArrayList<BoardVO>();
+
+					while(rs.next()) {
+						System.out.println("와일문 실행");
+						BoardVO board = new BoardVO();
+
+						board.setBoard_num(rs.getInt("board_num"));
+						board.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+						
+						// 자바빈(VO)을 ArrayList에 저장
+						list.add(board);
+					}
+
+				} catch (Exception e) {
+					throw new Exception(e);
+				} finally {
+					// 자원정리
+					DBUtil.executeClose(rs, pstmt, conn);
+				}
+				return list;
+			}
+
+			// [정동윤 작성] 마이페이지에 노출할 내가 추천한 board count구하기
+			public int MyGoodBoardCount(int session_user_num) throws Exception {
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				String sql = null;
+				int count = 0;
+
+				try {
+					// 커넥션풀로부터 커넥션풀 할당
+					conn = DBUtil.getConnection();
+
+					sql = "select count(*) from jgood_board where user_num=? and good=1";
+
+					// PreparedStatement 객체 생성
+					pstmt = conn.prepareStatement(sql);
+
+					// ?에 데이터 바인딩
+					pstmt.setInt(1, session_user_num);
+
+					// SQL문 수행하여 결과 집합을 rs에 담음
+					rs = pstmt.executeQuery();
+
+					if (rs.next()) {
+						count = rs.getInt(1);
+					}
+				} catch (Exception e) {
+					throw new Exception(e);
+				} finally {
+					DBUtil.executeClose(rs, pstmt, conn);
+				}
+
+				return count;
+			}
+			
+			
+			
+			
 			// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 게시글 내역
 			// 내가 작성한 게시글 리스트 카운트 구하기
 			public int getmyBoardCount(int session_user_num) throws Exception{
