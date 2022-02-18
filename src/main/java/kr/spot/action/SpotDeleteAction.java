@@ -21,14 +21,23 @@ public class SpotDeleteAction implements Action {
 		if (session_user_num == null) {
 			return "redirect:/user/loginForm.do";
 		}
-		int spot_num = Integer.parseInt(request.getParameter("spot_num"));
-		SpotDAO dao = SpotDAO.getInstance();
-		SpotVO db_spot = dao.getSpotBoard(spot_num);
 
-		// 게시글 삭제
-		dao.deleteSpotBoard(spot_num);
-		// 파일 삭제
-		FileUtil.removeFile(request, db_spot.getFilename());
+		SpotDAO dao = SpotDAO.getInstance();
+
+		String[] ajaxMsg = request.getParameterValues("valueArr");
+		if (ajaxMsg != null) { // 여러개 선택 삭제할 경우
+			int size = ajaxMsg.length;
+			for (int i = 0; i < size; i++) {
+				SpotVO db_spot = dao.getSpotBoard(Integer.parseInt(ajaxMsg[i]));
+				dao.deleteSpotBoard(Integer.parseInt(ajaxMsg[i]));
+				FileUtil.removeFile(request, db_spot.getFilename());
+			}
+		} else { // 상세 페이지에서 삭제할 경우
+			int spot_num = Integer.parseInt(request.getParameter("spot_num"));
+			SpotVO db_spot = dao.getSpotBoard(spot_num);
+			dao.deleteSpotBoard(spot_num);
+			db_spot.getFilename();
+		}
 
 		// alert 창으로 안내
 		response.setContentType("text/html; charset=UTF-8");

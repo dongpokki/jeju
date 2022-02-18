@@ -14,7 +14,39 @@
 <!-- js -->
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-
+<script type="text/javascript">
+	function deleteValue() {
+		var valueArr = new Array();
+		var list = $("input[name='RowCheck']");
+		for (var i = 0; i < list.length; i++) {
+			if (list[i].checked) { //선택되어 있으면 배열에 값을 저장함
+				valueArr.push(list[i].value);
+			}
+		}
+		if (valueArr.length == 0) {
+			alert("선택된 글이 없습니다.");
+		} else {
+			var chk = confirm("정말 삭제하시겠습니까?");
+			$.ajax({
+				url : 'spotDelete.do', // 전송 URL
+				type : 'POST', // POST 방식
+				traditional : true,
+				data : {
+					valueArr : valueArr
+				// 보내고자 하는 data 변수 설정
+				},
+				success : function(jdata) {
+					if (jdata = 1) {
+						alert("삭제 성공");
+						location.replace("spotList.do") //list 로 페이지 새로고침
+					} else {
+						alert("삭제 실패");
+					}
+				}
+			});
+		}
+	}﻿
+</script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -94,6 +126,7 @@
 					<c:if test="${count > 0}">
 						<c:forEach var="spot" items="${list}">
 							<div class="col-md-6 col-lg-4 py-3">
+								<input ﻿ name="RowCheck" type="checkbox" value="${spot.spot_num}" />
 								<div class="card-blog">
 									<div class="body">
 										<div class="post-title">
@@ -146,7 +179,7 @@
 				<!-- 관리자만 등록/삭제 버튼 보이게 -->
 				<c:if test="${session_user_auth == 3}">
 					<div class="col-12 mt-5" align="right">
-						<input class="btn btn-primary" type="button" value="등록" onclick="location.href='spotWriteForm.do'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;"> <input class="btn btn-secondary" type="button" value="삭제" onclick="location.href='spotDeleteForm.do';" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
+						<input class="btn btn-primary" type="button" value="등록" onclick="location.href='spotWriteForm.do'" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;"> <input class="btn btn-secondary" type="button" value="삭제" onclick="deleteValue();" style="padding: 0.370rem 0.55rem; font-size: 0.9rem;">
 					</div>
 				</c:if>
 			</div>
