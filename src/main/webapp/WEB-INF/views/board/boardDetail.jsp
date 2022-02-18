@@ -35,6 +35,11 @@
 	<p style="width:300px; height:500px;">
 		${board.content}
 	</p>
+	<c:if test="${!empty board.filename}">
+	<div class="align-center">
+		<img src="${board.course}" class="detail-img"><!-- 소진님 -->
+	</div>
+	</c:if>
 	<hr size="1" noshade="noshade" width="100%">
 	<div class="detail-button" style="float:right;">
 		
@@ -57,6 +62,7 @@
 		<input class="btn btn-secondary" type="button" value="목록" style="margin-bottom :20px"onclick="location.href='boardList.do'">
 	</div>
 <!-- 댓글 시작 -->
+						<div class="board-cmt" style="background: transparent; padding: 5px 0; margin-top: 20px;">
 						<div class="comments-area">
 							<h4>댓글</h4>
 							<!-- 댓글 목록 출력 시작 -->
@@ -80,6 +86,7 @@
 									</c:if>
 								</form>
 							</div>
+						</div>
 						</div>
 						<!-- 댓글 끝 -->
 </div>

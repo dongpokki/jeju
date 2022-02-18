@@ -106,6 +106,9 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 									<img src="${pageContext.request.contextPath }/upload/${spot.filename}" style="display: block; margin: auto; max-width: 690px">
 								</c:if>
 								<div style="padding: 20px 10px 0 10px;">${spot.content }</div>
+								<c:if test="${!empty spot.course }">
+									<img src="${spot.course }" style="display: block; margin: auto; ">
+								</c:if>
 							</div>
 						</div>
 						<div align="right" style="padding: 0 20px 0 0;">

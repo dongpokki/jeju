@@ -29,6 +29,7 @@ public class BoardWriteAction implements Action{
 		board.setContent(multi.getParameter("content"));
 		board.setIp(request.getRemoteAddr());
 		board.setFilename(multi.getFilesystemName("filename"));
+		board.setCourse(multi.getParameter("course"));//소진님
 		board.setUser_num(user_num);
 		
 		BoardDAO dao = BoardDAO.getInstance();
