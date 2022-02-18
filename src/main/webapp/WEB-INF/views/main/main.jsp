@@ -32,32 +32,11 @@
 					<div class="col-sm-6 col-lg-4">
 						<h3 class="best-title">${spot.title}</h3>
 						<a href="${pageContext.request.contextPath}/spot/spotDetail.do?spot_num=${spot.spot_num}"><img src="${pageContext.request.contextPath}/upload/${spot.filename}" class="img-thumbnail" style="width:300px; height: 300px; object-fit: scale-down;"></a>
-						<p class="best-content">${spot.content}</p>
+						<div class="main-content">${spot.content}</div>
 					</div>
 				</c:forEach>
 			</c:if>
 		</div>
-		<!-- 베스트 스팟 끝 -->	
-		<hr class="featurette-divider">
-		
-		<!--	
-		<h1 class="text-primary">BEST COURSE</h1>
-		<div class="row">
-			<c:if test="${empty course_list}">
-				<div class="alert alert-warning" style="width:100%;">등록된 추천 코스가 없습니다.</div>
-			</c:if>
-			<c:if test="${!empty course_list}">
-				<c:forEach var="course" items="${course_list}">
-					<div class="col-sm-6 col-lg-4">
-						<h3 class="best-title">${course.title}</h3>
-						<img src="${pageContext.request.contextPath}/upload/${course.filename}" class="img-thumbnail" style="width:300px; height: 300px; object-fit: scale-down;">
-						<p class="best-content">${course.content}</p>
-					</div>
-				</c:forEach>
-			</c:if>
-		</div>
-		-->
-	<!-- 중앙 컨텐츠 끝 -->
 	
 	<p><p>
 	
