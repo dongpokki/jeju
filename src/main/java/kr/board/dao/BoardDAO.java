@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.board.vo.BoardCmtVO;
+import kr.board.vo.BoardGoodVO;
 import kr.board.vo.BoardVO;
 import kr.util.DBUtil;
 import kr.util.DurationFromNow;
@@ -514,4 +515,103 @@ public class BoardDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	// 좋아요 여부 확인
+			public int checkGood(int user_num, int board_num) throws Exception {
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				String sql = null;
+				ResultSet rs = null;
+				int count = 0;
+
+				try {
+					conn = DBUtil.getConnection();
+
+					sql = "SELECT COUNT(*) FROM jgood_board WHERE user_num = ? AND board_num = ?";
+
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, user_num);
+					pstmt.setInt(2, board_num);
+					rs = pstmt.executeQuery();
+					if (rs.next()) {
+						count = rs.getInt(1);
+					}
+
+				} catch (Exception e) {
+					throw new Exception(e);
+				} finally {
+					DBUtil.executeClose(null, pstmt, conn);
+				}
+				return count;
+			}
+
+			// 좋아요 기능
+			public void jGood(BoardGoodVO good) throws Exception {
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				String sql = null;
+				try {
+					conn = DBUtil.getConnection();
+
+					sql = "INSERT INTO jgood_board VALUES (?,?,?)";
+
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, good.getBoard_num());
+					pstmt.setInt(2, good.getUser_num());
+					pstmt.setInt(3, 1);
+					pstmt.executeUpdate();
+				} catch (Exception e) {
+					throw new Exception(e);
+				} finally {
+					DBUtil.executeClose(null, pstmt, conn);
+				}
+			}
+
+			// 좋아요 취소 기능
+			public void cancelGood(int board_num, int user_num) throws Exception {
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				String sql = null;
+				try {
+					conn = DBUtil.getConnection();
+
+					sql = "DELETE FROM jgood_board WHERE board_num = ? AND user_num = ? ";
+
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, board_num);
+					pstmt.setInt(2, user_num);
+					pstmt.executeUpdate();
+				} catch (Exception e) {
+					throw new Exception(e);
+				} finally {
+					DBUtil.executeClose(null, pstmt, conn);
+				}
+			}
+
+			// 좋아요 개수
+			public int getBoardGoodCount(int board_num) throws Exception {
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				String sql = null;
+				int count = 0;
+
+				try {
+					conn = DBUtil.getConnection();
+
+					sql = "SELECT COUNT(*) FROM jGood_board WHERE board_num = ?";
+
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, board_num);
+					rs = pstmt.executeQuery();
+					if (rs.next()) {
+						count = rs.getInt(1);
+					}
+
+				} catch (Exception e) {
+					throw new Exception(e);
+				} finally {
+					DBUtil.executeClose(rs, pstmt, conn);
+				}
+				return count;
+			}
 }

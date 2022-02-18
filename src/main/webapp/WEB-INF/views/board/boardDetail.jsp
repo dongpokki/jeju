@@ -13,8 +13,35 @@
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board_cmt.js"></script>
 </head>
-<style>
-</style>
+<script>
+$(function(){
+	let user_num = ${session_user_num };
+	let checked = ${checked};
+	$('#good').click(function() {
+		 if (user_num == 0) { // 로그인 안 한 상태에서 좋아요 눌렀을 경우
+			alert('좋아요는 로그인 한 사용자만 가능합니다.');
+			return;
+		} 
+		if (user_num != 0) {
+			$.ajax({
+				url : 'boardGood.do',
+				type: 'post',
+				dataType: 'json',
+				data : {board_num: ${board.board_num}, checked :checked},
+				success:function(param){
+					if (param.result == 'success') { // 좋아요
+						$('#good').css('color','#FE9A2E');
+						$('#good_result').text(param.good_result);
+					}else if (param.result == 'cancel') { // 좋아요 취소
+						$('#good').css('color','#000000');
+						$('#good_result').text(param.good_result);
+					}
+				}
+			});
+		}
+	});	
+});
+</script>
 <body>
 <div class="page-main">
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -41,8 +68,10 @@
 	</div>
 	</c:if>
 	<hr size="1" noshade="noshade" width="100%">
+	
 	<div class="detail-button" style="float:right;">
-		
+		<input type="button" value="♡" id="good" <c:if test="${checked==1}">style="color:#FE9A2E;"</c:if>>
+							<div id="good_result" style="display: inline;">${good }</div>
 		<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정,삭제 가능 --%>
 		<c:if test="${session_user_num == board.user_num}">
 		<input class="btn btn-primary" type="button" value="수정" style="margin-bottom :20px"
@@ -59,6 +88,7 @@
 			};
 		</script>
 		</c:if>
+		
 		<input class="btn btn-secondary" type="button" value="목록" style="margin-bottom :20px"onclick="location.href='boardList.do'">
 	</div>
 <!-- 댓글 시작 -->

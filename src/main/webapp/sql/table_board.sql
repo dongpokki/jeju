@@ -29,6 +29,12 @@ create table jcmt_board(
 
 create sequence jcmt_board_seq;
 
-
+create table jgood_board(
+    board_num number(10) not null,
+    user_num number(10) not null,
+    good number(1) not null,
+    constraint jboard_like_fk foreign key(board_num) references jboard(board_num),
+    constraint jboard_like_fk2 foreign key(user_num) references juser(user_num)
+);
 
 
