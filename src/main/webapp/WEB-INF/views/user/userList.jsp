@@ -42,7 +42,7 @@
 	<div class="SearchSelect">
 		<ul id="search">
 		<li>
-			<select name="keyfield" class="form-control" style="width:100px;height:42px;margin:3px">
+			<select name="keyfield" class="form-control" style="width:120px;height:42px;margin:3px">
 							<option value="1"<c:if test="${param.keyfield==1}">selected</c:if>>ID</option>
 							<option value="2"<c:if test="${param.keyfield==2}">selected</c:if>>이름</option>
 							<option value="3"<c:if test="${param.keyfield==3}">selected</c:if>>E-mail</option>
