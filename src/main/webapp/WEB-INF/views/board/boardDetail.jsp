@@ -57,6 +57,7 @@
 		<input class="btn btn-secondary" type="button" value="목록" style="margin-bottom :20px"onclick="location.href='boardList.do'">
 	</div>
 <!-- 댓글 시작 -->
+						<div class="board-cmt" style="background: transparent; padding: 5px 0; margin-top: 20px;">
 						<div class="comments-area">
 							<h4>댓글</h4>
 							<!-- 댓글 목록 출력 시작 -->
@@ -80,6 +81,7 @@
 									</c:if>
 								</form>
 							</div>
+						</div>
 						</div>
 						<!-- 댓글 끝 -->
 </div>
