@@ -65,9 +65,9 @@
 		<ul class="search">
 		<li>
 				<select name="keyfield" class="form-control" style="width:120px;height:42px;margin:3px">
-					<option value="1">제목</option>
-					<option value="2">작성자</option>
-					<option value="3">내용</option>
+					<option value="1"<c:if test="${param.keyfield==1}">selected</c:if>>제목</option>
+					<option value="2"<c:if test="${param.keyfield==2}">selected</c:if>>작성자</option>
+					<option value="3"<c:if test="${param.keyfield==3}">selected</c:if>>내용</option>
 				</select>
 			
 				<input type="text" class="form-control" value="${param.keyword}" name="keyword" id="keyword" placeholder="검색어를 입력해주세요">
@@ -103,6 +103,7 @@
 	<div class="align-center" style="margin-top: 20px;">
 		${pagingHtml}
 	</div>
+	
 	</c:if>
 	<div class="list-space" align="right">
 		<input class="btn btn-primary" type="button" value="글쓰기" style="margin: 10px 0px 10px 0px;" onclick="location.href='boardWriteForm.do'"

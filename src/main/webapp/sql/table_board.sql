@@ -9,6 +9,7 @@ create table jboard(
   ip varchar2(40) not null,
   course clob,
   user_num number not null,
+  notice number default 1 not null,
   constraint jboard_pk primary key (board_num),
   constraint jboard_fk foreign key (user_num) references juser (user_num)
 );
