@@ -9,7 +9,6 @@ import java.util.List;
 import kr.board.vo.BoardCmtVO;
 import kr.board.vo.BoardGoodVO;
 import kr.board.vo.BoardVO;
-import kr.spot.vo.SpotVO;
 import kr.util.DBUtil;
 import kr.util.DurationFromNow;
 import kr.util.StringUtil;
@@ -36,7 +35,7 @@ public class BoardDAO {
 			conn = DBUtil.getConnection();
 			// SQL문 작성
 			sql = "INSERT INTO jboard (board_num,title,content,filename,ip,course,"//소진님
-					+ "user_num) VALUES (jboard_seq.nextval,?,?,?,?,?,?)";
+					+ "user_num,notice) VALUES (jboard_seq.nextval,?,?,?,?,?,?,?)";
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			// ?에 데이터를 바인딩
@@ -46,6 +45,7 @@ public class BoardDAO {
 			pstmt.setString(4, board.getIp());
 			pstmt.setString(5, board.getCourse());//소진님
 			pstmt.setInt(6, board.getUser_num());
+			pstmt.setInt(7, board.getNotice());
 			// SQL문 실행
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -124,7 +124,7 @@ public class BoardDAO {
 
 			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
 					+ "(SELECT * FROM jboard b JOIN juser u USING(user_num) " + sub_sql
-					+ " ORDER BY b.board_num DESC)a) " + "WHERE rnum >= ? AND rnum <= ?";
+					+ " ORDER BY b.notice DESC, b.board_num DESC)a) " + "WHERE rnum >= ? AND rnum <= ?";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -146,6 +146,7 @@ public class BoardDAO {
 				board.setReg_date(rs.getDate("reg_date"));
 				board.setId(rs.getString("id"));
 				board.setContent(rs.getString("course"));//소진님
+				board.setNotice(rs.getInt("notice"));
 
 				// BoardVO를 ArrayList에 저장
 				list.add(board);
@@ -159,6 +160,31 @@ public class BoardDAO {
 		}
 		return list;
 	}
+	
+	// 관리자 공지사항 값 수정
+				public void updateNoticeBoard(BoardVO board) throws Exception {
+					Connection conn = null;
+					PreparedStatement pstmt = null;
+					String sql = null;
+
+					try {
+						// 커넥션풀로부터 커넥션 할당
+						conn = DBUtil.getConnection();
+
+						sql = "UPDATE jboard SET notice=1 WHERE user_num=1";
+						// PreparedStatement 객체 생성
+						pstmt = conn.prepareStatement(sql);
+
+						// SQL문 실행
+						pstmt.executeUpdate();
+
+					} catch (Exception e) {
+						throw new Exception(e);
+					} finally {
+						// 자원정리
+						DBUtil.executeClose(null, pstmt, conn);
+					}
+				}
 
 	// 글상세
 	public BoardVO getBoard(int board_num) throws Exception {
@@ -265,6 +291,8 @@ public class BoardDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
+	
 
 	// 파일삭제
 	public void deleteFile(int board_num) throws Exception {

@@ -91,8 +91,11 @@
 			<th>조회</th>
 		</tr>
 		<c:forEach var="board" items="${list}">
-		<tr>
-			<td>${board.board_num}</td>
+		<c:if test="${board.notice==1}"><tr style="background-color:#dddddd"></c:if>
+			<td>
+			<c:if test="${board.notice==1}"><img src="${pageContext.request.contextPath }/images/board-no.png" style= "width: 20px; height: 20px;"></c:if>
+			<c:if test="${board.notice!=1}">${board.board_num}</c:if>
+			</td>
 			<td style="text-overflow:ellipsis;overflow:hidden;width:240px;"><a href="boardDetail.do?board_num=${board.board_num}">${board.title}</a></td>
 			<td>${board.id}</td>
 			<td>${board.reg_date}</td>
@@ -103,7 +106,6 @@
 	<div class="align-center" style="margin-top: 20px;">
 		${pagingHtml}
 	</div>
-	
 	</c:if>
 	<div class="list-space" align="right">
 		<input class="btn btn-primary" type="button" value="글쓰기" style="margin: 10px 0px 10px 0px;" onclick="location.href='boardWriteForm.do'"
@@ -111,7 +113,6 @@
 		<input class="btn btn-secondary" type="button" value="목록" onclick="location.href='boardList.do';">
 	</div>
 </div>
-
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>

@@ -34,6 +34,7 @@ public class BoardWriteAction implements Action{
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		dao.insertBoard(board);
+		dao.updateNoticeBoard(board);
 		
 		return "/WEB-INF/views/board/boardWrite.jsp";
 	}
