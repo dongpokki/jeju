@@ -129,7 +129,9 @@
 					<c:if test="${count > 0}">
 						<c:forEach var="spot" items="${list}">
 							<div class="col-md-6 col-lg-4 py-3">
-								<input ﻿ name="RowCheck" type="checkbox" value="${spot.spot_num}" />
+								<c:if test="${session_user_auth == 3}">
+									<input ﻿ name="RowCheck" type="checkbox" value="${spot.spot_num}" />
+								</c:if>
 								<div class="card-blog">
 									<div class="body">
 										<div class="post-title">

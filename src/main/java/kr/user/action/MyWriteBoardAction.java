@@ -14,8 +14,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import kr.board.dao.BoardDAO;
 import kr.board.vo.BoardVO;
 import kr.controller.Action;
-import kr.course.dao.CourseDAO;
-import kr.course.vo.CourseVO;
 import kr.spot.vo.SpotVO;
 import kr.util.PagingUtil;
 

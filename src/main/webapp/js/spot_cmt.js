@@ -40,10 +40,10 @@ $(function() {
 					}
 					output += '</div>';
 					output += '<div class="desc" >';
-					output += '<h6 >' + item.cmt_content + '</h6>';
+					output += '<h6  id="comment" >' + item.cmt_content + '</h6>';
 					output += '<div class="d-flex justify-content-between" >';
 					output += '<div class="d-flex align-items-center">';
-					output += '<p class="comment" id="comment" style="margin: 4px 0 0;">' + item.id + '</hp>';
+					output += '<p style="margin: 4px 0 0;">' + item.id + '</p>';
 					if (item.modify_date) {
 						output += '<p class="date" id="modify_date">' + item.modify_date + '</p>';
 					} else {
