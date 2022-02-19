@@ -24,6 +24,9 @@ public class BoardListAction implements Action{
 		BoardDAO dao = BoardDAO.getInstance();
 		int count = dao.getBoardCount(keyfield, keyword);
 		
+		// 정렬 필터 값 호출
+		String sort = request.getParameter("sort");
+		
 		//페이지 처리
 		//keyfield,keyword,currentPage,count,rowCount,pageCount,url
 		PagingUtil page = new PagingUtil(keyfield,keyword,
@@ -32,7 +35,7 @@ public class BoardListAction implements Action{
 		List<BoardVO> list = null;
 		if(count > 0) {
 			list = dao.getListBoard(page.getStartCount(), page.getEndCount(), 
-					                                     keyfield, keyword);
+					                                     keyfield, keyword, sort);
 		}
 		
 		request.setAttribute("count", count);

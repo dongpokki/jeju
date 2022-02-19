@@ -100,7 +100,7 @@ public class BoardDAO {
 	}
 
 	// 목록
-	public List<BoardVO> getListBoard(int startRow, int endRow, String keyfield, String keyword) throws Exception {
+	public List<BoardVO> getListBoard(int startRow, int endRow, String keyfield, String keyword, String sort) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -648,7 +648,7 @@ public class BoardDAO {
 			
 			
 			// ============================================================================================================================================
-			// [정동윤 작성] 마이페이지에 노출할 내가 추천한 spot 구하기
+			// [정동윤 작성] 마이페이지에 노출할 내가 추천한 board 구하기
 			public List<BoardVO> MyGoodBoard(int user_num, int startRow, int endRow) throws Exception {
 				Connection conn = null;
 				PreparedStatement pstmt = null;
