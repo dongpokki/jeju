@@ -23,7 +23,6 @@ public class BoardCourseAction implements Action {
 			mapAjax.put("result", "success");
 			mapAjax.put("img", imgUrl);
 		}
-		System.out.println(imgUrl);
 		ObjectMapper mapper = new ObjectMapper();
 		String ajaxData = mapper.writeValueAsString(mapAjax);
 
