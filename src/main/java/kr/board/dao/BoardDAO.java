@@ -107,6 +107,7 @@ public class BoardDAO {
 		List<BoardVO> list = null;
 		String sql = null;
 		String sub_sql = "";
+		String sub_sql2 = "";
 		int cnt = 0;
 
 		try {
@@ -121,10 +122,18 @@ public class BoardDAO {
 				else if (keyfield.equals("3"))
 					sub_sql = "WHERE b.content LIKE ?";
 			}
-
+			
+			if (sort != null && sort.equals("hit")) {// 조회수 정렬
+				sub_sql2 = "ORDER BY notice DESC, hit DESC";
+			} else if (sort == null || sort.equals("board_num")) {// 게시글 번호로 정렬 (내림차순)
+				sub_sql2 = "ORDER BY notice DESC, board_num DESC";
+			} else {
+				sub_sql2 = "ORDER BY good DESC NULLS LAST, hit DESC"; // 좋아요 정렬, 좋아요가 0일 경우 조회수로 정렬
+			}
+			
 			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
-					+ "(SELECT * FROM jboard b JOIN juser u USING(user_num) " + sub_sql
-					+ " ORDER BY b.notice DESC, b.board_num DESC)a) " + "WHERE rnum >= ? AND rnum <= ?";
+					+ "(SELECT * FROM jboard b JOIN juser u USING(user_num) " + sub_sql + sub_sql2
+					+ " )a) " + "WHERE rnum >= ? AND rnum <= ?";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);

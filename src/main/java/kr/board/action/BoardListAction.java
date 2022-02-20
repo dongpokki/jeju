@@ -41,6 +41,7 @@ public class BoardListAction implements Action{
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);
 		request.setAttribute("pagingHtml", page.getPagingHtml());
+		request.setAttribute("sort", sort);
 		
 		//JSP 경로 반환
 		return "/WEB-INF/views/board/boardList.jsp";
