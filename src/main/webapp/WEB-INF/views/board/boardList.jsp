@@ -76,7 +76,7 @@
 			</li>
 		</ul>
 		<select name="sort" class="nice-select" onChange="this.form.submit()" style="border-color: transparent; height: none; padding: 0; float:right;">
-							<option <c:if test="${empty param.sort }">selected</c:if> value="spot_num">최신순</option>
+							<option <c:if test="${empty param.sort }">selected</c:if> value="board_num">최신순</option>
 							<option <c:if test="${param.sort eq'hit' }">selected</c:if> value="hit">조회수순</option>
 							<option <c:if test="${param.sort eq'good' }">selected</c:if> value="good">좋아요순</option>
 						</select>

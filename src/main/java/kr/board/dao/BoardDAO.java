@@ -34,7 +34,7 @@ public class BoardDAO {
 			// 커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 			// SQL문 작성
-			sql = "INSERT INTO jboard (board_num,title,content,filename,ip,course,"//소진님
+			sql = "INSERT INTO jboard (board_num,title,content,filename,ip,course,"// 소진님
 					+ "user_num,notice) VALUES (jboard_seq.nextval,?,?,?,?,?,?,?)";
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -43,7 +43,7 @@ public class BoardDAO {
 			pstmt.setString(2, board.getContent());
 			pstmt.setString(3, board.getFilename());
 			pstmt.setString(4, board.getIp());
-			pstmt.setString(5, board.getCourse());//소진님
+			pstmt.setString(5, board.getCourse());// 소진님
 			pstmt.setInt(6, board.getUser_num());
 			pstmt.setInt(7, board.getNotice());
 			// SQL문 실행
@@ -100,13 +100,15 @@ public class BoardDAO {
 	}
 
 	// 목록
-	public List<BoardVO> getListBoard(int startRow, int endRow, String keyfield, String keyword, String sort) throws Exception {
+	public List<BoardVO> getListBoard(int startRow, int endRow, String keyfield, String keyword, String sort)
+			throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<BoardVO> list = null;
 		String sql = null;
 		String sub_sql = "";
+		String sub_sql2 = "";
 		int cnt = 0;
 
 		try {
@@ -115,17 +117,25 @@ public class BoardDAO {
 
 			if (keyword != null && !"".equals(keyword)) {
 				if (keyfield.equals("1"))
-					sub_sql = "WHERE b.title LIKE ?";
+					sub_sql = "WHERE title LIKE ?";
 				else if (keyfield.equals("2"))
-					sub_sql = "WHERE u.id LIKE ?";
+					sub_sql = "WHERE id LIKE ?";
 				else if (keyfield.equals("3"))
-					sub_sql = "WHERE b.content LIKE ?";
+					sub_sql = "WHERE content LIKE ?";
+			}
+			if (sort != null && sort.equals("hit")) {// 조회수 정렬
+				sub_sql2 = "ORDER BY hit DESC";
+			} else if (sort == null || sort.equals("board_num")) {// 게시글 번호로 정렬 (내림차순)
+				sub_sql2 = "ORDER BY board_num DESC";
+			} else {
+				sub_sql2 = "ORDER BY good DESC NULLS LAST, hit DESC"; // 좋아요 정렬, 좋아요가 0일 경우 조회수로 정렬
 			}
 
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
-					+ "(SELECT * FROM jboard b JOIN juser u USING(user_num) " + sub_sql
-					+ " ORDER BY b.notice DESC, b.board_num DESC)a) " + "WHERE rnum >= ? AND rnum <= ?";
-
+			sql = "SELECT * FROM ( SELECT aa.*, rownum rnum FROM "
+					+ "(SELECT * FROM ((SELECT * FROM (SELECT content, board_num, user_num FROM jboard) JOIN juser u USING(user_num))) JOIN "
+					+ "(SELECT DISTINCT board_num, title, hit, reg_date, notice, good FROM jboard b LEFT OUTER JOIN "
+					+ "(SELECT board_num, COUNT(*) good FROM jgood_board GROUP BY board_num ) g USING (board_num) )a "
+					+ "USING (board_num) " + sub_sql + sub_sql2 + " ) aa ) WHERE rnum>=? AND rnum <=? ";
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			if (keyword != null && !"".equals(keyword)) {
@@ -145,7 +155,7 @@ public class BoardDAO {
 				board.setHit(rs.getInt("hit"));
 				board.setReg_date(rs.getDate("reg_date"));
 				board.setId(rs.getString("id"));
-				board.setContent(rs.getString("course"));//소진님
+				board.setContent(rs.getString("content"));// 소진님
 				board.setNotice(rs.getInt("notice"));
 
 				// BoardVO를 ArrayList에 저장
@@ -160,31 +170,31 @@ public class BoardDAO {
 		}
 		return list;
 	}
-	
+
 	// 관리자 공지사항 값 수정
-				public void updateNoticeBoard(BoardVO board) throws Exception {
-					Connection conn = null;
-					PreparedStatement pstmt = null;
-					String sql = null;
+	public void updateNoticeBoard(BoardVO board) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
 
-					try {
-						// 커넥션풀로부터 커넥션 할당
-						conn = DBUtil.getConnection();
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
 
-						sql = "UPDATE jboard SET notice=1 WHERE user_num=1";
-						// PreparedStatement 객체 생성
-						pstmt = conn.prepareStatement(sql);
+			sql = "UPDATE jboard SET notice=1 WHERE user_num=1";
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
 
-						// SQL문 실행
-						pstmt.executeUpdate();
+			// SQL문 실행
+			pstmt.executeUpdate();
 
-					} catch (Exception e) {
-						throw new Exception(e);
-					} finally {
-						// 자원정리
-						DBUtil.executeClose(null, pstmt, conn);
-					}
-				}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 
 	// 글상세
 	public BoardVO getBoard(int board_num) throws Exception {
@@ -216,7 +226,7 @@ public class BoardDAO {
 				board.setFilename(rs.getString("filename"));
 				board.setUser_num(rs.getInt("user_num"));
 				board.setId(rs.getString("id"));
-				board.setCourse(rs.getString("course"));//소진님
+				board.setCourse(rs.getString("course"));// 소진님
 			}
 
 		} catch (Exception e) {
@@ -291,8 +301,6 @@ public class BoardDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
-	
-	
 
 	// 파일삭제
 	public void deleteFile(int board_num) throws Exception {
@@ -544,269 +552,263 @@ public class BoardDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+
 	// 좋아요 여부 확인
-			public int checkGood(int user_num, int board_num) throws Exception {
-				Connection conn = null;
-				PreparedStatement pstmt = null;
-				String sql = null;
-				ResultSet rs = null;
-				int count = 0;
+	public int checkGood(int user_num, int board_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		int count = 0;
 
-				try {
-					conn = DBUtil.getConnection();
+		try {
+			conn = DBUtil.getConnection();
 
-					sql = "SELECT COUNT(*) FROM jgood_board WHERE user_num = ? AND board_num = ?";
+			sql = "SELECT COUNT(*) FROM jgood_board WHERE user_num = ? AND board_num = ?";
 
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, user_num);
-					pstmt.setInt(2, board_num);
-					rs = pstmt.executeQuery();
-					if (rs.next()) {
-						count = rs.getInt(1);
-					}
-
-				} catch (Exception e) {
-					throw new Exception(e);
-				} finally {
-					DBUtil.executeClose(null, pstmt, conn);
-				}
-				return count;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_num);
+			pstmt.setInt(2, board_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
 			}
 
-			// 좋아요 기능
-			public void jGood(BoardGoodVO good) throws Exception {
-				Connection conn = null;
-				PreparedStatement pstmt = null;
-				String sql = null;
-				try {
-					conn = DBUtil.getConnection();
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		return count;
+	}
 
-					sql = "INSERT INTO jgood_board VALUES (?,?,?)";
+	// 좋아요 기능
+	public void jGood(BoardGoodVO good) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		try {
+			conn = DBUtil.getConnection();
 
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, good.getBoard_num());
-					pstmt.setInt(2, good.getUser_num());
-					pstmt.setInt(3, 1);
-					pstmt.executeUpdate();
-				} catch (Exception e) {
-					throw new Exception(e);
-				} finally {
-					DBUtil.executeClose(null, pstmt, conn);
-				}
+			sql = "INSERT INTO jgood_board VALUES (?,?,?)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, good.getBoard_num());
+			pstmt.setInt(2, good.getUser_num());
+			pstmt.setInt(3, 1);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+
+	// 좋아요 취소 기능
+	public void cancelGood(int board_num, int user_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		try {
+			conn = DBUtil.getConnection();
+
+			sql = "DELETE FROM jgood_board WHERE board_num = ? AND user_num = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			pstmt.setInt(2, user_num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+
+	// 좋아요 개수
+	public int getBoardGoodCount(int board_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+
+		try {
+			conn = DBUtil.getConnection();
+
+			sql = "SELECT COUNT(*) FROM jGood_board WHERE board_num = ?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
 			}
 
-			// 좋아요 취소 기능
-			public void cancelGood(int board_num, int user_num) throws Exception {
-				Connection conn = null;
-				PreparedStatement pstmt = null;
-				String sql = null;
-				try {
-					conn = DBUtil.getConnection();
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
 
-					sql = "DELETE FROM jgood_board WHERE board_num = ? AND user_num = ? ";
+	// ============================================================================================================================================
+	// [정동윤 작성] 마이페이지에 노출할 내가 추천한 board 구하기
+	public List<BoardVO> MyGoodBoard(int user_num, int startRow, int endRow) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardVO> list = null;
+		String sql = null;
 
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, board_num);
-					pstmt.setInt(2, user_num);
-					pstmt.executeUpdate();
-				} catch (Exception e) {
-					throw new Exception(e);
-				} finally {
-					DBUtil.executeClose(null, pstmt, conn);
-				}
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+
+			// sql문 작성
+			sql = "select * from (select a.*, rownum rnum from (select b.board_num,b.title,g.good from jboard b join jgood_board g on b.board_num = g.board_num where g.user_num=? and good=1 order by b.board_num)a) where rnum>=? and rnum<=?";
+
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, user_num);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			// sql문 수행하여 결과 집합을 rs에 담음
+			rs = pstmt.executeQuery();
+
+			list = new ArrayList<BoardVO>();
+
+			while (rs.next()) {
+				BoardVO board = new BoardVO();
+
+				board.setBoard_num(rs.getInt("board_num"));
+				board.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+
+				// 자바빈(VO)을 ArrayList에 저장
+				list.add(board);
 			}
 
-			// 좋아요 개수
-			public int getBoardGoodCount(int board_num) throws Exception {
-				Connection conn = null;
-				PreparedStatement pstmt = null;
-				ResultSet rs = null;
-				String sql = null;
-				int count = 0;
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
+	}
 
-				try {
-					conn = DBUtil.getConnection();
+	// [정동윤 작성] 마이페이지에 노출할 내가 추천한 board count구하기
+	public int MyGoodBoardCount(int session_user_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
 
-					sql = "SELECT COUNT(*) FROM jGood_board WHERE board_num = ?";
+		try {
+			// 커넥션풀로부터 커넥션풀 할당
+			conn = DBUtil.getConnection();
 
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, board_num);
-					rs = pstmt.executeQuery();
-					if (rs.next()) {
-						count = rs.getInt(1);
-					}
+			sql = "select count(*) from jgood_board where user_num=? and good=1";
 
-				} catch (Exception e) {
-					throw new Exception(e);
-				} finally {
-					DBUtil.executeClose(rs, pstmt, conn);
-				}
-				return count;
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, session_user_num);
+
+			// SQL문 수행하여 결과 집합을 rs에 담음
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt(1);
 			}
-			
-			
-			
-			
-			// ============================================================================================================================================
-			// [정동윤 작성] 마이페이지에 노출할 내가 추천한 board 구하기
-			public List<BoardVO> MyGoodBoard(int user_num, int startRow, int endRow) throws Exception {
-				Connection conn = null;
-				PreparedStatement pstmt = null;
-				ResultSet rs = null;
-				List<BoardVO> list = null;
-				String sql = null;
-	
-				try {
-					// 커넥션풀로부터 커넥션 할당
-					conn = DBUtil.getConnection();
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
 
-					// sql문 작성
-					sql = "select * from (select a.*, rownum rnum from (select b.board_num,b.title,g.good from jboard b join jgood_board g on b.board_num = g.board_num where g.user_num=? and good=1 order by b.board_num)a) where rnum>=? and rnum<=?";
+		return count;
+	}
 
-					// PreparedStatement 객체 생성
-					pstmt = conn.prepareStatement(sql);
-					
-					// ?에 데이터 바인딩
-					pstmt.setInt(1, user_num);
-					pstmt.setInt(2, startRow);
-					pstmt.setInt(3, endRow);
+	// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 게시글 내역
+	// 내가 작성한 게시글 리스트 카운트 구하기
+	public int getmyBoardCount(int session_user_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
 
-					// sql문 수행하여 결과 집합을 rs에 담음
-					rs = pstmt.executeQuery();
+		try {
+			// 커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
 
-					list = new ArrayList<BoardVO>();
+			// sQL문 작성
+			sql = "select count(*) from jboard where user_num = ?";
 
-					while(rs.next()) {
-						BoardVO board = new BoardVO();
+			pstmt = conn.prepareStatement(sql);
 
-						board.setBoard_num(rs.getInt("board_num"));
-						board.setTitle(StringUtil.useNoHtml(rs.getString("title")));
-						
-						// 자바빈(VO)을 ArrayList에 저장
-						list.add(board);
-					}
+			pstmt.setInt(1, session_user_num);
 
-				} catch (Exception e) {
-					throw new Exception(e);
-				} finally {
-					// 자원정리
-					DBUtil.executeClose(rs, pstmt, conn);
-				}
-				return list;
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt(1);
 			}
 
-			// [정동윤 작성] 마이페이지에 노출할 내가 추천한 board count구하기
-			public int MyGoodBoardCount(int session_user_num) throws Exception {
-				Connection conn = null;
-				PreparedStatement pstmt = null;
-				ResultSet rs = null;
-				String sql = null;
-				int count = 0;
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
 
-				try {
-					// 커넥션풀로부터 커넥션풀 할당
-					conn = DBUtil.getConnection();
+	// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 게시글 내역
+	// 내가 작성한 게시글 리스트 조회
+	public List<BoardVO> getmyBoardList(int session_user_num, int startRow, int endRow) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardVO> list = null;
+		String sql = null;
+		try {
+			// 커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
 
-					sql = "select count(*) from jgood_board where user_num=? and good=1";
+			// sql문 작성
+			sql = "select * from (select a.*,rownum rnum from (select board_num,title,user_num from jboard where user_num = ?)a) where rnum>=? AND rnum<=?";
 
-					// PreparedStatement 객체 생성
-					pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 
-					// ?에 데이터 바인딩
-					pstmt.setInt(1, session_user_num);
+			pstmt.setInt(1, session_user_num);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 
-					// SQL문 수행하여 결과 집합을 rs에 담음
-					rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 
-					if (rs.next()) {
-						count = rs.getInt(1);
-					}
-				} catch (Exception e) {
-					throw new Exception(e);
-				} finally {
-					DBUtil.executeClose(rs, pstmt, conn);
-				}
+			list = new ArrayList<BoardVO>();
 
-				return count;
+			while (rs.next()) {
+				BoardVO board = new BoardVO();
+				board.setTitle(rs.getString("title"));
+				board.setBoard_num(rs.getInt("board_num"));
+
+				// BoardVO를 ArrayList에 저장
+				list.add(board);
 			}
-			
-			
-			
-			
-			// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 게시글 내역
-			// 내가 작성한 게시글 리스트 카운트 구하기
-			public int getmyBoardCount(int session_user_num) throws Exception{
-				Connection conn =null;
-				PreparedStatement pstmt =null;
-				ResultSet rs =null;
-				String sql=null;
-				int count=0;
-
-				try {
-					//커넥션풀로부터 커넥션을 할당
-					conn = DBUtil.getConnection();
-
-					//sQL문 작성
-					sql="select count(*) from jboard where user_num = ?";
-
-					pstmt = conn.prepareStatement(sql);
-
-					pstmt.setInt(1, session_user_num);
-
-					rs = pstmt.executeQuery();
-
-					if(rs.next()) {
-						count=rs.getInt(1);
-					}
-
-				}catch(Exception e) {
-					throw new Exception(e);
-				}finally {
-					DBUtil.executeClose(rs, pstmt, conn);
-				}
-				return count;
-			}
-
-
-			// [정동윤 작성] - 마이페이지에서 노출할 내가 작성한 게시글 내역
-			// 내가 작성한 게시글 리스트 조회
-			public List<BoardVO> getmyBoardList(int session_user_num,int startRow,int endRow) throws Exception{
-				Connection conn =null;
-				PreparedStatement pstmt =null;
-				ResultSet rs=null;
-				List<BoardVO> list =null;
-				String sql =null;
-				try {
-					//커넥션풀로부터 커넥션 할당
-					conn = DBUtil.getConnection();
-
-					//sql문 작성
-					sql="select * from (select a.*,rownum rnum from (select board_num,title,user_num from jboard where user_num = ?)a) where rnum>=? AND rnum<=?";
-
-					pstmt = conn.prepareStatement(sql);
-
-					pstmt.setInt(1, session_user_num);
-					pstmt.setInt(2, startRow);
-					pstmt.setInt(3, endRow);
-
-					rs = pstmt.executeQuery();
-
-					list = new ArrayList<BoardVO>();
-
-					while(rs.next()) {
-						BoardVO board = new BoardVO();
-						board.setTitle(rs.getString("title"));
-						board.setBoard_num(rs.getInt("board_num"));
-
-						//BoardVO를 ArrayList에 저장
-						list.add(board);
-					}
-				}catch(Exception e) {
-					throw new Exception(e);
-				}finally {
-					DBUtil.executeClose(rs, pstmt, conn);
-				}
-				return list;
-			}
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;
+	}
 
 }
