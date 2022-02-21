@@ -8,6 +8,7 @@
 <title>추천 장소 상세 페이지</title>
 
 <!-- css  -->
+<link rel="icon" href="${pageContext.request.contextPath}/images/jeju.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 
