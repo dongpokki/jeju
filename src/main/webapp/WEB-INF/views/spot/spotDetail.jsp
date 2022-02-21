@@ -165,29 +165,22 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 					<!-- 사이드 바 시작 -->
 					<div class="col-lg-3">
 						<div class="widget">
-							<!-- Widget Categories -->
+							<!-- 위젯 카테고리 -->
 							<div class="widget-box">
 								<h4 class="widget-title">Category</h4>
 								<div class="divider"></div>
-
 								<ul class="categories">
 									<li><a href="spotList.do?category=0" <c:if test="${spot.category<1}">style="color:#FE9A2E;"</c:if>>전체</a></li>
 									<li><a href="spotList.do?category=1" <c:if test="${spot.category==1 }">style="color:#FE9A2E;"</c:if>>동부</a></li>
 									<li><a href="spotList.do?category=2" <c:if test="${spot.category==2 }">style="color:#FE9A2E;"</c:if>>서부</a></li>
 									<li><a href="spotList.do?category=3" <c:if test="${spot.category==3 }">style="color:#FE9A2E;"</c:if>>남부</a></li>
 									<li c><a href="spotList.do?category=4" <c:if test="${spot.category==4 }">style="color:#FE9A2E;"</c:if>>북부</a></li>
-
 								</ul>
 							</div>
-							<!-- Widget search -->
+							<!-- 위젯 검색 -->
 							<div class="widget-box">
 								<form action="spotList.do" class="search-widget">
-									<c:if test="${!empty spot.category}">
-										<input type="hidden" name="category" value="${spot.category}">
-									</c:if>
-									<c:if test="${empty spot.category}">
 										<input type="hidden" name="category" value="0">
-									</c:if>
 									<input type="text" class="form-control" placeholder="검색어를 입력해주세요" value="${param.keyword}" name="keyword" id="keyword" style="width: 100% !important;">
 									<button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 3px; width: 100% !important;">검색</button>
 								</form>
@@ -200,7 +193,6 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 		</div>
 	</main>
 	<!-- 컨테이너 끝 -->
-	<!-- 	footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
