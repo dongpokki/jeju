@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>글수정</title>
+<link rel="icon" href="${pageContext.request.contextPath}/images/jeju.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css">
