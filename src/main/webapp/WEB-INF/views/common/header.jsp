@@ -17,7 +17,7 @@
 				<ul class="navbar-nav mx-4">
 					<li class="nav-item"><a href="${pageContext.request.contextPath}/main/main.do" class="nav-link">메인</a></li>
 					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">추천 장소</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin:0px 30px 0px 30px;">
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do?category=0">전체</a> 
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do?category=1">동부</a>
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/spot/spotList.do?category=2">서부</a>
