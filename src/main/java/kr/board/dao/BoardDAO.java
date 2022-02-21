@@ -128,15 +128,20 @@ public class BoardDAO {
 			} else if (sort == null || sort.equals("board_num")) {// 게시글 번호로 정렬 (내림차순)
 				sub_sql2 = "ORDER BY notice DESC, board_num DESC";
 			} else {
-				sub_sql2 = "ORDER BY notice DESC, good DESC NULLS LAST, notice DESC, hit DESC"; // 좋아요 정렬, 좋아요가 0일 경우 조회수로 정렬
+				sub_sql2 = "ORDER BY notice DESC, good DESC NULLS LAST, notice DESC, hit DESC"; // 좋아요 정렬, 좋아요가 0일 경우
+																								// 조회수로 정렬
 			}
 
-			sql = "SELECT * FROM ( SELECT aa.*, rownum rnum FROM "
-					+ "(SELECT * FROM ((SELECT * FROM (SELECT content, board_num, user_num FROM jboard) JOIN juser u USING(user_num))) JOIN "
-					+ "(SELECT DISTINCT board_num, title, hit, reg_date, notice, good FROM jboard b LEFT OUTER JOIN "
-					+ "(SELECT board_num, COUNT(*) good FROM jgood_board GROUP BY board_num ) g USING (board_num) )a "
-					+ "USING (board_num) " + sub_sql + sub_sql2 + " ) aa ) WHERE rnum>=? AND rnum <=? ";
-			
+			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM (SELECT * FROM "
+					// content가 clob 타입이라 ORDER BY가 안돼서 따로 SELECT한 뒤 id 값을 불러오기 위한 juser 테이블과 JOIN
+					+ "(SELECT * FROM (SELECT content, board_num, user_num FROM jboard) JOIN juser USING(user_num)) JOIN "
+					// content를 제외한 다른 컬럼을 중복 값을 제외한 뒤 JOIN 
+					+ "(SELECT DISTINCT board_num, title, hit, reg_date, notice, good FROM jboard LEFT OUTER JOIN "
+					// 좋아요 개수 COUNT한 뒤 JOIN
+					+ "(SELECT board_num, COUNT(*) good FROM jgood_board GROUP BY board_num ) USING (board_num) ) USING (board_num) "
+					// 먼저 조건문 실행한 뒤 rnum 생성
+					+ sub_sql + sub_sql2 + " ) a ) WHERE rnum>=? AND rnum <=? ";
+
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			if (keyword != null && !"".equals(keyword)) {
