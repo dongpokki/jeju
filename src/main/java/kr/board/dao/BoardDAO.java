@@ -124,11 +124,11 @@ public class BoardDAO {
 					sub_sql = "WHERE content LIKE ?";
 			}
 			if (sort != null && sort.equals("hit")) {// 조회수 정렬
-				sub_sql2 = "ORDER BY hit DESC";
+				sub_sql2 = "ORDER BY notice DESC, hit DESC";
 			} else if (sort == null || sort.equals("board_num")) {// 게시글 번호로 정렬 (내림차순)
-				sub_sql2 = "ORDER BY board_num DESC";
+				sub_sql2 = "ORDER BY notice DESC, board_num DESC";
 			} else {
-				sub_sql2 = "ORDER BY good DESC NULLS LAST, hit DESC"; // 좋아요 정렬, 좋아요가 0일 경우 조회수로 정렬
+				sub_sql2 = "ORDER BY notice DESC, good DESC NULLS LAST, notice DESC, hit DESC"; // 좋아요 정렬, 좋아요가 0일 경우 조회수로 정렬
 			}
 
 			sql = "SELECT * FROM ( SELECT aa.*, rownum rnum FROM "
