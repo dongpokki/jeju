@@ -610,7 +610,7 @@ public class SpotDAO {
 			// sql문 작성
 			// 게시글별로 추천수의 합(total_good)이 높은 순으로 랭킹1~3위 까지 3개의 컬럼 조회 [추천수(good)이 같은 경우에는,
 			// 게시글번호(spot_num)이 낮은(먼저 등록한 순)순으로 추가 비교]
-			sql = "select b.spot_num,b.title,b.content,b.filename,b.category,u.total_good,u.rank from jboard_spot b join (select * from (select spot_num,total_good,row_number() over (order by total_good desc,spot_num) rank from(select spot_num,count(*) total_good from jgood_spot where good =1 group by spot_num)) where rank<4) u on b.spot_num = u.spot_num";
+			sql = "select b.spot_num,b.title,b.content,b.filename,b.category,u.total_good,u.rank from jboard_spot b join (select * from (select spot_num,total_good,row_number() over (order by total_good desc,spot_num) rank from(select spot_num,count(*) total_good from jgood_spot where good =1 group by spot_num)) where rank<4 order by rank) u on b.spot_num = u.spot_num";
 
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
