@@ -213,11 +213,16 @@ public class SpotDAO {
 				sub_sql3 = "ORDER BY good DESC NULLS LAST, hit DESC"; // 좋아요 정렬, 좋아요가 0일 경우 조회수로 정렬
 			}
 
-			sql = "SELECT * FROM ( SELECT aa.*, rownum rnum FROM "
+			sql = "SELECT * FROM ( SELECT a.*, rownum rnum FROM "
+					// content가 clob 타입이라 ORDER BY가 안돼서 따로 SELECT한 뒤 JOIN
 					+ "(SELECT * FROM (SELECT content, spot_num FROM jboard_spot) JOIN "
-					+ "(SELECT DISTINCT spot_num, title, filename, hit, good, category FROM jboard_spot b LEFT OUTER JOIN "
-					+ "(SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num ) g USING (spot_num) )a "
-					+ "USING (spot_num) " + sub_sql + sub_sql2 + sub_sql3 + " ) aa ) WHERE rnum>=? AND rnum <=? ";
+					// content를 제외한 다른 컬럼을 중복 값을 제외한 뒤 JOIN
+					+ "(SELECT DISTINCT spot_num, title, filename, hit, good, category FROM jboard_spot LEFT OUTER JOIN "
+					// 좋아요 개수 COUNT한 뒤 JOIN
+					+ "(SELECT spot_num, COUNT(*) good FROM jgood_spot GROUP BY spot_num ) USING (spot_num) ) USING (spot_num) "
+					// 먼저 조건문 실행한 뒤 rnum 생성
+					+ sub_sql + sub_sql2 + sub_sql3 + " ) a ) WHERE rnum>=? AND rnum <=? ";
+			
 			pstmt = conn.prepareStatement(sql);
 
 			if (category != 0) {
@@ -572,7 +577,7 @@ public class SpotDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
-	
+
 	// 댓글 삭제
 	public void deleteCmtSpot(int spotcmt_num) throws Exception {
 		Connection conn = null;
