@@ -136,6 +136,7 @@ public class BoardDAO {
 					+ "(SELECT DISTINCT board_num, title, hit, reg_date, notice, good FROM jboard b LEFT OUTER JOIN "
 					+ "(SELECT board_num, COUNT(*) good FROM jgood_board GROUP BY board_num ) g USING (board_num) )a "
 					+ "USING (board_num) " + sub_sql + sub_sql2 + " ) aa ) WHERE rnum>=? AND rnum <=? ";
+			
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			if (keyword != null && !"".equals(keyword)) {
