@@ -64,13 +64,13 @@ public class QnaDAO {
 			conn = DBUtil.getConnection();
 			
 			if(keyword!=null && !"".equals(keyword)) {
-				if(keyfield.equals("0")) sub_sql="WHERE b.title LIKE ? OR d.name LIKE ? OR b.content LIKE ?";				
-				if(keyfield.equals("1")) sub_sql="WHERE b.title LIKE ?";
-				else if(keyfield.equals("2")) sub_sql="WHERE d.name LIKE ?";
-				else if(keyfield.equals("3")) sub_sql="WHERE b.content LIKE ?";
+				if(keyfield.equals("0")) sub_sql="WHERE q.title LIKE ? OR u.id LIKE ? OR q.content LIKE ?";				
+				if(keyfield.equals("1")) sub_sql="WHERE q.title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql="WHERE u.id LIKE ?";
+				else if(keyfield.equals("3")) sub_sql="WHERE q.content LIKE ?";
 			}
 			//sQL문 작성
-			sql="SELECT COUNT(*) FROM jboard_qna b JOIN juser u USING(user_num) LEFT JOIN juser_detail d USING(user_num)"+sub_sql;
+			sql="SELECT COUNT(*) FROM jboard_qna q JOIN juser u USING(user_num) LEFT JOIN juser_detail d USING(user_num)"+sub_sql;
 			
 			pstmt = conn.prepareStatement(sql);
 			if(keyword!=null & !"".equals(keyword)) {
@@ -110,9 +110,9 @@ public class QnaDAO {
 			conn = DBUtil.getConnection();
 			
 			if(keyword!=null && !"".equals(keyword)) {
-				if(keyfield.equals("0")) sub_sql="WHERE q.title LIKE ? OR d.name LIKE ? OR q.content LIKE ?";
+				if(keyfield.equals("0")) sub_sql="WHERE q.title LIKE ? OR u.id LIKE ? OR q.content LIKE ?";
 				else if(keyfield.equals("1")) sub_sql="WHERE q.title LIKE ?";
-				else if(keyfield.equals("2")) sub_sql="WHERE d.name LIKE ?";
+				else if(keyfield.equals("2")) sub_sql="WHERE u.id LIKE ?";
 				else if(keyfield.equals("3")) sub_sql="WHERE q.content LIKE ?";
 			}
 			
