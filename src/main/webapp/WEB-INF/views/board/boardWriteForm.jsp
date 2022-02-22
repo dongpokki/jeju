@@ -47,8 +47,8 @@
 														+ "<input type='radio' name='placeType' value='3'/>액티비티</div>"
 														+ "<div style='margin: 0 5px; color: #808080;'><button type='button' class='btn btn-course' onclick='drawNodeAndLine();' id='insertName'>추가</button>"
 														+ "<button type='button' class='btn btn-course' onclick='clearNode();'>초기화</button></div></div> "
-														+ "<canvas id='canvas' width='970' height='300' style='width: 100%; margin: 0 0 10px 50px;'></canvas>"
-														+ "</div></div></div><button type='button' class='btn btn-course' id='makeImgBtn' onclick='imgtest();'>저장</button>");
+														+ "<canvas id='canvas' width='970' height='500' style='width: 100%; margin:10px 0 0 55px;'></canvas>"
+														+ "</div></div></div><div class='canvas_form'><button type='button' class='btn btn-course' id='makeImgBtn' onclick='imgtest();'>저장</button></div>");
 
 								[ x, y ] = drawDefaultNode(x, y);
 							} else {

@@ -124,8 +124,8 @@ a:hover {
 	border-color: #D7D5E9;
 	color: #645F88;
 	font-size: 14px;
-    margin: 0 5px;
-    padding: 5px 8px;
+	margin: 0 5px;
+	padding: 5px 8px;
 }
 
 .btn-link:focus, .btn-link.focus {
@@ -1305,7 +1305,7 @@ input[type="text"].course_title, .course_content {
 	padding-left: 12px;
 	padding-right: 30px;
 	border: 1px solid #ebecef;
-	outline:none;
+	outline: none;
 }
 
 .nice-select:hover {
@@ -1458,6 +1458,13 @@ input[type="text"].course_title, .course_content {
 	display: flex;
 	justify-content: center;
 	margin: 120px 0 100px 0;
+}
+
+.canvas_form {
+	display: flex;
+	width: 100%;
+	justify-content: flex-end;
+	padding: 0 20px 20px 0;
 }
 
 /*QnA 게시판 */
