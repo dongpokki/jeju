@@ -55,6 +55,7 @@
 	</li>
 	</ul>
 	</div>
+	JEJU와 함께하고 있는 회원 수 <span class="text-primary">${count }</span>명
 	</form>
 	<c:if test="${count == 0}">
 	<div class="result-display">
