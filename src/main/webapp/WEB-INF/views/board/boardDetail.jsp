@@ -61,7 +61,7 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 			<hr size="1" noshade="noshade" width="100%">
 			<c:if test="${!empty board.filename}">
 				<div class="align-center">
-					<img src="${pageContext.request.contextPath}/upload/${board.filename}" class="detail-img">
+					<img src="${pageContext.request.contextPath}/upload/${board.filename}" class="detail-img" style="display: block; margin: auto; max-width: 800px">
 				</div>
 			</c:if>
 			<c:if test="${!empty board.course}">
