@@ -64,13 +64,13 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 					<img src="${pageContext.request.contextPath}/upload/${board.filename}" class="detail-img">
 				</div>
 			</c:if>
-			<p>${board.content}</p>
 			<c:if test="${!empty board.course}">
 				<div class="align-center">
 					<img src="${board.course}" class="detail-img" style="margin: 10px 0 0 55px;">
 					<!-- 소진님 -->
 				</div>
 			</c:if>
+			<p>${board.content}</p>
 			<hr size="1" noshade="noshade" width="100%">
 
 			<div class="detail-button" style="float: left;">
