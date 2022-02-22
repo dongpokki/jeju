@@ -81,6 +81,8 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 				<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정,삭제 가능 --%>
 				<c:if test="${session_user_num == board.user_num}">
 					<input class="btn btn-primary" type="button" value="수정" style="margin-bottom: 20px" onclick="location.href='boardUpdateForm.do?board_num=${board.board_num}'">
+				</c:if>
+				<c:if test="${session_user_num==board.user_num || session_user_auth==3 }">	
 					<input class="btn btn-secondary" type="button" value="삭제" style="margin-bottom: 20px" id="delete_btn">
 					<script type="text/javascript">
 			let delete_btn = document.getElementById('delete_btn');
